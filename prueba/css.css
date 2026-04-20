@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+
+/* ANIMACIÓN */
+.animar {
+  opacity: 0;
+  transform: translateX(-50px); /* empieza a la izquierda */
+  animation: aparecer 1s ease forwards;
+}
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* TARJETA */
+.card {
+  width: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  font-family: Arial;
+  background: white;
+  text-align: center;
+}
+
+/* IMAGEN */
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* TEXTO */
+.card-content {
+  padding: 15px;
+}
+
+/* BOTÓN */
+.btn-toggle {
+  background: royalblue;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* PARTE OCULTA */
+.card-extra {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: #f0f0f0;
+  padding: 0 15px;
+}
+
+/* CUANDO SE ABRE */
+.card.active .card-extra {
+  max-height: 150px;
+  padding: 15px;
+}
