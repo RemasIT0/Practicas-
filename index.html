@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CMP</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="logo.png" alt="CMP" style="height:50px; margin-right:10px;">
+      <span style="font-weight:600; color:var(--primary);">CMP</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <div class="ms-auto">
+
+        <a href="#" class="mx-3 nav-link d-inline">Home</a>
+        <a href="#servicios" class="mx-3 nav-link d-inline">Servicios</a>
+        <a href="#profesionales" class="mx-3 nav-link d-inline">Profesionales</a>
+        <a href="#contacto" class="mx-3 nav-link d-inline">Contacto</a>
+
+        <button class="btn btn-primary ms-3">Turnos</button>
+
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-content">
+    <h1>Centro<br>Medico<br>Palacio</h1>
+    <p>
+      CMP nace con el propósito de ofrecer atención médica de alto nivel,
+      respaldada por profesionales especializados y tecnología moderna.
+    </p>
+    <button class="btn-main" onclick="scrollToSection('servicios')">Ver más</button>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="container">
+
+    <div class="title text-center">
+      <h2>Nuestros Servicios</h2>
+      <p>Ofrecemos una amplia gama de servicios médicos para cuidar tu salud y la de tu familia</p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="service-card" onclick="scrollToSection('consultas')">
+          <div class="service-icon icon-blue">🩺</div>
+          <h5>Consultas Médicas</h5>
+          <p>Atención personalizada en múltiples especialidades médicas.</p>
+          <a class="service-link">Ver más detalles →</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card" onclick="scrollToSection('estudios')">
+          <div class="service-icon icon-red">❤️</div>
+          <h5>Estudios Médicos</h5>
+          <p>Diagnóstico preciso con tecnología moderna.</p>
+          <a class="service-link">Ver más detalles →</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card" onclick="scrollToSection('cirugias')">
+          <div class="service-icon icon-pink">🏥</div>
+          <h5>Cirugías</h5>
+          <p>Procedimientos seguros realizados por profesionales especializados.</p>
+          <a class="service-link">Ver más detalles →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="consultas" class="bg-light py-5">
+  <div class="container">
+
+    <h2 class="mb-5 text-center" style="color: var(--primary);">
+      🩺 Consultas Médicas
+    </h2>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-ear fs-1 text-primary mb-3"></i>
+          <h5>Otorrinolaringología</h5>
+          <a href="reservar.html?esp=otorrino" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-capsule fs-1 text-success mb-3"></i>
+          <h5>Gastroenterología</h5>
+          <a href="reservar.html?esp=gastro" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-heart-pulse fs-1 text-danger mb-3"></i>
+          <h5>Cardiología</h5>
+          <a href="reservar.html?esp=cardiologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-scissors fs-1 text-dark mb-3"></i>
+          <h5>Cirugía General y Digestiva</h5>
+          <a href="reservar.html?esp=cirugia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-brain fs-1 text-purple mb-3"></i>
+          <h5>Neurología</h5>
+          <a href="reservar.html?esp=neurologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-activity fs-1 text-warning mb-3"></i>
+          <h5>Psiquiatría</h5>
+          <a href="reservar.html?esp=psiquiatria" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-person-standing fs-1 text-info mb-3"></i>
+          <h5>Reumatología</h5>
+          <a href="reservar.html?esp=reumatologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-emoji-smile fs-1 text-warning mb-3"></i>
+          <h5>Psicología</h5>
+          <a href="reservar.html?esp=psicologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-clipboard-pulse fs-1 text-danger mb-3"></i>
+          <h5>Obesidad y Diabetes</h5>
+          <a href="reservar.html?esp=obesidad" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-emoji-laughing fs-1 text-primary mb-3"></i>
+          <h5>Odontología – Ortodoncia</h5>
+          <a href="reservar.html?esp=odontologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center p-4 shadow-sm h-100">
+          <i class="bi bi-gender-female fs-1 text-pink mb-3"></i>
+          <h5>Ginecología – Obstetricia</h5>
+          <a href="reservar.html?esp=ginecologia" class="btn btn-primary mt-3">Reservar turno</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="estudios" class="py-5 bg-light">
+  <div class="container">
+
+    <h2 class="text-center mb-5" style="color: var(--primary);">
+      ❤️ Estudios Médicos
+    </h2>
+
+    <div class="row g-4">
+
+      <div class="col-md-6">
+        <div class="estudio-card">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-ear fs-3 text-primary me-2"></i>
+            <h5 class="mb-0">Otorrinolaringología</h5>
+          </div>
+
+          <ul>
+            <li>Rinofibrolaringoscopia</li>
+            <li>Fibroscopia</li>
+            <li>Rinoscopia</li>
+            <li>Otomicroscopia</li>
+            <li>Laringoscopia</li>
+          </ul>
+
+          <a href="reservar.html?esp=otorrino" class="btn btn-outline-primary btn-sm mt-2">
+            Reservar estudio
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="estudio-card">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-capsule fs-3 text-success me-2"></i>
+            <h5 class="mb-0">Gastroenterología</h5>
+          </div>
+
+          <ul>
+            <li>Endoscopias digestivas</li>
+          </ul>
+
+          <a href="reservar.html?esp=gastro" class="btn btn-outline-primary btn-sm mt-2">
+            Reservar estudio
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="estudio-card">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-brain fs-3 text-purple me-2"></i>
+            <h5 class="mb-0">Neurología</h5>
+          </div>
+
+          <ul>
+            <li>Electroencefalograma</li>
+            <li>Electromiograma</li>
+          </ul>
+
+          <a href="reservar.html?esp=neuro" class="btn btn-outline-primary btn-sm mt-2">
+            Reservar estudio
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="estudio-card">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-heart-pulse fs-3 text-danger me-2"></i>
+            <h5 class="mb-0">Cardiología</h5>
+          </div>
+
+          <ul>
+            <li>Electrocardiograma</li>
+            <li>Ecocardiograma Doppler</li>
+            <li>Ergometrías</li>
+          </ul>
+
+          <a href="reservar.html?esp=cardio" class="btn btn-outline-primary btn-sm mt-2">
+            Reservar estudio
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="estudio-card">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-gender-female fs-3 text-pink me-2"></i>
+            <h5 class="mb-0">Ginecología</h5>
+          </div>
+
+          <ul>
+            <li>Papanicolau</li>
+          </ul>
+
+          <a href="reservar.html?esp=gine" class="btn btn-outline-primary btn-sm mt-2">
+            Reservar estudio
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="cirugias" class="bg-light">
+  <div class="container">
+
+    <div class="title text-center">
+      <h2>🏥 Cirugías</h2>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="service-card text-center">
+          <h5>Cirugía General</h5>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card text-center">
+          <h5>Cirugía Cardiovascular</h5>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card text-center">
+          <h5>Cirugía Ambulatoria</h5>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<section id="profesionales" class="staff-section">
+  <div class="container">
+
+    <div class="title">
+      <h2>Staff Médico</h2>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-3">
+        <div class="staff-card">
+
+          <img src="https://via.placeholder.com/400x300" class="staff-img">
+
+          <div class="staff-body">
+            <div class="staff-name">Dr. Palacio, Marcos Antonio</div>
+
+            <div class="staff-specialty">
+              OTORRINOLARINGOLOGIA
+            </div>
+
+            <div class="staff-info">
+              <p><strong>Horarios:</strong></p>
+              <p>Martes - Miércoles - Viernes</p>
+              <p>16:30 a 20:30 hs</p>
+              <p><strong>*Particulares</strong></p>
+            </div>
+
+            <button class="staff-btn">Turnos</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="staff-card">
+
+          <img src="https://via.placeholder.com/400x300" class="staff-img">
+
+          <div class="staff-body">
+            <div class="staff-name">Dr. Palacio, Gastón Antonio</div>
+
+            <div class="staff-specialty">
+              OTORRINOLARINGOLOGIA
+            </div>
+
+            <div class="staff-info">
+              <p><strong>Horarios:</strong></p>
+              <p>Lunes, Martes, Jueves y Viernes</p>
+              <p>16:00 a 20:30 hs</p>
+              <p><strong>*Todas las obras sociales</strong></p>
+            </div>
+
+            <button class="staff-btn">Turnos</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="staff-card">
+
+          <img src="https://via.placeholder.com/400x300" class="staff-img">
+
+          <div class="staff-body">
+            <div class="staff-name">Dr. Palacio, Gerardo Marcos</div>
+
+            <div class="staff-specialty">
+              CARDIOLOGIA
+            </div>
+
+            <div class="staff-info">
+              <p><strong>Horarios:</strong></p>
+              <p>Lunes, Miércoles y Viernes</p>
+              <p>16:00 a 20:30 hs</p>
+              <p><strong>*Todas las obras sociales</strong></p>
+            </div>
+
+            <button class="staff-btn">Turnos</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="staff-card">
+
+          <img src="https://via.placeholder.com/400x300" class="staff-img">
+
+          <div class="staff-body">
+            <div class="staff-name">Dra. Zelarayán, Norma Daniela</div>
+
+            <div class="staff-specialty">
+              GASTROENTEROLOGIA
+            </div>
+
+            <div class="staff-info">
+              <p><strong>Horarios:</strong></p>
+              <p>Martes y Jueves</p>
+              <p>16:00 a 20:30 hs</p>
+              <p><strong>*Todas las obras sociales</strong></p>
+            </div>
+
+            <button class="staff-btn">Turnos</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- COMO FUNCIONA PARA LA SECCION DE TURNOS -->
+<section class="how-section">
+  <div class="container text-center">
+
+    <h2 class="mb-3">¿Cómo funciona?</h2>
+    <p class="mb-5">Reservá tu turno en 3 simples pasos</p>
+
+    <div class="row justify-content-center">
+
+      <div class="col-md-4">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <div class="icon-circle">🩺</div>
+          <h5>Elegí especialidad</h5>
+          <p>Seleccioná la especialidad médica que necesitás</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <div class="icon-circle">👤</div>
+          <h5>Seleccioná profesional</h5>
+          <p>Elegí el médico según disponibilidad</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <div class="icon-circle">📅</div>
+          <h5>Reservá turno</h5>
+          <p>Confirmá fecha y horario</p>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-start mt-5" onclick="scrollToSection('servicios')">
+      Comenzar ahora
+    </button>
+
+  </div>
+</section>
+
+<section class="cta-section text-center">
+  <div class="container">
+    <h2>¿Listo para cuidar tu salud?</h2>
+    <p>Reservá tu turno ahora y accedé a atención médica de calidad</p>
+    <button class="cta-btn">Sacar turno ahora →</button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3">
+        <h5>❤️ Centro Médico Salud</h5>
+        <p>
+          Brindamos atención médica de calidad con profesionales especializados
+          para cuidar tu salud y la de tu familia.
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Contacto</h5>
+        <p>📞 +54 (3865) 425356</p>
+        <p>✉ admin@centromedicopalacio.com</p>
+        <p>📍24 de Septiembre 2070</p>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Horarios</h5>
+        <p>Lunes a Viernes: 16:00 - 20:30</p>
+        <p>Sábados: Cerrado</p>
+        <p>Domingos: Cerrado</p>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Redes Sociales</h5>
+        <div class="social-icons">
+          <span>📘</span>
+          <span>📷</span>
+          <span>🐦</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>
