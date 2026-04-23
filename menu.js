@@ -13,8 +13,19 @@ cerrar.addEventListener("click", () => {
 // Tarjetas
 const botones = document.querySelectorAll(".btn-toggle");
 
-botones.forEach(btn => {
-  btn.addEventListener("click", () => {
-    btn.parentElement.classList.toggle("active");
-  });
+botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+
+        const card = boton.closest(".card");
+
+    
+        document.querySelectorAll(".card").forEach(c => {
+            if(c !== card){
+                c.classList.remove("active");
+            }
+        });
+
+        
+        card.classList.toggle("active");
+    });
 });
