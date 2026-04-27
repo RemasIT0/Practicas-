@@ -145,6 +145,20 @@ section{
   font-weight:500;
   text-decoration:none;
 }
+.trust-section {
+  padding: 60px 0;
+  background: #ffffff;
+}
+
+.trust-item h4 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.trust-item p {
+  color: #6c757d;
+}
 
 .estudio-card {
   background: #ffffff;
@@ -232,6 +246,51 @@ section{
   position: absolute;
   left: 0;
   top: 11px;
+}
+
+.cirugia-card{
+  background: white;
+  border-radius: 14px;
+  padding: 22px;
+  height: 100%;
+  border: 1px solid #e6edf5;
+  transition: 0.3s;
+}
+
+.cirugia-card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.cirugia-card h5{
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1f2d3d;
+}
+
+.cirugia-card ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cirugia-card li{
+  font-size: 14.5px;
+  color: #5f6c7b;
+  padding: 6px 0;
+  padding-left: 16px;
+  position: relative;
+}
+
+.cirugia-card li::before{
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: #2a7cc7;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 12px;
 }
 
 /* COLORES SUAVES */
