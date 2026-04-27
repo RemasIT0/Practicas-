@@ -22,46 +22,115 @@
             <li><a href="">SERVICIOS</a></li>
             <li><a href="">PROFESIONALES</a></li>
             <li><a href="">CONTACTO</a></li>
-
         </ul> 
     </nav>
     </header>
     <!-- Sección de búsqueda de DNI -->
 <section class="dni-search-section">
-  <div class="dni-card">
-    <div class="dni-icon">
-      <i class="bi bi-card-checklist"></i>
-    </div>
-    <h2 class="dni-title">Agendar Turno</h2>
-    <p class="dni-description">
-      Ingrese su DNI para agendar su turno
-    </p>
-    <p>Cualquier duda, contáctenos al 381 232 43123</p>
+  <div class="wizard-wrapper">
     
-    <form class="dni-form" id="dniForm">
-      <div class="dni-input-group">
-        <input 
-          type="text" 
-          class="dni-input" 
-          placeholder="Ej: 12345678" 
-          maxlength="9"
-          pattern="[0-9]+"
-          required
-          id="dniInput"
-        >
-        <button type="submit" class="dni-btn-search">
-          <i class="bi bi-search"></i>
-        </button>
+    <!-- Barra de progreso -->
+    <div class="wiz-stepper" style="--progress: 0%">
+      <div class="wiz-step active" data-step="1">
+        <span class="wiz-step-num">1</span>
+        <span class="wiz-step-label">DNI</span>
       </div>
-      <button type="submit" class="dni-btn-submit">
-        Buscar Paciente
-      </button>
-    </form>
-    
-    <p class="dni-security">
-      <i class="bi bi-shield-check"></i>
-      Tus datos están protegidos
-    </p>
+      <div class="wiz-step" data-step="2">
+        <span class="wiz-step-num">2</span>
+        <span class="wiz-step-label">Especialidad</span>
+      </div>
+      <div class="wiz-step" data-step="3">
+        <span class="wiz-step-num">3</span>
+        <span class="wiz-step-label">Médico</span>
+      </div>
+      <div class="wiz-step" data-step="4">
+        <span class="wiz-step-num">4</span>
+        <span class="wiz-step-label">Fecha/Hora</span>
+      </div>
+     </div>
+    <!-- Contenedor de slides -->
+    <div class="wiz-slides">
+      
+      <!-- PASO 1: DNI -->
+      <div class="wiz-slide active" id="slide-1">
+        <div class="dni-icon wiz-icon">
+          <i class="bi bi-card-checklist"></i>
+        </div>
+        <h2 class="dni-title">Agendar Turno</h2>
+        <p class="dni-description">Ingrese su DNI para comenzar</p>
+        <p class="dni-help">¿Dudas? <a href="tel:38123243123">381 232 43123</a></p>
+        
+        <form class="dni-form" id="dniForm" onsubmit="return false;">
+          <div class="dni-input-group">
+            <input type="text" class="dni-input" id="dniInput" placeholder="Ej: 12345678" maxlength="9" pattern="[0-9]+">
+          </div>
+          <span class="dni-error" id="dniError"></span>
+          <button type="button" class="dni-btn-submit" id="nextFromDni">Continuar <i class="bi bi-arrow-right"></i></button>
+        </form>
+        
+        <p class="dni-security"><i class="bi bi-shield-check"></i> Tus datos están protegidos</p>
+      </div>
+
+      <!-- PASO 2: Especialidad -->
+      <div class="wiz-slide" id="slide-2">
+        <div class="dni-icon wiz-icon">
+          <i class="bi bi-heart-pulse"></i>
+        </div>
+        <h2 class="dni-title">Seleccionar Especialidad</h2>
+        <p class="dni-description">Elige el área médica que necesitas</p>
+        
+        <div class="wiz-spec-grid" id="specialtyGrid"></div>
+        
+        <div class="wiz-spec-desc" id="specialtyDesc">
+          <p class="text-muted">Selecciona una especialidad para ver más detalles</p>
+        </div>
+        
+        <div class="wiz-btn-group">
+          <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
+          <button class="wiz-btn-next" id="nextFromSpecialty" disabled>Continuar <i class="bi bi-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PASO 3: Médico -->
+      <div class="wiz-slide" id="slide-3">
+        <div class="dni-icon wiz-icon">
+          <i class="bi bi-person-badge"></i>
+        </div>
+        <h2 class="dni-title">Seleccionar Profesional</h2>
+        <p class="dni-description">Médicos disponibles en <span id="selectedSpecialtyName">-</span></p>
+        
+        <div class="wiz-doc-list" id="doctorList"></div>
+        
+        <div class="wiz-btn-group">
+          <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
+          <button class="wiz-btn-next" id="nextFromDoctor" disabled>Continuar <i class="bi bi-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PASO 4: Fecha/Hora -->
+      <div class="wiz-slide" id="slide-4">
+        <div class="dni-icon wiz-icon">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <h2 class="dni-title">Elegir Fecha y Hora</h2>
+        <p class="dni-description">Disponibilidad para <span id="selectedDoctorName">-</span></p>
+        
+        <div class="wiz-dt-picker">
+          <label>Fecha</label>
+          <input type="date" id="dateInput" class="wiz-dt-input" min="">
+          
+          <label class="mt-3">Horarios disponibles</label>
+          <div class="wiz-time-grid" id="timeSlots"></div>
+        </div>
+        
+        <span class="dni-error" id="datetimeError"></span>
+        
+        <div class="wiz-btn-group">
+         <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
+         <button class="wiz-btn-confirm" id="confirmBtn">✅ Agendar Turno</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
