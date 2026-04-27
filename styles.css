@@ -13,7 +13,32 @@ body{
   padding-top: 80px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
+@media (max-width: 991px){
+
+  .navbar-collapse{
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+
+  .navbar-collapse a{
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+  }
+
+  .navbar-collapse .btn{
+    width: 100%;
+    margin-top: 10px;
+  }
+
+}
 
 h2{
   font-size: 32px;
@@ -481,15 +506,46 @@ section{
   padding: 60px 0;
 }
 
-.footer h5{
-  color: white;
+.footer{
+  background: #0b1b33;
+  color: #ccc;
+  padding: 60px 0;
 }
 
-.social-icons span{
-  margin-right: 10px;
-  font-size: 22px;
-  cursor: pointer;
+.footer h5{
+  color: white;
+  margin-bottom: 15px;
 }
+
+.footer-link{
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-link:hover{
+  color: #2a7cc7;
+}
+
+.social-icons a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-size: 18px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.social-icons a:hover{
+  background: #2a7cc7;
+  transform: translateY(-3px);
+}
+
 
 a {
   text-decoration: none;
