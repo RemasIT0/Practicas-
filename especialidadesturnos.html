@@ -18,10 +18,10 @@
     <nav class="nav " id="nav">
         <button class="cerrar-menu" id="cerrar"><i class="bi bi-x-lg"></i></button>
         <ul class="nav-list"> 
-            <li><a href="">INICIO</a></li>
-            <li><a href="">SERVICIOS</a></li>
-            <li><a href="">PROFESIONALES</a></li>
-            <li><a href="">CONTACTO</a></li>
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="index.html#servicios">SERVICIOS</a></li>
+            <li><a href="index.html#profesionales">PROFESIONALES</a></li>
+            <li><a href="index.html#contacto">CONTACTO</a></li>
 
         </ul> 
     </nav>
@@ -65,25 +65,34 @@
   </div>
 </section>
 
-  <footer class="footer">
+<footer class="footer">
   <div class="container">
     <div class="row">
 
+      <!-- LOGO + DESCRIPCIÓN -->
       <div class="col-md-3">
-        <h5>❤️ Centro Médico Salud</h5>
+        <img src="img/logo.png" alt="CMP" style="height:60px; margin-bottom:10px;">
+        <h5>Centro Médico Palacio</h5>
         <p>
           Brindamos atención médica de calidad con profesionales especializados
           para cuidar tu salud y la de tu familia.
         </p>
       </div>
 
+      <!-- CONTACTO -->
       <div class="col-md-3">
         <h5>Contacto</h5>
-        <p>📞 +54 (3865) 425356</p>
-        <p>✉ admin@centromedicopalacio.com</p>
-        <p>📍24 de Septiembre 2070</p>
+        <p><i class="bi bi-telephone-fill"></i> +54 (3865) 425356</p>
+        <p><i class="bi bi-envelope-fill"></i> admin@centromedicopalacio.com</p>
+        <p>
+          <i class="bi bi-geo-alt-fill"></i> 
+          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" class="footer-link">
+            24 de Septiembre 2070
+          </a>
+        </p>
       </div>
 
+      <!-- HORARIOS -->
       <div class="col-md-3">
         <h5>Horarios</h5>
         <p>Lunes a Viernes: 16:00 - 20:30</p>
@@ -91,16 +100,42 @@
         <p>Domingos: Cerrado</p>
       </div>
 
+      <!-- REDES -->
       <div class="col-md-3">
         <h5>Redes Sociales</h5>
         <div class="social-icons">
-          <span>📘</span>
-          <span>📷</span>
-          <span>🐦</span>
+
+          <a href="https://www.facebook.com/" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <a href="https://www.instagram.com/" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+
+          <a href="https://wa.me/543865425356" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+
         </div>
       </div>
 
     </div>
+
+    <!-- MAPA -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <iframe 
+          src="https://www.google.com/maps?q=24+de+Septiembre+2070&output=embed"
+          width="100%" 
+          height="200" 
+          style="border:0; border-radius:10px;"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
   </div>
 </footer>
 </body>
