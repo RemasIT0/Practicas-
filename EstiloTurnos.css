@@ -114,6 +114,10 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .wiz-doc-info { flex: 1; text-align: left; }
 .wiz-doc-name { font-weight: 600; font-size: 15px; }
 .wiz-doc-spec { font-size: 13px; opacity: 0.85; }
+.wiz-doc-schedule {
+  font-size: 0.8rem;
+  color: #666;
+}
 
 /* Paso 4: Fecha/Hora */
 .wiz-dt-picker { width: 100%; text-align: left; }

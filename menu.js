@@ -49,13 +49,15 @@ const DATA = {
         name: "Dr. Marcos Antonio Palacio",
         avatar: "P",
         schedule: "Martes, Miércoles y Viernes de 16:30 a 20:30",
-        notes: "Particulares"
+        notes: "Particulares",
+        days:[2,3,5]
       },
       {
         name: "Dr. Gastón Antonio Palacio",
         avatar: "P",
         schedule: "Lunes, Martes, Jueves y Viernes de 16:00 a 20:30",
-        notes: "Todas las obras sociales"
+        notes: "Todas las obras sociales",
+        days:[1,2,4,5]
       }
     ],
 
@@ -64,7 +66,8 @@ const DATA = {
         name: "Dr. Gerardo Marcos Palacio",
         avatar: "P",
         schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
-        notes: "Todas las obras sociales"
+        notes: "Todas las obras sociales",
+        days:[1,3,5]
       }
     ],
 
@@ -73,7 +76,8 @@ const DATA = {
         name: "Dra. Norma Daniela Zelarayán",
         avatar: "Z",
         schedule: "Martes y Jueves de 16:00 a 20:30",
-        notes: "Todas las obras sociales"
+        notes: "Todas las obras sociales",
+        days:[2,4]
       }
     ],
 
@@ -81,7 +85,8 @@ const DATA = {
       {
         name: "Lic. María Alejandra Sepúlveda",
         avatar: "S",
-        schedule: "Lunes, Miércoles y Viernes de 16:30 a 20:30"
+        schedule: "Lunes, Miércoles y Viernes de 16:30 a 20:30",
+        days:[1,3,5]
       }
     ],
 
@@ -90,7 +95,8 @@ const DATA = {
         name: "Dra. Virginia Paula Manzano",
         avatar: "M",
         schedule: "Martes de 16:00 a 20:30",
-        notes: "Clínica obesidad y diabetes"
+        notes: "Clínica obesidad y diabetes",
+        days:[2]
       }
     ],
 
@@ -99,7 +105,8 @@ const DATA = {
         name: "Dra. María Eugenia Moyano",
         avatar: "M",
         schedule: "Lunes de 16:00 a 20:30",
-        notes: "Ginecología y Obstetricia"
+        notes: "Ginecología y Obstetricia",
+        days:[1]
       }
     ],
 
@@ -107,7 +114,8 @@ const DATA = {
       {
         name: "Dr. Pablo Ramiro Maldonado",
         avatar: "M",
-        schedule: "Miércoles de 16:00 a 20:30"
+        schedule: "Miércoles de 16:00 a 20:30",
+        days:[3]
       }
     ],
 
@@ -115,18 +123,21 @@ const DATA = {
       {
         name: "Dr. Rafael Lara Norry",
         avatar: "L",
-        schedule: "Lunes de 16:00 a 20:30"
+        schedule: "Lunes de 16:00 a 20:30",
+        days:[1]
       },
       {
         name: "Dr. Juan Paz",
         avatar: "P",
-        schedule: "Sábado de 16:00 a 20:30"
+        schedule: "Sábado de 16:00 a 20:30",
+        days:[6]
       },
       {
         name: "Dra. Verónica Díaz",
         avatar: "D",
         schedule: "Jueves de 14:00 a 20:30",
-        notes: "Electromiograma"
+        notes: "Electromiograma",
+        days:[4]
       }
     ],
 
@@ -134,12 +145,14 @@ const DATA = {
       {
         name: "Dr. Gabriel Norry",
         avatar: "N",
-        schedule: "Miércoles de 16:00 a 20:30"
+        schedule: "Miércoles de 16:00 a 20:30",
+        days:[3]
       },
       {
         name: "Dra. Florencia Kollrich",
         avatar: "K",
-        schedule: "Lunes de 16:00 a 20:30"
+        schedule: "Lunes de 16:00 a 20:30",
+        days:[1]
       }
     ],
 
@@ -148,7 +161,8 @@ const DATA = {
         name: "Dra. Jimena De la Fuente",
         avatar: "D",
         schedule: "Lunes a Viernes de 16:00 a 20:30",
-        notes: "Ortodoncia"
+        notes: "Ortodoncia",  
+        days:[1,2,3,4,5]
       }
     ],
 
@@ -157,7 +171,8 @@ const DATA = {
         name: "Dr. Gustavo Carrizo",
         avatar: "C",
         schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
-        notes: "Laparoscopía"
+        notes: "Laparoscopía",
+        days:[1,3,5]
       }
     ],
 
@@ -165,7 +180,8 @@ const DATA = {
       {
         name: "Dra. Lourdes Elías Grane",
         avatar: "E",
-        schedule: "Martes y Viernes de 16:00 a 20:30"
+        schedule: "Martes y Viernes de 16:00 a 20:30",
+        days:[2,5]
       }
     ],
 
@@ -173,12 +189,14 @@ const DATA = {
       {
         name: "Lic. Paulina Fernández",
         avatar: "F",
-        schedule: "Lunes de 16:00 a 20:30"
+        schedule: "Lunes de 16:00 a 20:30",
+        days:[1]
       },
       {
         name: "Lic. María Belén Almirón",
         avatar: "A",
-        schedule: "Miércoles, Jueves y Viernes de 16:00 a 20:30"
+        schedule: "Miércoles, Jueves y Viernes de 16:00 a 20:30",
+        days:[3,4,5]
       }
     ]
   },
@@ -232,27 +250,51 @@ function renderDoctors(specialty) {
       <div class="wiz-doc-info">
         <div class="wiz-doc-name">${doc.name}</div>
         <div class="wiz-doc-spec">${specialty}</div>
+        <div class="wiz-doc-schedule">${doc.schedule}</div>
       </div>
     `;
-    card.onclick = () => selectDoctor(doc.name, card);
+    card.onclick = () => selectDoctor(doc, card);
     list.appendChild(card);
   });
 }
 
 function renderTimeSlots() {
   const container = document.getElementById('timeSlots');
-  if (!container) return;
+  if (!container || !formData.doctor) return;
+
   container.innerHTML = '';
-  
-  DATA.timeSlots.forEach(time => {
+
+  // 🔥 extrae horas del texto
+  const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
+
+  if (!match) return;
+
+  let [h, m] = match[1].split(':').map(Number);
+  const [endH, endM] = match[2].split(':').map(Number);
+
+  while (h < endH || (h === endH && m < endM)) {
+
+    const time = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+
     const slot = document.createElement('div');
     slot.className = 'wiz-time-slot';
     slot.textContent = time;
-    slot.onclick = () => selectTime(time, slot);
-    container.appendChild(slot);
-  });
-}
 
+    slot.onclick = () => {
+      document.querySelectorAll('.wiz-time-slot').forEach(s => s.classList.remove('selected'));
+      slot.classList.add('selected');
+      formData.time = time;
+    };
+
+    container.appendChild(slot);
+
+    m += 30;
+    if (m >= 60) {
+      m = 0;
+      h++;
+    }
+  }
+}
 // ===== SELECCIÓN DE DATOS =====
 function selectSpecialty(name, btn) {
   document.querySelectorAll('.wiz-spec-btn').forEach(b => b.classList.remove('selected'));
@@ -268,13 +310,15 @@ function selectSpecialty(name, btn) {
   if (nextBtn) nextBtn.disabled = false;
 }
 
-function selectDoctor(name, card) {
+function selectDoctor(doc, card) {
   document.querySelectorAll('.wiz-doc-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
   
-  formData.doctor = name;
+  formData.doctor = doc; // ✅ ahora sí guarda bien
+
   const docName = document.getElementById('selectedDoctorName');
-  if (docName) docName.textContent = name;
+  if (docName) docName.textContent = doc.name;
+
   const nextBtn = document.getElementById('nextFromDoctor');
   if (nextBtn) nextBtn.disabled = false;
 }
@@ -365,6 +409,15 @@ function validateStep(step) {
     const dateInput = document.getElementById('dateInput');
     const error = document.getElementById('datetimeError');
     const date = dateInput?.value || '';
+    
+    const [year, month, dayNum] = date.split('-').map(Number);
+    const selectedDate = new Date(year, month - 1, dayNum);
+    const day = selectedDate.getDay();
+
+    if (!formData.doctor.days.includes(day)) {
+    if (error) error.textContent = "❌ Este médico no atiende ese día";
+    return false;
+    }
 
     if (!date || !formData.time) {
       if (error) error.textContent = '⚠️ Selecciona fecha y hora';
@@ -504,26 +557,13 @@ function setupEventListeners() {
 } // ✅ SOLO UNA LLAVE PARA CERRAR
 
 function confirmAppointment() {
-  alert("Turno confirmado ✅");
+  generarPDF();
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  alert("Turno confirmado y comprobante descargado ✅");
 
-  doc.setFontSize(16);
-  doc.text("Comprobante de Turno", 20, 20);
+  document.getElementById("confirmCard").classList.add("d-none");
 
-  doc.setFontSize(12);
-  doc.text(`DNI: ${formData.dni}`, 20, 40);
-  doc.text(`Especialidad: ${formData.specialty}`, 20, 50);
-  doc.text(`Médico: ${formData.doctor}`, 20, 60);
-  doc.text(`Fecha: ${formData.date}`, 20, 70);
-  doc.text(`Hora: ${formData.time}`, 20, 80);
-
-  doc.save("turno.pdf");
-
-  setTimeout(() => {
-    resetWizard();
-  }, 1000);
+  resetWizard();
 }
 
 function showConfirmCard() {
@@ -534,23 +574,15 @@ function showConfirmCard() {
 
   document.getElementById("cDni").textContent = formData.dni;
   document.getElementById("cSpecialty").textContent = formData.specialty;
-  document.getElementById("cDoctor").textContent = formData.doctor;
+  document.getElementById("cDoctor").textContent = formData.doctor.name;
 
   const fecha = formData.date.split('-').reverse().join('/');
   document.getElementById("cDate").textContent = fecha;
 
   document.getElementById("cTime").textContent = formData.time;
+  
 }
 
-function confirmAppointment() {
-  generarPDF();
-
-  alert("Turno confirmado y comprobante descargado ✅");
-
-  document.getElementById("confirmCard").classList.add("d-none");
-
-  resetWizard();
-}
 
 function generarPDF() {
   const { jsPDF } = window.jspdf;
@@ -562,7 +594,7 @@ function generarPDF() {
   doc.setFontSize(12);
   doc.text(`DNI: ${formData.dni}`, 20, 40);
   doc.text(`Especialidad: ${formData.specialty}`, 20, 50);
-  doc.text(`Médico: ${formData.doctor}`, 20, 60);
+  doc.text(`Médico: ${formData.doctor.name}`, 20, 60);
 
   const fecha = formData.date.split('-').reverse().join('/');
   doc.text(`Fecha: ${fecha}`, 20, 70);
