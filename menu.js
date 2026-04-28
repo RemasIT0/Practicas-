@@ -28,39 +28,165 @@ botones.forEach(boton => {
 const DATA = {
   specialties: {
     "Cardiología": "Diagnóstico y tratamiento de enfermedades del corazón y sistema circulatorio.",
-    "Pediatría": "Atención médica especializada para niños desde recién nacidos hasta adolescentes.",
-    "Dermatología": "Cuidado integral de piel, cabello, uñas y tratamiento de enfermedades dermatológicas.",
-    "Traumatología": "Tratamiento de lesiones musculoesqueléticas, fracturas, esguinces y rehabilitación.",
-    "Oftalmología": "Diagnóstico y tratamiento de enfermedades de la vista y cirugía ocular."
+    "Cirugía General": "Procedimientos quirúrgicos para tratar diversas patologías del organismo.",
+    "Clínica Médica": "Atención integral del adulto para diagnóstico y tratamiento de enfermedades generales.",
+    "Dermatología": "Cuidado y tratamiento de enfermedades de la piel, cabello y uñas.",
+    "Gastroenterología": "Diagnóstico y tratamiento de enfermedades del sistema digestivo.",
+    "Ginecología": "Atención médica especializada en la salud femenina.",
+    "Infectología": "Diagnóstico y tratamiento de enfermedades infecciosas.",
+    "Neurología": "Estudio y tratamiento de enfermedades del sistema nervioso.",
+    "Nutrición": "Asesoramiento nutricional y planes alimentarios personalizados.",
+    "Obstetricia": "Control del embarazo, parto y salud materna.",
+    "Odontología": "Cuidado, diagnóstico y tratamiento de la salud bucal.",
+    "Otorrinolaringología": "Tratamiento de enfermedades de oído, nariz y garganta.",
+    "Psicología": "Atención y acompañamiento en la salud mental.",
+    "Reumatología": "Diagnóstico y tratamiento de enfermedades articulares y autoinmunes."
   },
+
   doctors: {
+    "Otorrinolaringología": [
+      {
+        name: "Dr. Marcos Antonio Palacio",
+        avatar: "P",
+        schedule: "Martes, Miércoles y Viernes de 16:30 a 20:30",
+        notes: "Particulares"
+      },
+      {
+        name: "Dr. Gastón Antonio Palacio",
+        avatar: "P",
+        schedule: "Lunes, Martes, Jueves y Viernes de 16:00 a 20:30",
+        notes: "Todas las obras sociales"
+      }
+    ],
+
     "Cardiología": [
-      { name: "Dra. Martínez", avatar: "M" },
-      { name: "Dr. López", avatar: "L" },
-      { name: "Dr. Ruiz", avatar: "R" }
+      {
+        name: "Dr. Gerardo Marcos Palacio",
+        avatar: "P",
+        schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
+        notes: "Todas las obras sociales"
+      }
     ],
-    "Pediatría": [
-      { name: "Dra. Gómez", avatar: "G" },
-      { name: "Dr. Fernández", avatar: "F" },
-      { name: "Dra. Silva", avatar: "S" }
+
+    "Gastroenterología": [
+      {
+        name: "Dra. Norma Daniela Zelarayán",
+        avatar: "Z",
+        schedule: "Martes y Jueves de 16:00 a 20:30",
+        notes: "Todas las obras sociales"
+      }
     ],
+
+    "Psicología": [
+      {
+        name: "Lic. María Alejandra Sepúlveda",
+        avatar: "S",
+        schedule: "Lunes, Miércoles y Viernes de 16:30 a 20:30"
+      }
+    ],
+
+    "Clínica Médica": [
+      {
+        name: "Dra. Virginia Paula Manzano",
+        avatar: "M",
+        schedule: "Martes de 16:00 a 20:30",
+        notes: "Clínica obesidad y diabetes"
+      }
+    ],
+
+    "Ginecología": [
+      {
+        name: "Dra. María Eugenia Moyano",
+        avatar: "M",
+        schedule: "Lunes de 16:00 a 20:30",
+        notes: "Ginecología y Obstetricia"
+      }
+    ],
+
+    "Reumatología": [
+      {
+        name: "Dr. Pablo Ramiro Maldonado",
+        avatar: "M",
+        schedule: "Miércoles de 16:00 a 20:30"
+      }
+    ],
+
+    "Neurología": [
+      {
+        name: "Dr. Rafael Lara Norry",
+        avatar: "L",
+        schedule: "Lunes de 16:00 a 20:30"
+      },
+      {
+        name: "Dr. Juan Paz",
+        avatar: "P",
+        schedule: "Sábado de 16:00 a 20:30"
+      },
+      {
+        name: "Dra. Verónica Díaz",
+        avatar: "D",
+        schedule: "Jueves de 14:00 a 20:30",
+        notes: "Electromiograma"
+      }
+    ],
+
     "Dermatología": [
-      { name: "Dra. Rojas", avatar: "R" },
-      { name: "Dr. Silva", avatar: "S" },
-      { name: "Dra. Vega", avatar: "V" },
-      { name: "Dr. Castro", avatar: "C" }
+      {
+        name: "Dr. Gabriel Norry",
+        avatar: "N",
+        schedule: "Miércoles de 16:00 a 20:30"
+      },
+      {
+        name: "Dra. Florencia Kollrich",
+        avatar: "K",
+        schedule: "Lunes de 16:00 a 20:30"
+      }
     ],
-    "Traumatología": [
-      { name: "Dr. Castro", avatar: "C" },
-      { name: "Dra. Méndez", avatar: "M" }
+
+    "Odontología": [
+      {
+        name: "Dra. Jimena De la Fuente",
+        avatar: "D",
+        schedule: "Lunes a Viernes de 16:00 a 20:30",
+        notes: "Ortodoncia"
+      }
     ],
-    "Oftalmología": [
-      { name: "Dra. Torres", avatar: "T" },
-      { name: "Dr. Díaz", avatar: "D" },
-      { name: "Dra. Pérez", avatar: "P" }
+
+    "Cirugía General": [
+      {
+        name: "Dr. Gustavo Carrizo",
+        avatar: "C",
+        schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
+        notes: "Laparoscopía"
+      }
+    ],
+
+    "Infectología": [
+      {
+        name: "Dra. Lourdes Elías Grane",
+        avatar: "E",
+        schedule: "Martes y Viernes de 16:00 a 20:30"
+      }
+    ],
+
+    "Nutrición": [
+      {
+        name: "Lic. Paulina Fernández",
+        avatar: "F",
+        schedule: "Lunes de 16:00 a 20:30"
+      },
+      {
+        name: "Lic. María Belén Almirón",
+        avatar: "A",
+        schedule: "Miércoles, Jueves y Viernes de 16:00 a 20:30"
+      }
     ]
   },
-  timeSlots: ["09:00", "09:30", "10:00", "10:30", "11:00", "16:00", "16:30", "17:00", "17:30", "18:00"]
+
+  timeSlots: [
+    "16:00", "16:30", "17:00", "17:30",
+    "18:00", "18:30", "19:00", "19:30", "20:00"
+  ]
 };
 
 // ===== ESTADO DEL WIZARD =====
@@ -202,48 +328,54 @@ function changeStep(target) {
 
 // ===== VALIDACIÓN POR PASO =====
 function validateStep(step) {
+
+  // ===== PASO 1: DNI =====
   if (step === 1) {
     const dniInput = document.getElementById('dniInput');
     const error = document.getElementById('dniError');
     const dni = dniInput?.value.trim() || '';
-    
+
     if (!/^\d{7,9}$/.test(dni)) {
       if (error) error.textContent = '⚠️ DNI inválido (7-9 dígitos)';
       if (dniInput) dniInput.classList.add('is-invalid');
       return false;
     }
-    
+
     if (error) error.textContent = '';
     if (dniInput) dniInput.classList.remove('is-invalid');
+
     formData.dni = dni;
     return true;
   }
-  
+
+  // ===== PASO 2: ESPECIALIDAD =====
   if (step === 2 && !formData.specialty) {
     alert('Selecciona una especialidad para continuar');
     return false;
   }
-  
+
+  // ===== PASO 3: MÉDICO =====
   if (step === 3 && !formData.doctor) {
     alert('Selecciona un médico para continuar');
     return false;
   }
-  
+
+  // ===== PASO 4: FECHA Y HORA =====
   if (step === 4) {
     const dateInput = document.getElementById('dateInput');
     const error = document.getElementById('datetimeError');
     const date = dateInput?.value || '';
-    
+
     if (!date || !formData.time) {
       if (error) error.textContent = '⚠️ Selecciona fecha y hora';
       return false;
     }
-    
+
     if (error) error.textContent = '';
     formData.date = date;
     return true;
   }
-  
+
   return true;
 }
 
@@ -262,6 +394,7 @@ function fillSummary() {
     if (el) el.textContent = values[i] || '-';
   });
 }
+
 
 
 
@@ -334,6 +467,7 @@ function resetWizard() {
 
 // ===== EVENT LISTENERS =====
 function setupEventListeners() {
+
   const dniInput = document.getElementById('dniInput');
   if (dniInput) {
     dniInput.addEventListener('input', e => {
@@ -343,36 +477,99 @@ function setupEventListeners() {
       e.target.classList.remove('is-invalid');
     });
   }
-  
+
   const nextFromDni = document.getElementById('nextFromDni');
   if (nextFromDni) {
     nextFromDni.onclick = () => { if (validateStep(1)) changeStep(2); };
   }
-  
+
   const nextFromSpecialty = document.getElementById('nextFromSpecialty');
   if (nextFromSpecialty) nextFromSpecialty.onclick = () => changeStep(3);
-  
+
   const nextFromDoctor = document.getElementById('nextFromDoctor');
   if (nextFromDoctor) nextFromDoctor.onclick = () => changeStep(4);
-  
-  // ✅ CAMBIADO: El botón del paso 4 ahora ejecuta submitWizard directo
-  const nextFromDatetime = document.getElementById('nextFromDatetime');
-  if (nextFromDatetime) {
-    nextFromDatetime.style.display = 'none'; // Ocultamos el botón "Continuar" del paso 4
-  }
-  
+
   const confirmBtn = document.getElementById('confirmBtn');
   if (confirmBtn) {
-    confirmBtn.onclick = submitWizard; // "Agendar Turno" ejecuta la confirmación
+    confirmBtn.onclick = submitWizard;
   }
-  
+
   const dateInput = document.getElementById('dateInput');
   if (dateInput) {
     dateInput.addEventListener('change', e => {
       formData.date = e.target.value;
-      if (formData.date) {
-        document.querySelectorAll('.wiz-time-slot.disabled').forEach(slot => slot.classList.remove('disabled'));
-      }
     });
   }
+
+} // ✅ SOLO UNA LLAVE PARA CERRAR
+
+function confirmAppointment() {
+  alert("Turno confirmado ✅");
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("Comprobante de Turno", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`DNI: ${formData.dni}`, 20, 40);
+  doc.text(`Especialidad: ${formData.specialty}`, 20, 50);
+  doc.text(`Médico: ${formData.doctor}`, 20, 60);
+  doc.text(`Fecha: ${formData.date}`, 20, 70);
+  doc.text(`Hora: ${formData.time}`, 20, 80);
+
+  doc.save("turno.pdf");
+
+  setTimeout(() => {
+    resetWizard();
+  }, 1000);
+}
+
+function showConfirmCard() {
+  if (!validateStep(4)) return;
+
+  const card = document.getElementById("confirmCard");
+  card.classList.remove("d-none");
+
+  document.getElementById("cDni").textContent = formData.dni;
+  document.getElementById("cSpecialty").textContent = formData.specialty;
+  document.getElementById("cDoctor").textContent = formData.doctor;
+
+  const fecha = formData.date.split('-').reverse().join('/');
+  document.getElementById("cDate").textContent = fecha;
+
+  document.getElementById("cTime").textContent = formData.time;
+}
+
+function confirmAppointment() {
+  generarPDF();
+
+  alert("Turno confirmado y comprobante descargado ✅");
+
+  document.getElementById("confirmCard").classList.add("d-none");
+
+  resetWizard();
+}
+
+function generarPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("Comprobante de Turno Médico", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`DNI: ${formData.dni}`, 20, 40);
+  doc.text(`Especialidad: ${formData.specialty}`, 20, 50);
+  doc.text(`Médico: ${formData.doctor}`, 20, 60);
+
+  const fecha = formData.date.split('-').reverse().join('/');
+  doc.text(`Fecha: ${fecha}`, 20, 70);
+
+  doc.text(`Hora: ${formData.time}`, 20, 80);
+
+  doc.text("Centro Médico Palacio", 20, 100);
+
+  doc.save(`Turno_${formData.dni}.pdf`);
 }
