@@ -1,7 +1,11 @@
 const nav = document.querySelector("#nav");
 const abrir = document.querySelector("#abrir");
 const cerrar = document.querySelector("#cerrar");
-
+const pacientesRegistrados = [
+  "12345678",
+  "30111222",
+  "44555666"
+];
 abrir.addEventListener("click", () => {
    nav.classList.add("visible");
 });
@@ -155,6 +159,15 @@ const DATA = {
         days:[1]
       }
     ],
+    "Obstetricia": [
+    {
+    name: "Dra. María Eugenia Moyano",
+    avatar: "M",
+    schedule: "Lunes de 16:00 a 20:30",
+    notes: "Obstetricia",
+    days:[1]
+    }
+   ],
 
     "Odontología": [
       {
@@ -379,11 +392,27 @@ function validateStep(step) {
     const error = document.getElementById('dniError');
     const dni = dniInput?.value.trim() || '';
 
-    if (!/^\d{7,9}$/.test(dni)) {
-      if (error) error.textContent = '⚠️ DNI inválido (7-9 dígitos)';
-      if (dniInput) dniInput.classList.add('is-invalid');
-      return false;
+    if (/^\d{7,9}$/.test(dni)) {
+
+  if (!pacientesRegistrados.includes(dni)) {
+
+    const error = document.getElementById('dniError');
+
+    if (error) {
+      error.innerHTML = `
+        ❌ DNI no registrado <br>
+       <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
+         📲 Contactar por WhatsApp
+       </a>
+      `;
     }
+
+    return; // ⛔ NO avanza
+  }
+
+  formData.dni = dni;
+  setTimeout(() => changeStep(2), 300);
+}
 
     if (error) error.textContent = '';
     if (dniInput) dniInput.classList.remove('is-invalid');

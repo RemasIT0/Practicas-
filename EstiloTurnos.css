@@ -53,6 +53,13 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .card-extra a { display: block; padding: 3px 0; color: var(--negro); text-decoration: none; }
 .card.active { z-index: 999; }
 .card.active .card-extra { display: block; }
+.card {
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
 /* ================= FOOTER ================= */
 .footer { background: #0b1b33; color: #ccc; padding: 60px 0; }
@@ -155,6 +162,17 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .dni-security { font-size: 13px; color: #888; margin: 20px 0 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .dni-security i { color: #28a745; }
 .dni-error { color: #dc3545; font-size: 13px; min-height: 18px; display: block; margin-bottom: 10px; text-align: center; }
+
+.btn-wsp {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #25D366;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
