@@ -1,19 +1,3 @@
-const nav = document.querySelector("#nav");
-const abrir = document.querySelector("#abrir");
-const cerrar = document.querySelector("#cerrar");
-const pacientesRegistrados = [
-  "12345678",
-  "30111222",
-  "44555666"
-];
-abrir.addEventListener("click", () => {
-   nav.classList.add("visible");
-});
-
-cerrar.addEventListener("click", () => {
-   nav.classList.remove("visible");
-});
-
 // Tarjetas (se mantiene igual, no usa clases del wizard)
 const botones = document.querySelectorAll(".btn-toggle");
 botones.forEach(boton => {

@@ -17,33 +17,60 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
-  <div class="container">
+<header>
+  <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+    <div class="container">
 
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="img/logo.png" alt="CMP" style="height:50px; margin-right:10px;">
-      <span style="font-weight:600; color:var(--primary);">CMP</span>
-    </a>
+      <!-- LOGO -->
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="img/logo.png" alt="Logo" width="50">
+        <span class="logo-text">CMP</span>
+      </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- BOTON MOBILE -->
+      <button 
+        class="navbar-toggler border-0 shadow-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <i class="bi bi-list"></i>
+      </button>
 
-    <div class="collapse navbar-collapse" id="menu">
-      <div class="ms-auto text-center text-lg-start mt-3 mt-lg-0">
+      <!-- MENU -->
+      <div class="collapse navbar-collapse" id="navbarNav">
 
-        <a href="#" class="mx-3 nav-link d-inline">Home</a>
-        <a href="#servicios" class="mx-3 nav-link d-inline">Servicios</a>
-        <a href="#profesionales" class="mx-3 nav-link d-inline">Profesionales</a>
-        <a href="#contacto" class="mx-3 nav-link d-inline">Contacto</a>
+        <ul class="navbar-nav mx-auto gap-lg-4 text-center">
 
-        <a href="especialidadesturnos.html" class="btn btn-primary ms-3">Turnos</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Inicio</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#servicios">Servicios</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#profesionales">Profesionales</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">Contacto</a>
+          </li>
+
+        </ul>
+
+        <div class="text-center">
+          <a href="especialidadesturnos.html" class="btn btn-turnos">
+            Turnos
+          </a>
+        </div>
 
       </div>
-    </div>
 
-  </div>
-</nav>
+    </div>
+  </nav>
+</header>
 
 <section class="hero">
   <div class="container hero-content">
@@ -881,12 +908,7 @@ function scrollToSection(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 </script>
-<script>
-window.addEventListener("scroll", function(){
-  const navbar = document.querySelector(".custom-navbar");
-  navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
-</script>
+
 
 </body>
 </html>
