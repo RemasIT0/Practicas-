@@ -222,7 +222,7 @@ const DATA = {
 
 // ===== ESTADO DEL WIZARD =====
 let currentStep = 1;
-const totalSteps = 4; // ✅ CAMBIADO: ahora son 4 pasos
+const totalSteps = 4; //  CAMBIADO: ahora son 4 pasos
 const formData = { dni: '', specialty: '', doctor: '', date: '', time: '' };
 
 // ===== INICIALIZACIÓN =====
@@ -277,7 +277,7 @@ function renderTimeSlots() {
 
   container.innerHTML = '';
 
-  // 🔥 extrae horas del texto
+  // extrae horas del texto
   const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
 
   if (!match) return;
@@ -327,7 +327,7 @@ function selectDoctor(doc, card) {
   document.querySelectorAll('.wiz-doc-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
   
-  formData.doctor = doc; // ✅ ahora sí guarda bien
+  formData.doctor = doc;
 
   const docName = document.getElementById('selectedDoctorName');
   if (docName) docName.textContent = doc.name;
@@ -370,18 +370,30 @@ function changeStep(target) {
     else if (num === target) step.classList.add('active');
   });
   
-  // Animar barra de progreso
-  const progress = ((target - 1) / (totalSteps - 1)) * 100;
   const stepper = document.querySelector('.wiz-stepper');
-  if (stepper) stepper.style.setProperty('--progress', `${progress}%`);
+  if (stepper) {
+    const progressMap = { 1: 0, 2: 30, 3: 70, 4: 100 };
+    const progress = progressMap[target] || 0;
+    stepper.style.setProperty('--progress', `${progress}%`);
+  }
   
   // Preparar contenido del nuevo paso
   if (target === 3) renderDoctors(formData.specialty);
   if (target === 4) renderTimeSlots();
-  // ✅ ELIMINADO: if (target === 5) fillSummary();
   
   currentStep = target;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== VALIDACIÓN POR PASO =====
 function validateStep(step) {
@@ -392,33 +404,39 @@ function validateStep(step) {
     const error = document.getElementById('dniError');
     const dni = dniInput?.value.trim() || '';
 
-    if (/^\d{7,9}$/.test(dni)) {
-
-  if (!pacientesRegistrados.includes(dni)) {
-
-    const error = document.getElementById('dniError');
-
-    if (error) {
-      error.innerHTML = `
-        ❌ DNI no registrado <br>
-       <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
-         📲 Contactar por WhatsApp
-       </a>
-      `;
+    // 1️⃣ Campo vacío
+    if (!dni) {
+      if (error) error.textContent = '⚠️ Por favor, ingrese su DNI';
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false;
     }
 
-    return; // ⛔ NO avanza
-  }
+    // 2️⃣ Formato inválido (no son 7-9 dígitos)
+    if (!/^\d{7,9}$/.test(dni)) {
+      if (error) error.textContent = '⚠️ DNI inválido. Ingrese 7 a 9 dígitos';
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false;
+    }
 
-  formData.dni = dni;
-  setTimeout(() => changeStep(2), 300);
-}
+    // 3️⃣ No está en la lista de registrados
+    if (!pacientesRegistrados.includes(dni)) {
+      if (error) {
+        error.innerHTML = `
+          ❌ DNI no registrado <br>
+          <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
+            📲 Contactar por WhatsApp
+          </a>
+        `;
+      }
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false;
+    }
 
+    // ✅ Todo correcto: limpiar y guardar
     if (error) error.textContent = '';
     if (dniInput) dniInput.classList.remove('is-invalid');
-
     formData.dni = dni;
-    return true;
+    return true; // ← IMPORTANTE: devuelve true para que el onclick avance
   }
 
   // ===== PASO 2: ESPECIALIDAD =====
@@ -444,8 +462,8 @@ function validateStep(step) {
     const day = selectedDate.getDay();
 
     if (!formData.doctor.days.includes(day)) {
-    if (error) error.textContent = "❌ Este médico no atiende ese día";
-    return false;
+      if (error) error.textContent = "❌ Este médico no atiende ese día";
+      return false;
     }
 
     if (!date || !formData.time) {
@@ -459,7 +477,18 @@ function validateStep(step) {
   }
 
   return true;
-}
+} // ← ¡LLAVE DE CIERRE DE LA FUNCIÓN! (NO LA BORRES)
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== RESUMEN FINAL (se usa en submitWizard) =====
 function fillSummary() {
@@ -493,7 +522,7 @@ function submitWizard() {
   btn.disabled = true;
   
   setTimeout(() => {
-    // ✅ Aquí después podrás redirigir a tu página de comprobante:
+    //  Aquí después podrás redirigir a tu página de comprobante:
     // window.location.href = `confirmacion.html?dni=${formData.dni}&especialidad=${encodeURIComponent(formData.specialty)}&medico=${encodeURIComponent(formData.doctor)}&fecha=${formData.date}&hora=${formData.time}`;
     
     
@@ -583,7 +612,7 @@ function setupEventListeners() {
     });
   }
 
-} // ✅ SOLO UNA LLAVE PARA CERRAR
+} //  SOLO UNA LLAVE PARA CERRAR
 
 function confirmAppointment() {
   generarPDF();

@@ -204,3 +204,37 @@ header { display: flex; align-items: center; justify-content: space-between; bac
   .wiz-title { font-size: 20px; }
   #slide-1 .dni-input { max-width: 100%; }
 }
+
+/* === CORRECCIÓN: Alineación de descripción de especialidad === */
+.wiz-spec-desc {
+  display: flex;
+  flex-direction: column;      /* ← Apila nombre y descripción en columnas */
+  align-items: center;
+  justify-content: flex-start; /* ← Alinea desde arriba, no centrado vertical */
+  text-align: center;
+  gap: 6px;                    /* ← Espacio controlado entre líneas */
+  padding: 16px;
+  min-height: 80px;
+}
+
+.wiz-spec-desc strong {
+  display: block;              /* ← Fuerza que el nombre ocupe su propia línea */
+  font-size: 1.05rem;
+  color: var(--azul-oscuro);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.wiz-spec-desc br {
+  display: none;               /* ← Ocultamos el <br> del JS, usamos gap en su lugar */
+}
+
+/* Opcional: estilo para el texto de descripción */
+.wiz-spec-desc > :not(strong) {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+  margin: 0;
+}
+
