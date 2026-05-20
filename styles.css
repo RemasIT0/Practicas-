@@ -10,35 +10,13 @@ body{
   font-family: 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
-  padding-top: 80px;
+  padding-top: 90px;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-@media (max-width: 991px){
-
-  .navbar-collapse{
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  }
-
-  .navbar-collapse a{
-    display: block;
-    margin: 10px 0;
-    font-size: 16px;
-  }
-
-  .navbar-collapse .btn{
-    width: 100%;
-    margin-top: 10px;
-  }
-
-}
 
 h2{
   font-size: 32px;
@@ -549,4 +527,269 @@ section{
 
 a {
   text-decoration: none;
+}
+
+/* MENU LATERAL */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:75%;
+  height:100vh;
+
+  background:rgba(42,124,199,0.92);
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  padding-top:120px;
+  gap:30px;
+
+  transition:0.4s ease;
+  z-index:9999;
+}
+
+.mobile-menu.visible{
+  right:0;
+}
+
+.mobile-menu a{
+  color:white;
+  font-size:2rem;
+  text-decoration:none;
+  font-weight:300;
+}
+
+.close-btn{
+  position:absolute;
+  top:30px;
+  right:30px;
+
+  background:none;
+  border:none;
+
+  color:white;
+  font-size:2rem;
+}
+
+/* RESPONSIVE */
+@media(max-width:991px){
+
+  .desktop-menu{
+    display:none;
+  }
+
+  #abrir{
+    display:block;
+  }
+
+}
+body{
+  padding-top: 80px;
+}
+
+.navbar{
+  transition: 0.3s;
+}
+
+.nav-link{
+  font-weight: 500;
+}
+
+.nav-link:hover{
+  color: #0d6efd !important;
+}
+.navbar{
+  background: white !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 15px 0;
+}
+
+.nav-link{
+  color: black !important;
+  font-weight: 500;
+}
+
+.nav-link:hover{
+  color: #0d6efd !important;
+}
+
+.navbar-toggler{
+  border: none;
+}
+
+body{
+  padding-top: 90px;
+}
+
+.nav-link{
+  color: rgb(4, 4, 4) !important;
+  font-weight: 500;
+}
+
+.nav-link:hover{
+  color: #0d6efd !important;
+}
+
+.navbar-toggler{
+  background: white;
+}
+
+body{
+  padding-top: 0;
+}
+/* NAVBAR GENERAL */
+.custom-navbar{
+  background: white;
+  padding: 14px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.logo-text{
+  font-size: 32px;
+  font-weight: 700;
+  color: #0d6efd;
+}
+
+/* LINKS */
+.nav-link{
+  color: #111 !important;
+  font-weight: 600;
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav-link:hover{
+  color: #0d6efd !important;
+}
+
+/* BOTON TURNOS */
+.btn-turnos{
+  background: linear-gradient(135deg,#0d6efd,#4da3ff);
+  color: white;
+  border-radius: 12px;
+  padding: 10px 22px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-turnos:hover{
+  background: linear-gradient(135deg,#0b5ed7,#1f8fff);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ICONO HAMBURGUESA */
+.navbar-toggler i{
+  font-size: 2rem;
+  color: #0d6efd;
+}
+
+/* MOBILE */
+@media(max-width:991px){
+
+  .navbar-collapse{
+    margin-top: 20px;
+
+    background: linear-gradient(
+      180deg,
+      rgba(42,124,199,0.97),
+      rgba(110,180,255,0.96)
+    );
+
+    backdrop-filter: blur(16px);
+
+    border-radius: 24px;
+
+    padding: 40px 30px;
+
+    animation: slideDown 0.35s ease;
+  }
+
+  .navbar-nav{
+    gap: 22px;
+  }
+
+  .nav-link{
+    color: white !important;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .nav-link:hover{
+    color: #ffffff !important;
+    transform: scale(1.03);
+  }
+
+  .btn-turnos{
+    margin-top: 25px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 1.1rem;
+  }
+
+}
+
+/* ANIMACION */
+@keyframes slideDown{
+  from{
+    opacity:0;
+    transform: translateY(-20px);
+  }
+
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+/* NAVBAR */
+.custom-navbar{
+  background: white;
+  padding: 10px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+/* LOGO */
+.logo-text{
+  font-size: 20px;   /* mas pequeño */
+  font-weight: 700;
+  color: #111;       /* negro */
+  margin: 0;
+}
+
+/* MENU */
+.navbar-nav{
+  margin-left: auto; /* empuja menu a la derecha */
+  margin-right: 20px !important; /* acerca al boton turnos */
+}
+
+/* LINKS */
+.nav-link{
+  color: #111 !important;
+  font-weight: 600;
+  font-size: 17px;
+  transition: 0.3s;
+}
+
+.nav-link:hover{
+  color: #0d6efd !important;
+}
+
+/* BOTON TURNOS */
+.btn-turnos{
+  background: linear-gradient(135deg,#0d6efd,#4da3ff);
+  color: white;
+  border-radius: 14px;
+  padding: 14px 30px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-turnos:hover{
+  transform: translateY(-2px);
+  color: white;
 }
