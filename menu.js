@@ -192,12 +192,6 @@ const DATA = {
         avatar: "F",
         schedule: "Lunes de 16:00 a 20:30",
         days:[1]
-      },
-      {
-        name: "Lic. María Belén Almirón",
-        avatar: "A",
-        schedule: "Miércoles, Jueves y Viernes de 16:00 a 20:30",
-        days:[3,4,5]
       }
     ]
   },
