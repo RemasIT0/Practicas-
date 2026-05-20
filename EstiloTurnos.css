@@ -298,3 +298,49 @@ header { display: flex; align-items: center; justify-content: space-between; bac
     font-size: 24px;
     font-weight: bold;
 }
+
+
+/* === CENTRAR TODO EL CONTENIDO DE LOS SLIDES === */
+.wiz-slide {
+  text-align: center;      
+  align-items: center;     
+}
+
+.wiz-slide .wiz-icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Paso 3: Lista de médicos */
+.wiz-doc-list {
+  text-align: left;
+  width: 100%;
+  max-width: 600px;        
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.wiz-dt-picker {
+  text-align: left;
+  width: 100%;
+  max-width: 600px;       
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.wiz-spec-grid {
+  width: 100%;
+  max-width: 700px;        
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.wiz-spec-desc {
+  width: 100%;
+  max-width: 600px;        
+  margin-left: auto;
+  margin-right: auto;
+}
