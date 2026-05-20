@@ -10,21 +10,38 @@
     <title>Document</title>
 </head>
 <body>
-    <header >
-        <div>
-            <img src="img/logocaptura.png" alt="" class="imglogo">
+    <header>
+
+    <div class="logo-container">
+        <img src="logoNUEVO.png" alt="" class="imglogo">
+
+        <div class="logo-info">
+            <span class="logo-text">Centro</span>
+            <span class="logo-subtext">Medico</span>
+            <strong class="palacio">Palacio</strong>
         </div>
-        <button class="abrir-menu" id="abrir"><i class="bi bi-list"></i></button>
-    <nav class="nav " id="nav">
-        <button class="cerrar-menu" id="cerrar"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <button class="abrir-menu" id="abrir">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <nav class="nav" id="nav">
+
+        <button class="cerrar-menu" id="cerrar">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
         <ul class="nav-list"> 
             <li><a href="index.html">INICIO</a></li>
             <li><a href="index.html#servicios">SERVICIOS</a></li>
             <li><a href="index.html#profesionales">PROFESIONALES</a></li>
             <li><a href="index.html#contacto">CONTACTO</a></li>
-        </ul> 
+        </ul>
+
     </nav>
-    </header>
+
+</header>
     <!-- Sección de búsqueda de DNI -->
 <section class="dni-search-section">
   <div class="wizard-wrapper">
@@ -87,7 +104,7 @@
         
         <div class="wiz-btn-group">
           <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
-          <button class="wiz-btn-next" id="nextFromSpecialty" disabled>Continuar <i class="bi bi-arrow-right"></i></button>
+          
         </div>
       </div>
 
@@ -103,7 +120,7 @@
         
         <div class="wiz-btn-group">
           <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
-          <button class="wiz-btn-next" id="nextFromDoctor" disabled>Continuar <i class="bi bi-arrow-right"></i></button>
+          
         </div>
       </div>
 
@@ -126,7 +143,7 @@
   
   <span class="dni-error" id="datetimeError"></span>
 
-  <!-- 🔥 TARJETA DE CONFIRMACIÓN -->
+  
   <div id="confirmCard" class="d-none">
 
   <h3>Confirmar turno</h3>
@@ -182,7 +199,7 @@
 
       <!-- LOGO + DESCRIPCIÓN -->
       <div class="col-md-3">
-        <img src="img/logo.png" alt="CMP" style="height:60px; margin-bottom:10px;">
+        <img src="logoNUEVO.png" alt="CMP" style="height:60px; margin-bottom:10px;">
         <h5>Centro Médico Palacio</h5>
         <p>
           Brindamos atención médica de calidad con profesionales especializados

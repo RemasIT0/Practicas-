@@ -267,7 +267,7 @@ function renderTimeSlots() {
 
   container.innerHTML = '';
 
-  // 🔥 extrae horas del texto
+  
   const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
 
   if (!match) return;
@@ -296,7 +296,7 @@ function renderTimeSlots() {
 
       formData.time = time;
 
-      // 🔥 mostrar botón solicitar
+      
       const btn = document.getElementById('requestTurnBtn');
 
       if (btn) {
@@ -349,7 +349,7 @@ function selectSpecialty(name, btn) {
     specName.textContent = name;
   }
 
-  // 🔥 AVANZA SOLO
+  
   setTimeout(() => {
     changeStep(3);
   }, 300);
