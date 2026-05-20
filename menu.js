@@ -210,7 +210,7 @@ const DATA = {
 
 // ===== ESTADO DEL WIZARD =====
 let currentStep = 1;
-const totalSteps = 4; // ✅ CAMBIADO: ahora son 4 pasos
+const totalSteps = 4; //  CAMBIADO: ahora son 4 pasos
 const formData = { dni: '', specialty: '', doctor: '', date: '', time: '' };
 
 // ===== INICIALIZACIÓN =====
@@ -267,9 +267,8 @@ function renderTimeSlots() {
 
   container.innerHTML = '';
 
-  const match = formData.doctor.schedule.match(
-    /(\d{2}:\d{2}) a (\d{2}:\d{2})/
-  );
+  // 🔥 extrae horas del texto
+  const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
 
   if (!match) return;
 
@@ -362,8 +361,8 @@ function selectDoctor(doc, card) {
     .forEach(c => c.classList.remove('selected'));
 
   card.classList.add('selected');
-
-  formData.doctor = doc;
+  
+  formData.doctor = doc; // ✅ ahora sí guarda bien
 
   const docName = document.getElementById('selectedDoctorName');
 
@@ -411,18 +410,30 @@ function changeStep(target) {
     else if (num === target) step.classList.add('active');
   });
   
-  // Animar barra de progreso
-  const progress = ((target - 1) / (totalSteps - 1)) * 100;
   const stepper = document.querySelector('.wiz-stepper');
-  if (stepper) stepper.style.setProperty('--progress', `${progress}%`);
+  if (stepper) {
+    const progressMap = { 1: 0, 2: 30, 3: 70, 4: 100 };
+    const progress = progressMap[target] || 0;
+    stepper.style.setProperty('--progress', `${progress}%`);
+  }
   
   // Preparar contenido del nuevo paso
   if (target === 3) renderDoctors(formData.specialty);
   if (target === 4) renderTimeSlots();
-  // ✅ ELIMINADO: if (target === 5) fillSummary();
   
   currentStep = target;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== VALIDACIÓN POR PASO =====
 function validateStep(step) {
@@ -435,48 +446,32 @@ function validateStep(step) {
 
     const dni = dniInput?.value.trim() || '';
 
-    // validar formato
-    if (!/^\d{7,9}$/.test(dni)) {
+    if (/^\d{7,9}$/.test(dni)) {
 
-      if (error) {
-        error.textContent = '⚠️ Ingresa un DNI válido';
-      }
+  if (!pacientesRegistrados.includes(dni)) {
 
-      if (dniInput) {
-        dniInput.classList.add('is-invalid');
-      }
+    const error = document.getElementById('dniError');
 
-      return false;
+    if (error) {
+      error.innerHTML = `
+        ❌ DNI no registrado <br>
+       <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
+         📲 Contactar por WhatsApp
+       </a>
+      `;
     }
 
-    // validar si existe
-    if (!pacientesRegistrados.includes(dni)) {
+    return; // ⛔ NO avanza
+  }
 
-      if (error) {
-        error.innerHTML = `
-          ❌ DNI no registrado <br>
+  formData.dni = dni;
+  setTimeout(() => changeStep(2), 300);
+}
 
-          <a href="https://wa.me/5493815551234"
-             target="_blank"
-             class="btn-wsp">
-
-             📲 Contactar por WhatsApp
-          </a>
-        `;
-      }
-
-      return false;
-    }
-
-    // limpiar errores
     if (error) error.textContent = '';
-
-    if (dniInput) {
-      dniInput.classList.remove('is-invalid');
-    }
+    if (dniInput) dniInput.classList.remove('is-invalid');
 
     formData.dni = dni;
-
     return true;
   }
 
@@ -506,12 +501,8 @@ function validateStep(step) {
     const day = selectedDate.getDay();
 
     if (!formData.doctor.days.includes(day)) {
-
-      if (error) {
-        error.textContent = "❌ Este médico no atiende ese día";
-      }
-
-      return false;
+    if (error) error.textContent = "❌ Este médico no atiende ese día";
+    return false;
     }
 
     if (!date || !formData.time) {
@@ -531,7 +522,18 @@ function validateStep(step) {
   }
 
   return true;
-}
+} // ← ¡LLAVE DE CIERRE DE LA FUNCIÓN! (NO LA BORRES)
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== RESUMEN FINAL (se usa en submitWizard) =====
 function fillSummary() {
@@ -565,7 +567,7 @@ function submitWizard() {
   btn.disabled = true;
   
   setTimeout(() => {
-    // ✅ Aquí después podrás redirigir a tu página de comprobante:
+    //  Aquí después podrás redirigir a tu página de comprobante:
     // window.location.href = `confirmacion.html?dni=${formData.dni}&especialidad=${encodeURIComponent(formData.specialty)}&medico=${encodeURIComponent(formData.doctor)}&fecha=${formData.date}&hora=${formData.time}`;
     
     
@@ -654,7 +656,7 @@ function setupEventListeners() {
     });
   }
 
-} // ✅ SOLO UNA LLAVE PARA CERRAR
+} 
 
 function confirmAppointment() {
 
