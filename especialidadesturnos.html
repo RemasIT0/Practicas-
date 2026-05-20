@@ -127,30 +127,49 @@
   <span class="dni-error" id="datetimeError"></span>
 
   <!-- 🔥 TARJETA DE CONFIRMACIÓN -->
-  <div id="confirmCard" class="card p-4 mt-3 d-none">
-    <h4 class="mb-3">Confirmar turno</h4>
+  <div id="confirmCard" class="d-none">
 
-    <p><strong>DNI:</strong> <span id="cDni"></span></p>
-    <p><strong>Especialidad:</strong> <span id="cSpecialty"></span></p>
-    <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
-    <p><strong>Fecha:</strong> <span id="cDate"></span></p>
-    <p><strong>Hora:</strong> <span id="cTime"></span></p>
+  <h3>Confirmar turno</h3>
 
-    <button class="btn btn-success mt-3" onclick="confirmAppointment()">
-      Confirmar turno
-    </button>
-  </div>
+  <p><strong>DNI:</strong> <span id="cDni"></span></p>
+
+  <p><strong>Especialidad:</strong> <span id="cSpecialty"></span></p>
+
+  <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
+
+  <p><strong>Fecha:</strong> <span id="cDate"></span></p>
+
+  <p><strong>Hora:</strong> <span id="cTime"></span></p>
+
+  <!-- 🔥 TEXTO -->
+  <p class="text-danger fw-bold mt-3">
+    ⚠️ Por favor asistir 10 minutos antes del turno.
+  </p>
+
+  <!-- 🔥 BOTÓN CONFIRMAR -->
+  <button
+    class="btn btn-success mt-3"
+    onclick="confirmAppointment()"
+  >
+    Confirmar turno
+  </button>
+
+</div>
   
-  <div class="wiz-btn-group">
-    <button class="wiz-btn-back" onclick="prevStep()">
-      <i class="bi bi-arrow-left"></i> Atrás
-    </button>
+<div class="wiz-btn-group bottom-buttons">
 
-    <!-- 🔥 CAMBIO CLAVE -->
-    <button class="wiz-btn-confirm" onclick="showConfirmCard()">
-      Ver resumen
-    </button>
-  </div>
+  <button class="wiz-btn-back" onclick="prevStep()">
+    <i class="bi bi-arrow-left"></i> Atrás
+  </button>
+
+  <button
+    id="requestTurnBtn"
+    class="btn btn-primary d-none"
+    onclick="showConfirmCard()"
+  >
+    Solicitar turno
+  </button>
+
 </div>
 
     </div>

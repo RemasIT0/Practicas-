@@ -11,7 +11,11 @@ botones.forEach(boton => {
 });
 
 /* ================================================== */
-
+const pacientesRegistrados = [
+  "12345678",
+  "87654321",
+  "40111222"
+];
 // ===== DATOS DE EJEMPLO =====
 const DATA = {
   specialties: {
@@ -256,36 +260,65 @@ function renderDoctors(specialty) {
 }
 
 function renderTimeSlots() {
+
   const container = document.getElementById('timeSlots');
+
   if (!container || !formData.doctor) return;
 
   container.innerHTML = '';
 
-  // 🔥 extrae horas del texto
-  const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
+  const match = formData.doctor.schedule.match(
+    /(\d{2}:\d{2}) a (\d{2}:\d{2})/
+  );
 
   if (!match) return;
 
   let [h, m] = match[1].split(':').map(Number);
+
   const [endH, endM] = match[2].split(':').map(Number);
 
   while (h < endH || (h === endH && m < endM)) {
 
-    const time = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+    const time =
+      `${h.toString().padStart(2,'0')}:` +
+      `${m.toString().padStart(2,'0')}`;
 
     const slot = document.createElement('div');
+
     slot.className = 'wiz-time-slot';
     slot.textContent = time;
 
     slot.onclick = () => {
-      document.querySelectorAll('.wiz-time-slot').forEach(s => s.classList.remove('selected'));
+
+      document.querySelectorAll('.wiz-time-slot')
+        .forEach(s => s.classList.remove('selected'));
+
       slot.classList.add('selected');
+
       formData.time = time;
+
+      // 🔥 mostrar botón solicitar
+      const btn = document.getElementById('requestTurnBtn');
+
+      if (btn) {
+
+  btn.classList.remove('d-none');
+
+  setTimeout(() => {
+
+    btn.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }, 200);
+}
     };
 
     container.appendChild(slot);
 
     m += 30;
+
     if (m >= 60) {
       m = 0;
       h++;
@@ -294,30 +327,54 @@ function renderTimeSlots() {
 }
 // ===== SELECCIÓN DE DATOS =====
 function selectSpecialty(name, btn) {
-  document.querySelectorAll('.wiz-spec-btn').forEach(b => b.classList.remove('selected'));
+
+  document.querySelectorAll('.wiz-spec-btn')
+    .forEach(b => b.classList.remove('selected'));
+
   btn.classList.add('selected');
-  
+
   const desc = document.getElementById('specialtyDesc');
-  if (desc) desc.innerHTML = `<strong>${name}</strong><br>${DATA.specialties[name]}`;
-  
+
+  if (desc) {
+    desc.innerHTML = `
+      <strong>${name}</strong><br>
+      ${DATA.specialties[name]}
+    `;
+  }
+
   formData.specialty = name;
+
   const specName = document.getElementById('selectedSpecialtyName');
-  if (specName) specName.textContent = name;
-  const nextBtn = document.getElementById('nextFromSpecialty');
-  if (nextBtn) nextBtn.disabled = false;
+
+  if (specName) {
+    specName.textContent = name;
+  }
+
+  // 🔥 AVANZA SOLO
+  setTimeout(() => {
+    changeStep(3);
+  }, 300);
 }
 
 function selectDoctor(doc, card) {
-  document.querySelectorAll('.wiz-doc-card').forEach(c => c.classList.remove('selected'));
+
+  document.querySelectorAll('.wiz-doc-card')
+    .forEach(c => c.classList.remove('selected'));
+
   card.classList.add('selected');
-  
-  formData.doctor = doc; // ✅ ahora sí guarda bien
+
+  formData.doctor = doc;
 
   const docName = document.getElementById('selectedDoctorName');
-  if (docName) docName.textContent = doc.name;
 
-  const nextBtn = document.getElementById('nextFromDoctor');
-  if (nextBtn) nextBtn.disabled = false;
+  if (docName) {
+    docName.textContent = doc.name;
+  }
+
+  // 🔥 AVANZA SOLO
+  setTimeout(() => {
+    changeStep(4);
+  }, 300);
 }
 
 function selectTime(time, slot) {
@@ -372,36 +429,54 @@ function validateStep(step) {
 
   // ===== PASO 1: DNI =====
   if (step === 1) {
+
     const dniInput = document.getElementById('dniInput');
     const error = document.getElementById('dniError');
+
     const dni = dniInput?.value.trim() || '';
 
-    if (/^\d{7,9}$/.test(dni)) {
+    // validar formato
+    if (!/^\d{7,9}$/.test(dni)) {
 
-  if (!pacientesRegistrados.includes(dni)) {
+      if (error) {
+        error.textContent = '⚠️ Ingresa un DNI válido';
+      }
 
-    const error = document.getElementById('dniError');
+      if (dniInput) {
+        dniInput.classList.add('is-invalid');
+      }
 
-    if (error) {
-      error.innerHTML = `
-        ❌ DNI no registrado <br>
-       <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
-         📲 Contactar por WhatsApp
-       </a>
-      `;
+      return false;
     }
 
-    return; // ⛔ NO avanza
-  }
+    // validar si existe
+    if (!pacientesRegistrados.includes(dni)) {
 
-  formData.dni = dni;
-  setTimeout(() => changeStep(2), 300);
-}
+      if (error) {
+        error.innerHTML = `
+          ❌ DNI no registrado <br>
 
+          <a href="https://wa.me/5493815551234"
+             target="_blank"
+             class="btn-wsp">
+
+             📲 Contactar por WhatsApp
+          </a>
+        `;
+      }
+
+      return false;
+    }
+
+    // limpiar errores
     if (error) error.textContent = '';
-    if (dniInput) dniInput.classList.remove('is-invalid');
+
+    if (dniInput) {
+      dniInput.classList.remove('is-invalid');
+    }
 
     formData.dni = dni;
+
     return true;
   }
 
@@ -419,26 +494,39 @@ function validateStep(step) {
 
   // ===== PASO 4: FECHA Y HORA =====
   if (step === 4) {
+
     const dateInput = document.getElementById('dateInput');
     const error = document.getElementById('datetimeError');
     const date = dateInput?.value || '';
-    
+
     const [year, month, dayNum] = date.split('-').map(Number);
+
     const selectedDate = new Date(year, month - 1, dayNum);
+
     const day = selectedDate.getDay();
 
     if (!formData.doctor.days.includes(day)) {
-    if (error) error.textContent = "❌ Este médico no atiende ese día";
-    return false;
+
+      if (error) {
+        error.textContent = "❌ Este médico no atiende ese día";
+      }
+
+      return false;
     }
 
     if (!date || !formData.time) {
-      if (error) error.textContent = '⚠️ Selecciona fecha y hora';
+
+      if (error) {
+        error.textContent = '⚠️ Selecciona fecha y hora';
+      }
+
       return false;
     }
 
     if (error) error.textContent = '';
+
     formData.date = date;
+
     return true;
   }
 
@@ -510,7 +598,12 @@ function resetWizard() {
   if (dniInput) dniInput.value = '';
   
   document.querySelectorAll('.wiz-spec-btn, .wiz-doc-card, .wiz-time-slot').forEach(el => el.classList.remove('selected'));
-  
+  const requestBtn =
+  document.getElementById("requestTurnBtn");
+
+if (requestBtn) {
+  requestBtn.classList.add("d-none");
+}
   const desc = document.getElementById('specialtyDesc');
   if (desc) desc.innerHTML = '<p class="text-muted">Selecciona una especialidad para ver más detalles</p>';
   
@@ -549,12 +642,6 @@ function setupEventListeners() {
     nextFromDni.onclick = () => { if (validateStep(1)) changeStep(2); };
   }
 
-  const nextFromSpecialty = document.getElementById('nextFromSpecialty');
-  if (nextFromSpecialty) nextFromSpecialty.onclick = () => changeStep(3);
-
-  const nextFromDoctor = document.getElementById('nextFromDoctor');
-  if (nextFromDoctor) nextFromDoctor.onclick = () => changeStep(4);
-
   const confirmBtn = document.getElementById('confirmBtn');
   if (confirmBtn) {
     confirmBtn.onclick = submitWizard;
@@ -570,30 +657,62 @@ function setupEventListeners() {
 } // ✅ SOLO UNA LLAVE PARA CERRAR
 
 function confirmAppointment() {
+
   generarPDF();
 
-  alert("Turno confirmado y comprobante descargado ✅");
+  alert("✅ Turno confirmado y comprobante descargado");
 
-  document.getElementById("confirmCard").classList.add("d-none");
+  document.getElementById("confirmCard")
+    .classList.add("d-none");
 
   resetWizard();
 }
 
 function showConfirmCard() {
+
   if (!validateStep(4)) return;
 
-  const card = document.getElementById("confirmCard");
+  // 🔥 ocultar SOLO solicitar turno
+  const requestBtn =
+    document.getElementById("requestTurnBtn");
+
+  if (requestBtn) {
+    requestBtn.classList.add("d-none");
+  }
+
+  // 🔥 mostrar card
+  const card =
+    document.getElementById("confirmCard");
+
   card.classList.remove("d-none");
 
-  document.getElementById("cDni").textContent = formData.dni;
-  document.getElementById("cSpecialty").textContent = formData.specialty;
-  document.getElementById("cDoctor").textContent = formData.doctor.name;
+  document.getElementById("cDni").textContent =
+    formData.dni;
 
-  const fecha = formData.date.split('-').reverse().join('/');
-  document.getElementById("cDate").textContent = fecha;
+  document.getElementById("cSpecialty").textContent =
+    formData.specialty;
 
-  document.getElementById("cTime").textContent = formData.time;
-  
+  document.getElementById("cDoctor").textContent =
+    formData.doctor.name;
+
+  const fecha =
+    formData.date.split('-').reverse().join('/');
+
+  document.getElementById("cDate").textContent =
+    fecha;
+
+  document.getElementById("cTime").textContent =
+    formData.time;
+
+  // 🔥 scroll automático
+  setTimeout(() => {
+
+    card.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }, 200);
 }
 
 
@@ -614,7 +733,13 @@ function generarPDF() {
 
   doc.text(`Hora: ${formData.time}`, 20, 80);
 
-  doc.text("Centro Médico Palacio", 20, 100);
+  doc.text("Centro Médico Palacio", 20, 115);
+
+  doc.text(
+  "Por favor asistir 10 minutos antes del turno.",
+  20,
+  100
+);
 
   doc.save(`Turno_${formData.dni}.pdf`);
 }

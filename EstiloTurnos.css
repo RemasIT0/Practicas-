@@ -204,3 +204,22 @@ header { display: flex; align-items: center; justify-content: space-between; bac
   .wiz-title { font-size: 20px; }
   #slide-1 .dni-input { max-width: 100%; }
 }
+
+.bottom-buttons{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-top:40px;
+}
+
+.bottom-buttons button{
+    flex:1;
+    height:60px;
+    border-radius:14px;
+}
+
+#requestTurnBtn{
+    max-width:250px;
+}
+
