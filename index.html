@@ -79,12 +79,19 @@
 
 <section class="hero">
   <div class="container hero-content">
-    <h1>Centro<br>Medico<br>Palacio</h1>
-    <p>
-      CMP nace con el propósito de ofrecer atención médica de alto nivel,
-      respaldada por profesionales especializados y tecnología moderna.
-    </p>
-    <button class="btn-main" onclick="scrollToSection('servicios')">Ver más</button>
+    <!-- Imagen (lado izquierdo) -->
+    <div class="hero-image">
+      <img src="logoNUEVO.png" alt="Centro Médico Palacio">
+    </div>
+
+    <div class="hero-text">
+      <h1>Centro<br>Medico<br>Palacio</h1>
+      <p>
+        CMP nace con el propósito de ofrecer atención médica de alto nivel,
+        respaldada por profesionales especializados y tecnología moderna.
+      </p>
+      <button class="btn-main" onclick="scrollToSection('servicios')">Ver más</button>
+    </div>
   </div>
 </section>
 
@@ -361,9 +368,7 @@
             <li>Laringoscopia</li>
           </ul>
 
-         <div class="estudio-info">
-         Atención con turno previo
-         </div>
+         
 
         </div>
       </div>
@@ -383,10 +388,7 @@
             <li>Endoscopias digestivas</li>
           </ul>
 
-          <div class="estudio-info">
-            Atención con turno previo
-          </div>
-
+       
         </div>
       </div>
 
@@ -406,9 +408,7 @@
             <li>Electromiograma</li>
           </ul>
 
-          <div class="estudio-info">
-            Atención con turno previo
-          </div>
+     
 
         </div>
       </div>
@@ -427,12 +427,7 @@
           <ul class="estudio-list">
             <li>Electrocardiograma</li>
             <li>Ecocardiograma Doppler</li>
-            <li>Ergometrías</li>
           </ul>
-
-          <div class="estudio-info">
-            Atención con turno previo
-          </div>
 
         </div>
       </div>
@@ -452,12 +447,50 @@
             <li>Papanicolau</li>
           </ul>
 
-          <div class="estudio-info">
-            Atención con turno previo
-          </div>
+
 
         </div>
       </div>
+
+      <!-- DERMA -->
+      <div class="col-md-6">
+        <div class="estudio-card">
+
+          <div class="estudio-header">
+            <div class="icon-card magenta">
+              <i class="fa-solid fa-hand-dots"></i>
+            </div>
+            <h5>Dermatología</h5>
+          </div>
+
+          <ul class="estudio-list">
+            <li>Biopsias</li>
+            <li>Cirugias</li>
+          </ul>
+
+        </div>
+      </div>
+
+  <!-- PSICO -->
+      <div class="col-md-6">
+        <div class="estudio-card">
+
+          <div class="estudio-header">
+            <div class="icon-card magenta">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <h5>PSicologia</h5>
+          </div>
+
+          <ul class="estudio-list">
+            <li>Psicoterapia jóvenes y adultos </li>
+          </ul>
+
+
+
+        </div>
+      </div>
+
 
     </div>
   </div>
@@ -532,6 +565,17 @@
         </div>
       </div>
 
+       <!-- DERMATOLOGIA -->
+      <div class="col-md-4">
+        <div class="cirugia-card">
+          <h5>Dermatologia</h5>
+          <ul>
+            <li>Extraccion de lunares</li>
+            <li>Extraccion de verrugas</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -569,8 +613,10 @@
             <div class="staff-specialty">Otorrinolaringología</div>
             <div class="staff-name">Dr. Palacio, Gastón Antonio</div>
             <div class="staff-meta">
-              <strong>Lunes, Martes, Jueves y Viernes</strong><br>
+              <strong>Lunes, Martes y Viernes</strong><br>
               16:00 a 20:30 hs<br>
+              <strong>Jueves</strong><br>
+              14:00 a 18:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
             <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
@@ -586,8 +632,10 @@
             <div class="staff-specialty">Cardiología</div>
             <div class="staff-name">Dr. Palacio, Gerardo Marcos</div>
             <div class="staff-meta">
-              <strong>Lunes, Miércoles y Viernes</strong><br>
+              <strong>Lunes y Miércoles</strong><br>
               16:00 a 20:30 hs<br>
+              <strong>Martes y Jueves</strong><br>
+              14:00 a 18:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
             <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
@@ -604,7 +652,7 @@
             <div class="staff-name">Dra. Zelarayán, Norma Daniela</div>
             <div class="staff-meta">
               <strong>Martes y Jueves</strong><br>
-              16:00 a 20:30 hs<br>
+              14:00 a 18:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
             <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
@@ -705,7 +753,7 @@
             <div class="staff-name">Dr. Norry, Gabriel</div>
             <div class="staff-meta">
               <strong>Miércoles</strong><br>
-              16:00 a 20:30 hs<br>
+              18:00 a 20:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
             <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
@@ -715,7 +763,7 @@
       <div class="col-md-3 col-sm-6">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/kollrich.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/nuevokollrich.png" class="staff-img" alt="Dr. Palacio Gerardo">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Dermatología</div>
@@ -788,7 +836,7 @@
             <div class="staff-specialty">Neurología - Electromiograma</div>
             <div class="staff-name">Dra. Díaz, Veronica</div>
             <div class="staff-meta">
-              <strong>Jueves</strong><br>
+              <strong>Miércoles</strong><br>
               14:00 a 20:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
@@ -802,10 +850,27 @@
             <img src="img/eliasgrane.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
           </div>
           <div class="staff-body">
-            <div class="staff-specialty">Infectología</div>
+            <div class="staff-specialty">Clínica - Infectología</div>
             <div class="staff-name">Dra. Elías Grane, Lourdes</div>
             <div class="staff-meta">
               <strong>Martes y Viernes</strong><br>
+              16:00 a 20:30 hs<br>
+              <span class="staff-coverage">Todas las obras sociales</span>
+            </div>
+            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="staff-card">
+          <div class="staff-img-wrap">
+            <img src="img/diazalvarez.png" class="staff-img" alt="Dra. Diaz Álvarez">
+          </div>
+          <div class="staff-body">
+            <div class="staff-specialty">Endocrinología</div>
+            <div class="staff-name">Dra. Diaz Álvarez, Noel</div>
+            <div class="staff-meta">
+              <strong>Miércoles</strong><br>
               16:00 a 20:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
