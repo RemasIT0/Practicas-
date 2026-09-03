@@ -17,12 +17,14 @@ const pacientesRegistrados = [
   "40111222"
 ];
 // ===== DATOS DE EJEMPLO =====
+// ===== DATOS DE EJEMPLO =====
 const DATA = {
   specialties: {
     "Cardiología": "Diagnóstico y tratamiento de enfermedades del corazón y sistema circulatorio.",
     "Cirugía General": "Procedimientos quirúrgicos para tratar diversas patologías del organismo.",
     "Clínica Médica": "Atención integral del adulto para diagnóstico y tratamiento de enfermedades generales.",
     "Dermatología": "Cuidado y tratamiento de enfermedades de la piel, cabello y uñas.",
+    "Endocrinología": "Diagnóstico y tratamiento de trastornos hormonales y metabólicos.",
     "Gastroenterología": "Diagnóstico y tratamiento de enfermedades del sistema digestivo.",
     "Ginecología": "Atención médica especializada en la salud femenina.",
     "Infectología": "Diagnóstico y tratamiento de enfermedades infecciosas.",
@@ -42,14 +44,14 @@ const DATA = {
         avatar: "P",
         schedule: "Martes, Miércoles y Viernes de 16:30 a 20:30",
         notes: "Particulares",
-        days:[2,3,5]
+        days: [2, 3, 5]
       },
       {
         name: "Dr. Gastón Antonio Palacio",
         avatar: "P",
-        schedule: "Lunes, Martes, Jueves y Viernes de 16:00 a 20:30",
+        schedule: "Lunes, Martes y Viernes de 16:00 a 20:30, Jueves de 14:00 a 18:30",
         notes: "Todas las obras sociales",
-        days:[1,2,4,5]
+        days: [1, 2, 4, 5]
       }
     ],
 
@@ -57,9 +59,9 @@ const DATA = {
       {
         name: "Dr. Gerardo Marcos Palacio",
         avatar: "P",
-        schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
+        schedule: "Lunes y Miércoles de 16:00 a 20:30, Martes y Jueves de 14:00 a 18:30",
         notes: "Todas las obras sociales",
-        days:[1,3,5]
+        days: [1, 2, 3, 4]
       }
     ],
 
@@ -67,9 +69,9 @@ const DATA = {
       {
         name: "Dra. Norma Daniela Zelarayán",
         avatar: "Z",
-        schedule: "Martes y Jueves de 16:00 a 20:30",
+        schedule: "Martes y Jueves de 14:00 a 18:30",
         notes: "Todas las obras sociales",
-        days:[2,4]
+        days: [2, 4]
       }
     ],
 
@@ -78,7 +80,7 @@ const DATA = {
         name: "Lic. María Alejandra Sepúlveda",
         avatar: "S",
         schedule: "Lunes, Miércoles y Viernes de 16:30 a 20:30",
-        days:[1,3,5]
+        days: [1, 3, 5]
       }
     ],
 
@@ -88,7 +90,7 @@ const DATA = {
         avatar: "M",
         schedule: "Martes de 16:00 a 20:30",
         notes: "Clínica obesidad y diabetes",
-        days:[2]
+        days: [2]
       }
     ],
 
@@ -98,7 +100,17 @@ const DATA = {
         avatar: "M",
         schedule: "Lunes de 16:00 a 20:30",
         notes: "Ginecología y Obstetricia",
-        days:[1]
+        days: [1]
+      }
+    ],
+
+    "Obstetricia": [
+      {
+        name: "Dra. María Eugenia Moyano",
+        avatar: "M",
+        schedule: "Lunes de 16:00 a 20:30",
+        notes: "Obstetricia",
+        days: [1]
       }
     ],
 
@@ -107,7 +119,8 @@ const DATA = {
         name: "Dr. Pablo Ramiro Maldonado",
         avatar: "M",
         schedule: "Miércoles de 16:00 a 20:30",
-        days:[3]
+        notes: "Todas las obras sociales",
+        days: [3]
       }
     ],
 
@@ -116,20 +129,22 @@ const DATA = {
         name: "Dr. Rafael Lara Norry",
         avatar: "L",
         schedule: "Lunes de 16:00 a 20:30",
-        days:[1]
+        notes: "Todas las obras sociales",
+        days: [1]
       },
       {
         name: "Dr. Juan Paz",
         avatar: "P",
         schedule: "Sábado de 16:00 a 20:30",
-        days:[6]
+        notes: "Todas las obras sociales",
+        days: [6]
       },
       {
         name: "Dra. Verónica Díaz",
         avatar: "D",
-        schedule: "Jueves de 14:00 a 20:30",
+        schedule: "Miércoles de 14:00 a 20:30",
         notes: "Electromiograma",
-        days:[4]
+        days: [3]
       }
     ],
 
@@ -137,33 +152,26 @@ const DATA = {
       {
         name: "Dr. Gabriel Norry",
         avatar: "N",
-        schedule: "Miércoles de 16:00 a 20:30",
-        days:[3]
+        schedule: "Miércoles de 18:00 a 20:30",
+        notes: "Todas las obras sociales",
+        days: [3]
       },
       {
         name: "Dra. Florencia Kollrich",
         avatar: "K",
         schedule: "Lunes de 16:00 a 20:30",
-        days:[1]
+        notes: "Todas las obras sociales",
+        days: [1]
       }
     ],
-    "Obstetricia": [
-    {
-    name: "Dra. María Eugenia Moyano",
-    avatar: "M",
-    schedule: "Lunes de 16:00 a 20:30",
-    notes: "Obstetricia",
-    days:[1]
-    }
-   ],
 
     "Odontología": [
       {
         name: "Dra. Jimena De la Fuente",
         avatar: "D",
         schedule: "Lunes a Viernes de 16:00 a 20:30",
-        notes: "Ortodoncia",  
-        days:[1,2,3,4,5]
+        notes: "Ortodoncia",
+        days: [1, 2, 3, 4, 5]
       }
     ],
 
@@ -173,7 +181,7 @@ const DATA = {
         avatar: "C",
         schedule: "Lunes, Miércoles y Viernes de 16:00 a 20:30",
         notes: "Laparoscopía",
-        days:[1,3,5]
+        days: [1, 3, 5]
       }
     ],
 
@@ -182,7 +190,18 @@ const DATA = {
         name: "Dra. Lourdes Elías Grane",
         avatar: "E",
         schedule: "Martes y Viernes de 16:00 a 20:30",
-        days:[2,5]
+        notes: "Clínica - Infectología",
+        days: [2, 5]
+      }
+    ],
+
+    "Endocrinología": [
+      {
+        name: "Dra. Noel Diaz Álvarez",
+        avatar: "D",
+        schedule: "Miércoles de 16:00 a 20:30",
+        notes: "Todas las obras sociales",
+        days: [3]
       }
     ],
 
@@ -191,14 +210,14 @@ const DATA = {
         name: "Lic. Paulina Fernández",
         avatar: "F",
         schedule: "Lunes de 16:00 a 20:30",
-        days:[1]
+        days: [1]
       }
     ]
   },
 
   timeSlots: [
-    "16:00", "16:30", "17:00", "17:30",
-    "18:00", "18:30", "19:00", "19:30", "20:00"
+    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+    "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"
   ]
 };
 
@@ -430,41 +449,46 @@ function changeStep(target) {
 
 
 // ===== VALIDACIÓN POR PASO =====
+// ===== VALIDACIÓN POR PASO =====
 function validateStep(step) {
 
   // ===== PASO 1: DNI =====
   if (step === 1) {
-
     const dniInput = document.getElementById('dniInput');
     const error = document.getElementById('dniError');
-
     const dni = dniInput?.value.trim() || '';
 
-    if (/^\d{7,9}$/.test(dni)) {
-
-  if (!pacientesRegistrados.includes(dni)) {
-
-    const error = document.getElementById('dniError');
-
-    if (error) {
-      error.innerHTML = `
-        ❌ DNI no registrado <br>
-       <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
-         📲 Contactar por WhatsApp
-       </a>
-      `;
+    // 1) DNI vacío o muy corto
+    if (!dni || dni.length < 7) {
+      if (error) error.textContent = '⚠️ Ingresá tu DNI (7 a 9 dígitos)';
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false;
     }
 
-    return; // ⛔ NO avanza
-  }
+    // 2) Formato inválido (solo números, 7 a 9 dígitos)
+    if (!/^\d{7,9}$/.test(dni)) {
+      if (error) error.textContent = '⚠️ El DNI debe tener entre 7 y 9 números';
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false;
+    }
 
-  formData.dni = dni;
-  setTimeout(() => changeStep(2), 300);
-}
+    // 3) DNI no registrado
+    if (!pacientesRegistrados.includes(dni)) {
+      if (error) {
+        error.innerHTML = `
+          ❌ DNI no registrado <br>
+          <a href="https://wa.me/5493815551234" target="_blank" class="btn-wsp">
+            📲 Contactar por WhatsApp
+          </a>
+        `;
+      }
+      if (dniInput) dniInput.classList.add('is-invalid');
+      return false; // ⛔ NO avanza
+    }
 
+    // 4) Todo OK: limpiar errores y avanzar
     if (error) error.textContent = '';
     if (dniInput) dniInput.classList.remove('is-invalid');
-
     formData.dni = dni;
     return true;
   }
@@ -483,42 +507,31 @@ function validateStep(step) {
 
   // ===== PASO 4: FECHA Y HORA =====
   if (step === 4) {
-
     const dateInput = document.getElementById('dateInput');
     const error = document.getElementById('datetimeError');
     const date = dateInput?.value || '';
 
+    if (!date || !formData.time) {
+      if (error) error.textContent = '⚠️ Selecciona fecha y hora';
+      return false;
+    }
+
     const [year, month, dayNum] = date.split('-').map(Number);
-
     const selectedDate = new Date(year, month - 1, dayNum);
-
     const day = selectedDate.getDay();
 
     if (!formData.doctor.days.includes(day)) {
-    if (error) error.textContent = "❌ Este médico no atiende ese día";
-    return false;
-    }
-
-    if (!date || !formData.time) {
-
-      if (error) {
-        error.textContent = '⚠️ Selecciona fecha y hora';
-      }
-
+      if (error) error.textContent = "❌ Este médico no atiende ese día";
       return false;
     }
 
     if (error) error.textContent = '';
-
     formData.date = date;
-
     return true;
   }
 
   return true;
-} // ← ¡LLAVE DE CIERRE DE LA FUNCIÓN! (NO LA BORRES)
-
-
+}
 
 
 
