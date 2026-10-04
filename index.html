@@ -164,28 +164,28 @@
 
     <div class="row">
 
-      <div class="col-md-4 reveal reveal-delay-1">
-        <div class="trust-item">
-          <h4>+20</h4>
-          <p>Especialistas</p>
-        </div>
-      </div>
-
-      <div class="col-md-4 reveal reveal-delay-2">
-        <div class="trust-item">
-          <h4>+5000</h4>
-          <p>Pacientes atendidos</p>
-        </div>
-      </div>
-
-      <div class="col-md-4 reveal reveal-delay-3">
-        <div class="trust-item">
-          <h4>15 años</h4>
-          <p>De experiencia</p>
-        </div>
-      </div>
-
+  <div class="col-md-4 reveal reveal-delay-1">
+    <div class="trust-item">
+      <h4><span class="counter" data-count="20" data-prefix="+">0</span></h4>
+      <p>Especialistas</p>
     </div>
+  </div>
+
+  <div class="col-md-4 reveal reveal-delay-2">
+    <div class="trust-item">
+      <h4><span class="counter" data-count="5000" data-prefix="+">0</span></h4>
+      <p>Pacientes atendidos</p>
+    </div>
+  </div>
+
+  <div class="col-md-4 reveal reveal-delay-3">
+    <div class="trust-item">
+      <h4><span class="counter" data-count="15" data-suffix=" años">0</span></h4>
+      <p>De experiencia</p>
+    </div>
+  </div>
+
+</div>
 
   </div>
 </section>
@@ -490,7 +490,7 @@
             <div class="icon-card magenta">
               <i class="fa-solid fa-hand-holding-heart"></i>
             </div>
-            <h5>PSicologia</h5>
+            <h5>Psicologia</h5>
           </div>
 
           <ul class="estudio-list">
@@ -1058,8 +1058,74 @@ document.addEventListener("DOMContentLoaded", function() {
 
   revealElements.forEach(el => observer.observe(el));
 });
-</script>
 
+
+
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// ANIMACIÓN AL HACER SCROLL (reveal)
+document.addEventListener("DOMContentLoaded", function() {
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+
+  // --- NUEVO: CONTADORES ANIMADOS ---
+  const counters = document.querySelectorAll('.counter');
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(counter => counterObserver.observe(counter));
+
+  function animateCounter(el) {
+    const target = parseInt(el.getAttribute('data-count'));
+    const prefix = el.getAttribute('data-prefix') || '';
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 2000; // 2 segundos
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing: empieza rápido y termina suave
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(easeOut * target);
+      
+      el.textContent = prefix + current.toLocaleString('es-AR') + suffix;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = prefix + target.toLocaleString('es-AR') + suffix;
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+});
+</script>
 
 </body>
 </html>
