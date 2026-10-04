@@ -13,6 +13,24 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ESTILOS DE LA ANIMACIÓN (NO TOCAR) -->
+<style>
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+</style>
 </head>
 
 <body>
@@ -98,14 +116,14 @@
 <section id="servicios">
   <div class="container">
 
-    <div class="title text-center">
+    <div class="title text-center reveal">
       <h2>Nuestros Servicios</h2>
       <p>Ofrecemos una amplia gama de servicios médicos para cuidar tu salud y la de tu familia</p>
     </div>
 
     <div class="row g-4">
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-1">
         <div class="service-card" onclick="scrollToSection('consultas')">
           <div class="service-icon icon-blue">🩺</div>
           <h5>Consultas Médicas</h5>
@@ -114,7 +132,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-2">
         <div class="service-card" onclick="scrollToSection('estudios')">
           <div class="service-icon icon-red">❤️</div>
           <h5>Estudios Médicos</h5>
@@ -123,7 +141,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-3">
         <div class="service-card" onclick="scrollToSection('cirugias')">
           <div class="service-icon icon-pink">🏥</div>
           <h5>Cirugías</h5>
@@ -139,28 +157,28 @@
 <section class="trust-section">
   <div class="container text-center">
 
-    <h3>Atención médica de calidad</h3>
-    <p class="mb-5">
+    <h3 class="reveal">Atención médica de calidad</h3>
+    <p class="mb-5 reveal reveal-delay-1">
       Más de 20 profesionales y tecnología moderna para brindarte el mejor cuidado.
     </p>
 
     <div class="row">
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-1">
         <div class="trust-item">
           <h4>+20</h4>
           <p>Especialistas</p>
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-2">
         <div class="trust-item">
           <h4>+5000</h4>
           <p>Pacientes atendidos</p>
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-3">
         <div class="trust-item">
           <h4>15 años</h4>
           <p>De experiencia</p>
@@ -175,14 +193,14 @@
 <section id="consultas" class="bg-light py-5">
   <div class="container">
 
-    <h2 class="mb-5 text-center" style="color: var(--primary);">
+    <h2 class="mb-5 text-center reveal" style="color: var(--primary);">
       🩺 Consultas Médicas
     </h2>
 
     <div class="row g-4">
 
       <!-- OTORRINO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-ear icon-card blue"></i>
           <h5>Otorrinolaringología</h5>
@@ -193,7 +211,7 @@
       </div>
 
       <!-- GASTRO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-capsule icon-card green"></i>
           <h5>Gastroenterología</h5>
@@ -204,7 +222,7 @@
       </div>
 
       <!-- CARDIO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-heart-pulse icon-card red"></i>
           <h5>Cardiología</h5>
@@ -215,7 +233,7 @@
       </div>
 
       <!-- CIRUGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-bandaid icon-card dark"></i>
           <h5>Cirugía General y Digestiva</h5>
@@ -226,7 +244,7 @@
       </div>
 
       <!-- NEURO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="fa-solid fa-brain icon-card purple"></i>
           <h5>Neurología</h5>
@@ -237,7 +255,7 @@
       </div>
 
       <!-- REUMATOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-person-lines-fill icon-card cyan"></i>
           <h5>Reumatología</h5>
@@ -248,7 +266,7 @@
       </div>
 
       <!-- PSICOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="fa-solid fa-comments icon-card orange"></i>
           <h5>Psicología</h5>
@@ -259,7 +277,7 @@
       </div>
 
       <!-- OBESIDAD -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-clipboard-pulse icon-card red"></i>
           <h5>Obesidad y Diabetes</h5>
@@ -270,7 +288,7 @@
       </div>
 
       <!-- ODONTOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-emoji-laughing icon-card blue"></i>
           <h5>Odontología – Ortodoncia</h5>
@@ -281,7 +299,7 @@
       </div>
 
       <!-- GINECOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-hospital icon-card magenta"></i>
           <h5>Ginecología – Obstetricia</h5>
@@ -292,7 +310,7 @@
       </div>
 
       <!-- CLINICA MEDICA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-hospital-fill icon-card blue"></i>
           <h5>Clínica Médica</h5>
@@ -303,7 +321,7 @@
       </div>
 
       <!-- INFECTOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-shield-plus icon-card green"></i>
           <h5>Infectología</h5>
@@ -314,7 +332,7 @@
       </div>
 
       <!-- DERMATOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-droplet-half icon-card orange"></i>
           <h5>Dermatología</h5>
@@ -325,7 +343,7 @@
       </div>
 
       <!-- NUTRICION -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal">
         <div class="card text-center p-4 shadow-sm h-100">
           <i class="bi bi-apple icon-card red"></i>
           <h5>Nutrición</h5>
@@ -343,14 +361,14 @@
 <section id="estudios" class="py-5 bg-light">
   <div class="container">
 
-    <h2 class="text-center mb-5" style="color: var(--primary);">
+    <h2 class="text-center mb-5 reveal" style="color: var(--primary);">
       Estudios Médicos
     </h2>
 
     <div class="row g-4">
 
       <!-- OTORRINO -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
           
           <div class="estudio-header">
@@ -368,13 +386,11 @@
             <li>Laringoscopia</li>
           </ul>
 
-         
-
         </div>
       </div>
 
       <!-- GASTRO -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -388,12 +404,11 @@
             <li>Endoscopias digestivas</li>
           </ul>
 
-       
         </div>
       </div>
 
       <!-- NEURO -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -408,13 +423,11 @@
             <li>Electromiograma</li>
           </ul>
 
-     
-
         </div>
       </div>
 
       <!-- CARDIO -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -433,7 +446,7 @@
       </div>
 
       <!-- GINE -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -447,13 +460,11 @@
             <li>Papanicolau</li>
           </ul>
 
-
-
         </div>
       </div>
 
       <!-- DERMA -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -472,7 +483,7 @@
       </div>
 
   <!-- PSICO -->
-      <div class="col-md-6">
+      <div class="col-md-6 reveal">
         <div class="estudio-card">
 
           <div class="estudio-header">
@@ -486,8 +497,6 @@
             <li>Psicoterapia jóvenes y adultos </li>
           </ul>
 
-
-
         </div>
       </div>
 
@@ -499,14 +508,14 @@
 <section id="cirugias" class="bg-light py-5">
   <div class="container">
 
-    <h2 class="text-center mb-5" style="color: var(--primary);">
+    <h2 class="text-center mb-5 reveal" style="color: var(--primary);">
       🏥 Cirugías
     </h2>
 
     <div class="row g-4">
 
       <!-- OTORRINO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-1">
         <div class="cirugia-card">
           <h5>Otorrinolaringología</h5>
           <ul>
@@ -520,7 +529,7 @@
       </div>
 
       <!-- CIRUGIA GENERAL -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-2">
         <div class="cirugia-card">
           <h5>Cirugía General y Digestiva</h5>
           <ul>
@@ -532,7 +541,7 @@
       </div>
 
       <!-- GINECO -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-3">
         <div class="cirugia-card">
           <h5>Ginecología</h5>
           <ul>
@@ -543,7 +552,7 @@
       </div>
 
       <!-- OBSTETRICIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-1">
         <div class="cirugia-card">
           <h5>Obstetricia</h5>
           <ul>
@@ -554,7 +563,7 @@
       </div>
 
       <!-- ANTICONCEPCION -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-2">
         <div class="cirugia-card">
           <h5>Anticoncepción</h5>
           <ul>
@@ -566,7 +575,7 @@
       </div>
 
        <!-- DERMATOLOGIA -->
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-3">
         <div class="cirugia-card">
           <h5>Dermatologia</h5>
           <ul>
@@ -583,11 +592,11 @@
 
 <section id="profesionales" class="staff-section" style="padding:80px 0;">
   <div class="container">
-    <div class="title text-center">
+    <div class="title text-center reveal">
       <h2>Staff Médico</h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/palacio1.jpeg" class="staff-img" alt="Dr. Palacio Marcos">
@@ -604,7 +613,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/palacio2.jpeg" class="staff-img" alt="Dr. Palacio Gastón">
@@ -623,7 +632,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/palacio3.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -642,7 +651,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/zalarayan.jpeg" class="staff-img" alt="Dra. Zelarayán">
@@ -659,7 +668,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/sepulveda.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -675,7 +684,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/manzano.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -692,7 +701,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/moyano.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -709,7 +718,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/maldonado.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -726,7 +735,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/laranorry.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -743,7 +752,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/norry.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -760,7 +769,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/nuevokollrich.png" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -777,7 +786,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/delafuente.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -793,7 +802,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/paz.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -810,7 +819,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/carrizo.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -827,7 +836,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/diaz.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -844,7 +853,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/eliasgrane.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -861,7 +870,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/diazalvarez.png" class="staff-img" alt="Dra. Diaz Álvarez">
@@ -878,7 +887,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+      <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
             <img src="img/fernandez.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
@@ -902,12 +911,12 @@
 <section class="how-section">
   <div class="container text-center">
 
-    <h2 class="mb-3">¿Cómo funciona?</h2>
-    <p class="mb-5">Reservá tu turno en 3 simples pasos</p>
+    <h2 class="mb-3 reveal">¿Cómo funciona?</h2>
+    <p class="mb-5 reveal reveal-delay-1">Reservá tu turno en 3 simples pasos</p>
 
     <div class="row justify-content-center">
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-1">
         <div class="step-card">
           <div class="step-number">01</div>
           <div class="icon-circle">🩺</div>
@@ -916,7 +925,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-2">
         <div class="step-card">
           <div class="step-number">02</div>
           <div class="icon-circle">👤</div>
@@ -925,7 +934,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 reveal reveal-delay-3">
         <div class="step-card">
           <div class="step-number">03</div>
           <div class="icon-circle">📅</div>
@@ -936,7 +945,7 @@
 
     </div>
 
-    <a href="especialidadesturnos.html" class="btn-start mt-5">
+    <a href="especialidadesturnos.html" class="btn-start mt-5 reveal">
       Comenzar ahora
     </a>
 
@@ -945,13 +954,13 @@
 
 <section class="cta-section text-center">
   <div class="container">
-    <h2>¿Listo para cuidar tu salud?</h2>
-    <p>Reservá tu turno ahora y accedé a atención médica de calidad</p>
-    <a href="especialidadesturnos.html" class="cta-btn">Sacar turno ahora →</a>
+    <h2 class="reveal">¿Listo para cuidar tu salud?</h2>
+    <p class="reveal reveal-delay-1">Reservá tu turno ahora y accedé a atención médica de calidad</p>
+    <a href="especialidadesturnos.html" class="cta-btn reveal reveal-delay-2">Sacar turno ahora →</a>
   </div>
 </section>
 
-<footer id="contacto" class="footer">
+<footer id="contacto" class="footer reveal">
   <div class="container">
     <div class="row">
 
@@ -1030,6 +1039,25 @@
 function scrollToSection(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
+
+// ANIMACIÓN AL HACER SCROLL
+document.addEventListener("DOMContentLoaded", function() {
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+});
 </script>
 
 
