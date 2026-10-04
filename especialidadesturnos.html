@@ -124,69 +124,49 @@
       </div>
 
       <!-- PASO 4: Fecha/Hora -->
- <div class="wiz-slide" id="slide-4">
-  
-  <div class="dni-icon wiz-icon">
-    <i class="bi bi-calendar-check"></i>
-  </div>
-  <h2 class="dni-title">Elegir Fecha y Hora</h2>
-  <p class="dni-description">Disponibilidad para <span id="selectedDoctorName">-</span></p>
-  
-  <div class="wiz-dt-picker">
-    <label>Fecha</label>
-    <input type="date" id="dateInput" class="wiz-dt-input" min="">
-    
-    <label class="mt-3">Horarios disponibles</label>
-    <div class="wiz-time-grid" id="timeSlots"></div>
-  </div>
-  
-  <span class="dni-error" id="datetimeError"></span>
+       <!-- PASO 4: Fecha/Hora -->
+      <div class="wiz-slide" id="slide-4">
+        <div class="dni-icon wiz-icon">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <h2 class="dni-title">Elegir Fecha y Hora</h2>
+        <p class="dni-description">Disponibilidad para <span id="selectedDoctorName">-</span></p>
+        
+        <!-- Selector de días disponibles -->
+        <div class="wiz-days-section">
+          <label class="wiz-days-label">📅 Próximos días disponibles</label>
+          <div class="wiz-days-grid" id="daysGrid"></div>
+          <p class="wiz-days-hint" id="daysHint">Seleccioná un día para ver los horarios</p>
+        </div>
+        
+        <!-- Horarios (se muestran al elegir un día) -->
+        <div class="wiz-hours-section" id="hoursSection" style="display: none;">
+          <label class="wiz-days-label">🕐 Horarios para el <span id="selectedDayLabel">-</span></label>
+          <div class="wiz-time-grid" id="timeSlots"></div>
+        </div>
+        
+        <span class="dni-error" id="datetimeError"></span>
 
-  
-  <div id="confirmCard" class="d-none">
-
-  <h3>Confirmar turno</h3>
-
-  <p><strong>DNI:</strong> <span id="cDni"></span></p>
-
-  <p><strong>Especialidad:</strong> <span id="cSpecialty"></span></p>
-
-  <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
-
-  <p><strong>Fecha:</strong> <span id="cDate"></span></p>
-
-  <p><strong>Hora:</strong> <span id="cTime"></span></p>
-
-  
-  <p class="text-danger fw-bold mt-3">
-    ⚠️ Por favor asistir 10 minutos antes del turno.
-  </p>
-
-  
-  <button
-    class="btn btn-success mt-3"
-    onclick="confirmAppointment()"
-  >
-    Confirmar turno
-  </button>
-
-</div>
-  
-<div class="wiz-btn-group bottom-buttons">
-
-  <button class="wiz-btn-back" onclick="prevStep()">
-    <i class="bi bi-arrow-left"></i> Atrás
-  </button>
-
-  <button
-    id="requestTurnBtn"
-    class="btn btn-primary d-none"
-    onclick="showConfirmCard()"
-  >
-    Solicitar turno
-  </button>
-
-</div>
+        <div id="confirmCard" class="d-none">
+          <h3>Confirmar turno</h3>
+          <p><strong>DNI:</strong> <span id="cDni"></span></p>
+          <p><strong>Especialidad:</strong> <span id="cSpecialty"></span></p>
+          <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
+          <p><strong>Fecha:</strong> <span id="cDate"></span></p>
+          <p><strong>Hora:</strong> <span id="cTime"></span></p>
+          <p class="text-danger fw-bold mt-3">⚠️ Por favor asistir 10 minutos antes del turno.</p>
+          <button class="btn btn-success mt-3" onclick="confirmAppointment()">Confirmar turno</button>
+        </div>
+        
+        <div class="wiz-btn-group bottom-buttons">
+          <button class="wiz-btn-back" onclick="prevStep()">
+            <i class="bi bi-arrow-left"></i> Atrás
+          </button>
+          <button id="requestTurnBtn" class="btn btn-primary d-none" onclick="showConfirmCard()">
+            Solicitar turno
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>

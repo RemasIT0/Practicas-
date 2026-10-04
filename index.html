@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- ESTILOS DE LA ANIMACIÓN (NO TOCAR) -->
+<!-- ESTILOS DE LA ANIMACIÓN -->
 <style>
 .reveal {
   opacity: 0;
@@ -38,8 +38,6 @@
 <header>
   <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
     <div class="container">
-
-      <!-- LOGO -->
       <a class="navbar-brand d-flex align-items-center gap-2" href="#">
         <img src="logoNUEVO.png" alt="Logo" width="50">
         <div>
@@ -47,67 +45,35 @@
           <span class="logo-subtext">Medico</span>
           <strong class="palacio">Palacio</strong>
         </div>
-        
       </a>
 
-      <!-- BOTON MOBILE -->
-      <button 
-        class="navbar-toggler border-0 shadow-none"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-      >
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <i class="bi bi-list"></i>
       </button>
 
-      <!-- MENU -->
       <div class="collapse navbar-collapse" id="navbarNav">
-
         <ul class="navbar-nav mx-auto gap-lg-4 text-center">
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Inicio</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#servicios">Servicios</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#profesionales">Profesionales</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#contacto">Contacto</a>
-          </li>
-
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#profesionales">Profesionales</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
         </ul>
-
         <div class="text-center">
-          <a href="especialidadesturnos.html" class="btn btn-turnos">
-            Turnos
-          </a>
+          <a href="especialidadesturnos.html" class="btn btn-turnos">Turnos</a>
         </div>
-
       </div>
-
     </div>
   </nav>
 </header>
 
 <section class="hero">
   <div class="container hero-content">
-    <!-- Imagen (lado izquierdo) -->
     <div class="hero-image">
       <img src="logoNUEVO.png" alt="Centro Médico Palacio">
     </div>
-
     <div class="hero-text">
       <h1>Centro<br>Medico<br>Palacio</h1>
-      <p>
-        CMP nace con el propósito de ofrecer atención médica de alto nivel,
-        respaldada por profesionales especializados y tecnología moderna.
-      </p>
+      <p>CMP nace con el propósito de ofrecer atención médica de alto nivel, respaldada por profesionales especializados y tecnología moderna.</p>
       <button class="btn-main" onclick="scrollToSection('servicios')">Ver más</button>
     </div>
   </div>
@@ -115,14 +81,11 @@
 
 <section id="servicios">
   <div class="container">
-
     <div class="title text-center reveal">
       <h2>Nuestros Servicios</h2>
       <p>Ofrecemos una amplia gama de servicios médicos para cuidar tu salud y la de tu familia</p>
     </div>
-
     <div class="row g-4">
-
       <div class="col-md-4 reveal reveal-delay-1">
         <div class="service-card" onclick="scrollToSection('consultas')">
           <div class="service-icon icon-blue">🩺</div>
@@ -131,7 +94,6 @@
           <a class="service-link">Ver más detalles →</a>
         </div>
       </div>
-
       <div class="col-md-4 reveal reveal-delay-2">
         <div class="service-card" onclick="scrollToSection('estudios')">
           <div class="service-icon icon-red">❤️</div>
@@ -140,453 +102,93 @@
           <a class="service-link">Ver más detalles →</a>
         </div>
       </div>
-
       <div class="col-md-4 reveal reveal-delay-3">
         <div class="service-card" onclick="scrollToSection('cirugias')">
-          <div class="service-icon icon-pink">🏥</div>
+          <div class="service-icon icon-pink"></div>
           <h5>Cirugías</h5>
           <p>Procedimientos seguros realizados por profesionales especializados.</p>
           <a class="service-link">Ver más detalles →</a>
         </div>
       </div>
-
     </div>
-
   </div>
 </section>
+
 <section class="trust-section">
   <div class="container text-center">
-
     <h3 class="reveal">Atención médica de calidad</h3>
-    <p class="mb-5 reveal reveal-delay-1">
-      Más de 20 profesionales y tecnología moderna para brindarte el mejor cuidado.
-    </p>
-
+    <p class="mb-5 reveal reveal-delay-1">Más de 20 profesionales y tecnología moderna para brindarte el mejor cuidado.</p>
     <div class="row">
-
-  <div class="col-md-4 reveal reveal-delay-1">
-    <div class="trust-item">
-      <h4><span class="counter" data-count="20" data-prefix="+">0</span></h4>
-      <p>Especialistas</p>
+      <div class="col-md-4 reveal reveal-delay-1">
+        <div class="trust-item">
+          <h4><span class="counter" data-count="20" data-prefix="+">0</span></h4>
+          <p>Especialistas</p>
+        </div>
+      </div>
+      <div class="col-md-4 reveal reveal-delay-2">
+        <div class="trust-item">
+          <h4><span class="counter" data-count="5000" data-prefix="+">0</span></h4>
+          <p>Pacientes atendidos</p>
+        </div>
+      </div>
+      <div class="col-md-4 reveal reveal-delay-3">
+        <div class="trust-item">
+          <h4><span class="counter" data-count="15" data-suffix=" años">0</span></h4>
+          <p>De experiencia</p>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="col-md-4 reveal reveal-delay-2">
-    <div class="trust-item">
-      <h4><span class="counter" data-count="5000" data-prefix="+">0</span></h4>
-      <p>Pacientes atendidos</p>
-    </div>
-  </div>
-
-  <div class="col-md-4 reveal reveal-delay-3">
-    <div class="trust-item">
-      <h4><span class="counter" data-count="15" data-suffix=" años">0</span></h4>
-      <p>De experiencia</p>
-    </div>
-  </div>
-
-</div>
-
   </div>
 </section>
 
 <section id="consultas" class="bg-light py-5">
   <div class="container">
-
-    <h2 class="mb-5 text-center reveal" style="color: var(--primary);">
-      🩺 Consultas Médicas
-    </h2>
-
+    <h2 class="mb-5 text-center reveal" style="color: var(--primary);">🩺 Consultas Médicas</h2>
     <div class="row g-4">
-
-      <!-- OTORRINO -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-ear icon-card blue"></i>
-          <h5>Otorrinolaringología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- GASTRO -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-capsule icon-card green"></i>
-          <h5>Gastroenterología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- CARDIO -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-heart-pulse icon-card red"></i>
-          <h5>Cardiología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- CIRUGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-bandaid icon-card dark"></i>
-          <h5>Cirugía General y Digestiva</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- NEURO -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="fa-solid fa-brain icon-card purple"></i>
-          <h5>Neurología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- REUMATOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-person-lines-fill icon-card cyan"></i>
-          <h5>Reumatología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- PSICOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="fa-solid fa-comments icon-card orange"></i>
-          <h5>Psicología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- OBESIDAD -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-clipboard-pulse icon-card red"></i>
-          <h5>Obesidad y Diabetes</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- ODONTOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-emoji-laughing icon-card blue"></i>
-          <h5>Odontología – Ortodoncia</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- GINECOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-hospital icon-card magenta"></i>
-          <h5>Ginecología – Obstetricia</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- CLINICA MEDICA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-hospital-fill icon-card blue"></i>
-          <h5>Clínica Médica</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- INFECTOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-shield-plus icon-card green"></i>
-          <h5>Infectología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- DERMATOLOGIA -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-droplet-half icon-card orange"></i>
-          <h5>Dermatología</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
-      <!-- NUTRICION -->
-      <div class="col-md-4 reveal">
-        <div class="card text-center p-4 shadow-sm h-100">
-          <i class="bi bi-apple icon-card red"></i>
-          <h5>Nutrición</h5>
-          <a href="especialidadesturnos.html" class="btn btn-primary mt-3">
-            Reservar turno
-          </a>
-        </div>
-      </div>
-
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-ear icon-card blue"></i><h5>Otorrinolaringología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-capsule icon-card green"></i><h5>Gastroenterología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-heart-pulse icon-card red"></i><h5>Cardiología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-bandaid icon-card dark"></i><h5>Cirugía General y Digestiva</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="fa-solid fa-brain icon-card purple"></i><h5>Neurología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-person-lines-fill icon-card cyan"></i><h5>Reumatología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="fa-solid fa-comments icon-card orange"></i><h5>Psicología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-clipboard-pulse icon-card red"></i><h5>Obesidad y Diabetes</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-emoji-laughing icon-card blue"></i><h5>Odontología – Ortodoncia</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-hospital icon-card magenta"></i><h5>Ginecología – Obstetricia</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-hospital-fill icon-card blue"></i><h5>Clínica Médica</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-shield-plus icon-card green"></i><h5>Infectología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-droplet-half icon-card orange"></i><h5>Dermatología</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
+      <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-apple icon-card red"></i><h5>Nutrición</h5><a href="especialidadesturnos.html" class="btn btn-primary mt-3">Reservar turno</a></div></div>
     </div>
-
   </div>
 </section>
 
 <section id="estudios" class="py-5 bg-light">
   <div class="container">
-
-    <h2 class="text-center mb-5 reveal" style="color: var(--primary);">
-      Estudios Médicos
-    </h2>
-
+    <h2 class="text-center mb-5 reveal" style="color: var(--primary);">Estudios Médicos</h2>
     <div class="row g-4">
-
-      <!-- OTORRINO -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-          
-          <div class="estudio-header">
-            <div class="icon-card blue">
-              <i class="fa-solid fa-ear-listen"></i>
-            </div>
-            <h5>Otorrinolaringología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Rinofibrolaringoscopia</li>
-            <li>Fibroscopia</li>
-            <li>Rinoscopia</li>
-            <li>Otomicroscopia</li>
-            <li>Laringoscopia</li>
-          </ul>
-
-        </div>
-      </div>
-
-      <!-- GASTRO -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card green">
-              <i class="bi bi-capsule"></i>
-            </div>
-            <h5>Gastroenterología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Endoscopias digestivas</li>
-          </ul>
-
-        </div>
-      </div>
-
-      <!-- NEURO -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card purple">
-              <i class="fa-solid fa-brain"></i>
-            </div>
-            <h5>Neurología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Electroencefalograma</li>
-            <li>Electromiograma</li>
-          </ul>
-
-        </div>
-      </div>
-
-      <!-- CARDIO -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card red">
-              <i class="fa-solid fa-heart-pulse"></i>
-            </div>
-            <h5>Cardiología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Electrocardiograma</li>
-            <li>Ecocardiograma Doppler</li>
-          </ul>
-
-        </div>
-      </div>
-
-      <!-- GINE -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card magenta">
-              <i class="fa-solid fa-hospital"></i>
-            </div>
-            <h5>Ginecología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Papanicolau</li>
-          </ul>
-
-        </div>
-      </div>
-
-      <!-- DERMA -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card magenta">
-              <i class="fa-solid fa-hand-dots"></i>
-            </div>
-            <h5>Dermatología</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Biopsias</li>
-            <li>Cirugias</li>
-          </ul>
-
-        </div>
-      </div>
-
-  <!-- PSICO -->
-      <div class="col-md-6 reveal">
-        <div class="estudio-card">
-
-          <div class="estudio-header">
-            <div class="icon-card magenta">
-              <i class="fa-solid fa-hand-holding-heart"></i>
-            </div>
-            <h5>Psicologia</h5>
-          </div>
-
-          <ul class="estudio-list">
-            <li>Psicoterapia jóvenes y adultos </li>
-          </ul>
-
-        </div>
-      </div>
-
-
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card blue"><i class="fa-solid fa-ear-listen"></i></div><h5>Otorrinolaringología</h5></div><ul class="estudio-list"><li>Rinofibrolaringoscopia</li><li>Fibroscopia</li><li>Rinoscopia</li><li>Otomicroscopia</li><li>Laringoscopia</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card green"><i class="bi bi-capsule"></i></div><h5>Gastroenterología</h5></div><ul class="estudio-list"><li>Endoscopias digestivas</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card purple"><i class="fa-solid fa-brain"></i></div><h5>Neurología</h5></div><ul class="estudio-list"><li>Electroencefalograma</li><li>Electromiograma</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card red"><i class="fa-solid fa-heart-pulse"></i></div><h5>Cardiología</h5></div><ul class="estudio-list"><li>Electrocardiograma</li><li>Ecocardiograma Doppler</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card magenta"><i class="fa-solid fa-hospital"></i></div><h5>Ginecología</h5></div><ul class="estudio-list"><li>Papanicolau</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card magenta"><i class="fa-solid fa-hand-dots"></i></div><h5>Dermatología</h5></div><ul class="estudio-list"><li>Biopsias</li><li>Cirugias</li></ul></div></div>
+      <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card magenta"><i class="fa-solid fa-hand-holding-heart"></i></div><h5>Psicología</h5></div><ul class="estudio-list"><li>Psicoterapia jóvenes y adultos</li></ul></div></div>
     </div>
   </div>
 </section>
 
 <section id="cirugias" class="bg-light py-5">
   <div class="container">
-
-    <h2 class="text-center mb-5 reveal" style="color: var(--primary);">
-      🏥 Cirugías
-    </h2>
-
+    <h2 class="text-center mb-5 reveal" style="color: var(--primary);"> Cirugías</h2>
     <div class="row g-4">
-
-      <!-- OTORRINO -->
-      <div class="col-md-4 reveal reveal-delay-1">
-        <div class="cirugia-card">
-          <h5>Otorrinolaringología</h5>
-          <ul>
-            <li>Amigdalectomía</li>
-            <li>Adenoidectomía</li>
-            <li>Cirugía funcional de nariz</li>
-            <li>Cirugía estética de nariz</li>
-            <li>Cirugías de oído</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- CIRUGIA GENERAL -->
-      <div class="col-md-4 reveal reveal-delay-2">
-        <div class="cirugia-card">
-          <h5>Cirugía General y Digestiva</h5>
-          <ul>
-            <li>Laparoscopía: apéndice, vesícula, hernias, reflujo, tumores</li>
-            <li>Cirugía ambulatoria: verrugas, abscesos, lipomas, quistes</li>
-            <li>Cirugía percutánea guiada por ecografía</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- GINECO -->
-      <div class="col-md-4 reveal reveal-delay-3">
-        <div class="cirugia-card">
-          <h5>Ginecología</h5>
-          <ul>
-            <li>Histerectomía</li>
-            <li>Quistes de ovario</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- OBSTETRICIA -->
-      <div class="col-md-4 reveal reveal-delay-1">
-        <div class="cirugia-card">
-          <h5>Obstetricia</h5>
-          <ul>
-            <li>Cesáreas</li>
-            <li>Partos</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- ANTICONCEPCION -->
-      <div class="col-md-4 reveal reveal-delay-2">
-        <div class="cirugia-card">
-          <h5>Anticoncepción</h5>
-          <ul>
-            <li>Ligadura tubaria</li>
-            <li>Colocación y extracción de DIU</li>
-            <li>Implante subdérmico (chip)</li>
-          </ul>
-        </div>
-      </div>
-
-       <!-- DERMATOLOGIA -->
-      <div class="col-md-4 reveal reveal-delay-3">
-        <div class="cirugia-card">
-          <h5>Dermatologia</h5>
-          <ul>
-            <li>Extraccion de lunares</li>
-            <li>Extraccion de verrugas</li>
-          </ul>
-        </div>
-      </div>
-
+      <div class="col-md-4 reveal reveal-delay-1"><div class="cirugia-card"><h5>Otorrinolaringología</h5><ul><li>Amigdalectomía</li><li>Adenoidectomía</li><li>Cirugía funcional de nariz</li><li>Cirugía estética de nariz</li><li>Cirugías de oído</li></ul></div></div>
+      <div class="col-md-4 reveal reveal-delay-2"><div class="cirugia-card"><h5>Cirugía General y Digestiva</h5><ul><li>Laparoscopía: apéndice, vesícula, hernias, reflujo, tumores</li><li>Cirugía ambulatoria: verrugas, abscesos, lipomas, quistes</li><li>Cirugía percutánea guiada por ecografía</li></ul></div></div>
+      <div class="col-md-4 reveal reveal-delay-3"><div class="cirugia-card"><h5>Ginecología</h5><ul><li>Histerectomía</li><li>Quistes de ovario</li></ul></div></div>
+      <div class="col-md-4 reveal reveal-delay-1"><div class="cirugia-card"><h5>Obstetricia</h5><ul><li>Cesáreas</li><li>Partos</li></ul></div></div>
+      <div class="col-md-4 reveal reveal-delay-2"><div class="cirugia-card"><h5>Anticoncepción</h5><ul><li>Ligadura tubaria</li><li>Colocación y extracción de DIU</li><li>Implante subdérmico (chip)</li></ul></div></div>
+      <div class="col-md-4 reveal reveal-delay-3"><div class="cirugia-card"><h5>Dermatologia</h5><ul><li>Extraccion de lunares</li><li>Extraccion de verrugas</li></ul></div></div>
     </div>
-
   </div>
 </section>
 
@@ -671,7 +273,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/sepulveda.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/sepulveda.jpeg" class="staff-img" alt="Psic. Sepulveda">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Psicología</div>
@@ -687,24 +289,24 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/manzano.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/manzano.jpeg" class="staff-img" alt="Dra. Manzano">
           </div>
           <div class="staff-body">
-            <div class="staff-specialty">Clinica obesidad diabetes</div>
+            <div class="staff-specialty">Clínica Médica</div>
             <div class="staff-name">Dra. Manzano, Virginia Paula</div>
             <div class="staff-meta">
               <strong>Martes</strong><br>
               16:00 a 20:30 hs<br>
               <span class="staff-coverage">Todas las obras sociales</span>
             </div>
-            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a >
+            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
           </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/moyano.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/moyano.jpeg" class="staff-img" alt="Dra. Moyano">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Ginecología - Obstetricia</div>
@@ -721,7 +323,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/maldonado.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/maldonado.jpeg" class="staff-img" alt="Dr. Maldonado">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Reumatología</div>
@@ -738,7 +340,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/laranorry.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/laranorry.jpeg" class="staff-img" alt="Dr. Lara Norry">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Neurología</div>
@@ -755,7 +357,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/norry.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/norry.jpeg" class="staff-img" alt="Dr. Norry">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Dermatologia</div>
@@ -772,7 +374,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/nuevokollrich.png" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/nuevokollrich.png" class="staff-img" alt="Dra. Kollrich">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Dermatología</div>
@@ -789,7 +391,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/delafuente.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/delafuente.jpeg" class="staff-img" alt="Dra. De La Fuente">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Odontologia - Ortodoncia</div>
@@ -805,7 +407,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/paz.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/paz.jpeg" class="staff-img" alt="Dr. Paz">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Neurología</div>
@@ -822,7 +424,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/carrizo.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/carrizo.jpeg" class="staff-img" alt="Dr. Carrizo">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Cirugia Gral. - Laparoscopia</div>
@@ -839,7 +441,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/diaz.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/diaz.jpeg" class="staff-img" alt="Dra. Díaz">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Neurología - Electromiograma</div>
@@ -856,7 +458,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/eliasgrane.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/eliasgrane.jpeg" class="staff-img" alt="Dra. Elías Grane">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Clínica - Infectología</div>
@@ -873,24 +475,7 @@
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
-            <img src="img/diazalvarez.png" class="staff-img" alt="Dra. Diaz Álvarez">
-          </div>
-          <div class="staff-body">
-            <div class="staff-specialty">Endocrinología</div>
-            <div class="staff-name">Dra. Diaz Álvarez, Noel</div>
-            <div class="staff-meta">
-              <strong>Miércoles</strong><br>
-              16:00 a 20:30 hs<br>
-              <span class="staff-coverage">Todas las obras sociales</span>
-            </div>
-            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 reveal">
-        <div class="staff-card">
-          <div class="staff-img-wrap">
-            <img src="img/fernandez.jpeg" class="staff-img" alt="Dr. Palacio Gerardo">
+            <img src="img/fernandez.jpeg" class="staff-img" alt="Lic. Fernández">
           </div>
           <div class="staff-body">
             <div class="staff-specialty">Nutricionista</div>
@@ -903,10 +488,59 @@
           </div>
         </div>
       </div>
-      
+      <!-- NUEVOS PROFESIONALES AGREGADOS -->
+      <div class="col-md-3 col-sm-6 reveal">
+        <div class="staff-card">
+          <div class="staff-img-wrap">
+            <img src="FOTO(Dra. Gil - Neumonología)" class="staff-img" alt="Dra. Gil">
+          </div>
+          <div class="staff-body">
+            <div class="staff-specialty">Neumonología</div>
+            <div class="staff-name">Dra. Gil, Beatriz</div>
+            <div class="staff-meta">
+              <strong>Consultar horarios</strong><br>
+              <span class="staff-coverage">Todas las obras sociales</span>
+            </div>
+            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 reveal">
+        <div class="staff-card">
+          <div class="staff-img-wrap">
+            <img src="FOTO(Dra. Pedraza - Psiquiatría)" class="staff-img" alt="Dra. Pedraza">
+          </div>
+          <div class="staff-body">
+            <div class="staff-specialty">Psiquiatría</div>
+            <div class="staff-name">Dra. Pedraza, Mariela</div>
+            <div class="staff-meta">
+              <strong>Consultar horarios</strong><br>
+              <span class="staff-coverage">Todas las obras sociales</span>
+            </div>
+            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 reveal">
+        <div class="staff-card">
+          <div class="staff-img-wrap">
+            <img src="FOTO(Lic. Acosta - Fonoaudiología)" class="staff-img" alt="Lic. Acosta">
+          </div>
+          <div class="staff-body">
+            <div class="staff-specialty">Fonoaudiología</div>
+            <div class="staff-name">Lic. Acosta, Mariana</div>
+            <div class="staff-meta">
+              <strong>Consultar horarios</strong><br>
+              <span class="staff-coverage">Todas las obras sociales</span>
+            </div>
+            <a href="especialidadesturnos.html" class="staff-btn d-block text-center">Turnos</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
 <!-- COMO FUNCIONA PARA LA SECCION DE TURNOS -->
 <section class="how-section">
   <div class="container text-center">
@@ -919,7 +553,9 @@
       <div class="col-md-4 reveal reveal-delay-1">
         <div class="step-card">
           <div class="step-number">01</div>
-          <div class="icon-circle">🩺</div>
+          <div class="icon-circle">
+            <i class="bi bi-search"></i>
+          </div>
           <h5>Elegí especialidad</h5>
           <p>Seleccioná la especialidad médica que necesitás</p>
         </div>
@@ -928,7 +564,9 @@
       <div class="col-md-4 reveal reveal-delay-2">
         <div class="step-card">
           <div class="step-number">02</div>
-          <div class="icon-circle">👤</div>
+          <div class="icon-circle">
+            <i class="bi bi-person-badge"></i>
+          </div>
           <h5>Seleccioná profesional</h5>
           <p>Elegí el médico según disponibilidad</p>
         </div>
@@ -937,17 +575,15 @@
       <div class="col-md-4 reveal reveal-delay-3">
         <div class="step-card">
           <div class="step-number">03</div>
-          <div class="icon-circle">📅</div>
+          <div class="icon-circle">
+            <i class="bi bi-calendar-check"></i>
+          </div>
           <h5>Reservá turno</h5>
           <p>Confirmá fecha y horario</p>
         </div>
       </div>
 
     </div>
-
-    <a href="especialidadesturnos.html" class="btn-start mt-5 reveal">
-      Comenzar ahora
-    </a>
 
   </div>
 </section>
@@ -963,75 +599,38 @@
 <footer id="contacto" class="footer reveal">
   <div class="container">
     <div class="row">
-
-      <!-- LOGO + DESCRIPCIÓN -->
       <div class="col-md-3">
         <img src="logoNUEVO.png" alt="CMP" style="height:60px; margin-bottom:10px;">
         <h5>Centro Médico Palacio</h5>
-        <p>
-          Brindamos atención médica de calidad con profesionales especializados
-          para cuidar tu salud y la de tu familia.
-        </p>
+        <p>Brindamos atención médica de calidad con profesionales especializados para cuidar tu salud y la de tu familia.</p>
       </div>
-
-      <!-- CONTACTO -->
       <div class="col-md-3">
         <h5>Contacto</h5>
         <p><i class="bi bi-telephone-fill"></i> +54 (3865) 425356</p>
         <p><i class="bi bi-envelope-fill"></i> admin@centromedicopalacio.com</p>
-        <p>
-          <i class="bi bi-geo-alt-fill"></i> 
-          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" class="footer-link">
-            24 de Septiembre 2070
-          </a>
-        </p>
+        <p><i class="bi bi-geo-alt-fill"></i> <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" class="footer-link">24 de Septiembre 2070</a></p>
       </div>
-
-      <!-- HORARIOS -->
       <div class="col-md-3">
         <h5>Horarios</h5>
-        <p>Lunes, Miercoles, Viernes: 16:00 - 20:30</p>
-        <p>Martes y Jueves: 14:00 - 20:30</p>
+        <p>Lunes, Miércoles, Viernes: 16:00 - 20:30</p>
+        <p>Martes y Jueves: 8:00 - 20:30</p>
         <p>Sábados: Cerrado</p>
         <p>Domingos: Cerrado</p>
       </div>
-
-      <!-- REDES -->
       <div class="col-md-3">
         <h5>Redes Sociales</h5>
         <div class="social-icons">
-
-          <a href="https://www.facebook.com/share/17XspoK9Nt/" target="_blank">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-
-          <a href="https://www.instagram.com/centromedicopalacio?igsh=MW14YTgwczB3cjA1dA==" target="_blank">
-            <i class="fab fa-instagram"></i>
-          </a>
-
-          <a href="https://wa.me/543865762230" target="_blank">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-
+          <a href="https://www.facebook.com/share/17XspoK9Nt/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/centromedicopalacio?igsh=MW14YTgwczB3cjA1dA==" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/543865762230" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
-
     </div>
-
-    <!-- MAPA -->
     <div class="row mt-4">
       <div class="col-12">
-        <iframe 
-          src="https://www.google.com/maps?q=24+de+Septiembre+2070&output=embed"
-          width="100%" 
-          height="200" 
-          style="border:0; border-radius:10px;"
-          allowfullscreen=""
-          loading="lazy">
-        </iframe>
+        <iframe src="https://www.google.com/maps?q=24+de+Septiembre+2070&output=embed" width="100%" height="200" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
-
   </div>
 </footer>
 
@@ -1040,10 +639,8 @@ function scrollToSection(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
-// ANIMACIÓN AL HACER SCROLL
 document.addEventListener("DOMContentLoaded", function() {
   const revealElements = document.querySelectorAll('.reveal');
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1051,42 +648,10 @@ document.addEventListener("DOMContentLoaded", function() {
         observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
-  });
-
-  revealElements.forEach(el => observer.observe(el));
-});
-
-
-
-
-function scrollToSection(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-
-// ANIMACIÓN AL HACER SCROLL (reveal)
-document.addEventListener("DOMContentLoaded", function() {
-  const revealElements = document.querySelectorAll('.reveal');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
-  });
-
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
   revealElements.forEach(el => observer.observe(el));
 
-  // --- NUEVO: CONTADORES ANIMADOS ---
   const counters = document.querySelectorAll('.counter');
-
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1095,33 +660,27 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }, { threshold: 0.5 });
-
   counters.forEach(counter => counterObserver.observe(counter));
 
   function animateCounter(el) {
     const target = parseInt(el.getAttribute('data-count'));
     const prefix = el.getAttribute('data-prefix') || '';
     const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 2000; // 2 segundos
+    const duration = 2000;
     const startTime = performance.now();
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing: empieza rápido y termina suave
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easeOut * target);
-      
       el.textContent = prefix + current.toLocaleString('es-AR') + suffix;
-      
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
         el.textContent = prefix + target.toLocaleString('es-AR') + suffix;
       }
     }
-    
     requestAnimationFrame(update);
   }
 });

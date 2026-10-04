@@ -273,68 +273,31 @@ function renderDoctors(specialty) {
 }
 
 function renderTimeSlots() {
-
   const container = document.getElementById('timeSlots');
-
-  if (!container || !formData.doctor) return;
-
+  if (!container || !formData.doctor || !formData.date) return;
   container.innerHTML = '';
-
-  
   const match = formData.doctor.schedule.match(/(\d{2}:\d{2}) a (\d{2}:\d{2})/);
-
   if (!match) return;
-
   let [h, m] = match[1].split(':').map(Number);
-
   const [endH, endM] = match[2].split(':').map(Number);
-
   while (h < endH || (h === endH && m < endM)) {
-
-    const time =
-      `${h.toString().padStart(2,'0')}:` +
-      `${m.toString().padStart(2,'0')}`;
-
+    const time = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
     const slot = document.createElement('div');
-
     slot.className = 'wiz-time-slot';
     slot.textContent = time;
-
     slot.onclick = () => {
-
-      document.querySelectorAll('.wiz-time-slot')
-        .forEach(s => s.classList.remove('selected'));
-
+      document.querySelectorAll('.wiz-time-slot').forEach(s => s.classList.remove('selected'));
       slot.classList.add('selected');
-
       formData.time = time;
-
-      
       const btn = document.getElementById('requestTurnBtn');
-
       if (btn) {
-
-  btn.classList.remove('d-none');
-
-  setTimeout(() => {
-
-    btn.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-  }, 200);
-}
+        btn.classList.remove('d-none');
+        setTimeout(() => btn.scrollIntoView({ behavior: "smooth", block: "center" }), 200);
+      }
     };
-
     container.appendChild(slot);
-
     m += 30;
-
-    if (m >= 60) {
-      m = 0;
-      h++;
-    }
+    if (m >= 60) { m = 0; h++; }
   }
 }
 // ===== SELECCIÓN DE DATOS =====
@@ -409,13 +372,11 @@ function prevStep() {
 }
 
 function changeStep(target) {
-  // Ocultar paso actual, mostrar nuevo
   const currentSlide = document.getElementById(`slide-${currentStep}`);
   const targetSlide = document.getElementById(`slide-${target}`);
   if (currentSlide) currentSlide.classList.remove('active');
   if (targetSlide) targetSlide.classList.add('active');
   
-  // Actualizar stepper
   document.querySelectorAll('.wiz-step').forEach(step => {
     const num = parseInt(step.dataset.step);
     step.classList.remove('active', 'completed');
@@ -425,19 +386,15 @@ function changeStep(target) {
   
   const stepper = document.querySelector('.wiz-stepper');
   if (stepper) {
-    const progressMap = { 1: 0, 2: 30, 3: 70, 4: 100 };
-    const progress = progressMap[target] || 0;
+    const progress = ((target - 1) / (totalSteps - 1)) * 100;
     stepper.style.setProperty('--progress', `${progress}%`);
   }
   
-  // Preparar contenido del nuevo paso
   if (target === 3) renderDoctors(formData.specialty);
-  if (target === 4) renderTimeSlots();
+  if (target === 4) renderAvailableDays(); // <-- AQUÍ ESTÁ EL CAMBIO
   
   currentStep = target;
 }
-
-
 
 
 
@@ -505,32 +462,20 @@ function validateStep(step) {
     return false;
   }
 
-  // ===== PASO 4: FECHA Y HORA =====
+   // ===== PASO 4: FECHA Y HORA =====
   if (step === 4) {
-    const dateInput = document.getElementById('dateInput');
     const error = document.getElementById('datetimeError');
-    const date = dateInput?.value || '';
 
-    if (!date || !formData.time) {
-      if (error) error.textContent = '⚠️ Selecciona fecha y hora';
+    if (!formData.date || !formData.time) {
+      if (error) error.textContent = '⚠️ Seleccioná un día y un horario';
       return false;
     }
 
-    const [year, month, dayNum] = date.split('-').map(Number);
-    const selectedDate = new Date(year, month - 1, dayNum);
-    const day = selectedDate.getDay();
-
-    if (!formData.doctor.days.includes(day)) {
-      if (error) error.textContent = "❌ Este médico no atiende ese día";
-      return false;
-    }
-
+    // Ya no hace falta validar si el médico atiende ese día, 
+    // porque la UI solo muestra los días que sí atiende.
     if (error) error.textContent = '';
-    formData.date = date;
     return true;
   }
-
-  return true;
 }
 
 
@@ -588,47 +533,36 @@ function submitWizard() {
 
 
 
-
 function resetWizard() {
-  // 1️⃣ Primero, oculta visualmente el slide actual SIN animación
   const currentSlide = document.getElementById(`slide-${currentStep}`);
-  if (currentSlide) {
-    currentSlide.style.transition = 'none'; // Desactiva animación temporalmente
-    currentSlide.style.opacity = '0';
-    currentSlide.style.visibility = 'hidden';
-    currentSlide.classList.remove('active');
+  if (currentSlide) { 
+    currentSlide.style.transition = 'none'; 
+    currentSlide.style.opacity = '0'; 
+    currentSlide.style.visibility = 'hidden'; 
+    currentSlide.classList.remove('active'); 
   }
-  
-  // 2️⃣ Limpia datos
   currentStep = 1;
   Object.keys(formData).forEach(k => formData[k] = '');
   
-  const dniInput = document.getElementById('dniInput');
+  const dniInput = document.getElementById('dniInput'); 
   if (dniInput) dniInput.value = '';
   
-  document.querySelectorAll('.wiz-spec-btn, .wiz-doc-card, .wiz-time-slot').forEach(el => el.classList.remove('selected'));
-  const requestBtn =
-  document.getElementById("requestTurnBtn");
-
-if (requestBtn) {
-  requestBtn.classList.add("d-none");
-}
+  // Agregamos .wiz-day-chip a la limpieza
+  document.querySelectorAll('.wiz-spec-btn, .wiz-doc-card, .wiz-time-slot, .wiz-day-chip').forEach(el => el.classList.remove('selected'));
+  
+  const requestBtn = document.getElementById("requestTurnBtn");
+  if (requestBtn) requestBtn.classList.add("d-none");
+  
   const desc = document.getElementById('specialtyDesc');
   if (desc) desc.innerHTML = '<p class="text-muted">Selecciona una especialidad para ver más detalles</p>';
   
-  ['nextFromSpecialty', 'nextFromDoctor', 'nextFromDatetime'].forEach(id => {
-    const btn = document.getElementById(id);
-    if (btn) btn.disabled = true;
-  });
+  // Ocultamos la sección de horas al resetear
+  const hoursSection = document.getElementById('hoursSection');
+  if (hoursSection) hoursSection.style.display = 'none';
   
-  // 3️⃣ Fuerza un reflow para que el navegador aplique los cambios ANTES de animar
   void document.body.offsetWidth;
-  
-  // 4️⃣ Restaura la transición y muestra el paso 1
   requestAnimationFrame(() => {
-    if (currentSlide) {
-      currentSlide.style.transition = ''; // Restaura animación
-    }
+    if (currentSlide) currentSlide.style.transition = '';
     changeStep(1);
   });
 }
@@ -777,3 +711,48 @@ cerrar.addEventListener("click", () => {
 
     document.body.style.overflow = "auto";
 });
+
+
+// 1. NUEVA FUNCIÓN: Renderiza los días disponibles del médico
+function renderAvailableDays() {
+  const container = document.getElementById('daysGrid');
+  const hint = document.getElementById('daysHint');
+  const hoursSection = document.getElementById('hoursSection');
+  if (!container || !formData.doctor) return;
+  
+  container.innerHTML = '';
+  hoursSection.style.display = 'none';
+  formData.date = '';
+  formData.time = '';
+  document.getElementById('requestTurnBtn').classList.add('d-none');
+  
+  const doctorDays = formData.doctor.days;
+  const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let availableCount = 0;
+  
+  for (let i = 0; i < 21 && availableCount < 8; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    if (doctorDays.includes(date.getDay())) {
+      availableCount++;
+      const chip = document.createElement('div');
+      chip.className = 'wiz-day-chip';
+      chip.innerHTML = `<span class="wiz-day-name">${dayNames[date.getDay()]}</span><span class="wiz-day-number">${date.getDate()}</span><span class="wiz-day-month">${monthNames[date.getMonth()]}</span>`;
+      chip.onclick = () => {
+        document.querySelectorAll('.wiz-day-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        formData.date = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        document.getElementById('selectedDayLabel').textContent = `${dayNames[date.getDay()]} ${date.getDate()} de ${monthNames[date.getMonth()]}`;
+        hoursSection.style.display = 'block';
+        renderTimeSlots();
+        setTimeout(() => hoursSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+      };
+      container.appendChild(chip);
+    }
+  }
+  hint.textContent = availableCount === 0 ? '❌ Sin disponibilidad en los próximos 21 días' : `Próximos ${availableCount} días disponibles`;
+  hint.style.color = availableCount === 0 ? '#dc3545' : '#888';
+}
