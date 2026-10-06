@@ -17,7 +17,6 @@ const pacientesRegistrados = [
   "40111222"
 ];
 // ===== DATOS DE EJEMPLO =====
-// ===== DATOS DE EJEMPLO =====
 const DATA = {
   specialties: {
     "Cardiología": "Diagnóstico y tratamiento de enfermedades del corazón y sistema circulatorio.",
@@ -223,7 +222,7 @@ const DATA = {
 
 // ===== ESTADO DEL WIZARD =====
 let currentStep = 1;
-const totalSteps = 4; //  CAMBIADO: ahora son 4 pasos
+const totalSteps = 4; 
 const formData = { dni: '', specialty: '', doctor: '', date: '', time: '' };
 
 // ===== INICIALIZACIÓN =====
@@ -338,7 +337,7 @@ function selectDoctor(doc, card) {
 
   card.classList.add('selected');
   
-  formData.doctor = doc; // ✅ ahora sí guarda bien
+  formData.doctor = doc; 
 
   const docName = document.getElementById('selectedDoctorName');
 
@@ -346,7 +345,6 @@ function selectDoctor(doc, card) {
     docName.textContent = doc.name;
   }
 
-  // 🔥 AVANZA SOLO
   setTimeout(() => {
     changeStep(4);
   }, 300);
@@ -391,21 +389,13 @@ function changeStep(target) {
   }
   
   if (target === 3) renderDoctors(formData.specialty);
-  if (target === 4) renderAvailableDays(); // <-- AQUÍ ESTÁ EL CAMBIO
+  if (target === 4) renderAvailableDays(); 
   
   currentStep = target;
 }
 
 
 
-
-
-
-
-
-
-
-// ===== VALIDACIÓN POR PASO =====
 // ===== VALIDACIÓN POR PASO =====
 function validateStep(step) {
 
@@ -443,7 +433,6 @@ function validateStep(step) {
       return false; // ⛔ NO avanza
     }
 
-    // 4) Todo OK: limpiar errores y avanzar
     if (error) error.textContent = '';
     if (dniInput) dniInput.classList.remove('is-invalid');
     formData.dni = dni;
@@ -471,8 +460,7 @@ function validateStep(step) {
       return false;
     }
 
-    // Ya no hace falta validar si el médico atiende ese día, 
-    // porque la UI solo muestra los días que sí atiende.
+    
     if (error) error.textContent = '';
     return true;
   }
@@ -509,7 +497,6 @@ function fillSummary() {
 
 // ===== SUBMIT FINAL =====
 function submitWizard() {
-  // Validar paso 4 antes de confirmar
   if (!validateStep(4)) return;
   
   const btn = document.getElementById('confirmBtn');
@@ -519,7 +506,6 @@ function submitWizard() {
   btn.disabled = true;
   
   setTimeout(() => {
-    //  Aquí después podrás redirigir a tu página de comprobante:
     // window.location.href = `confirmacion.html?dni=${formData.dni}&especialidad=${encodeURIComponent(formData.specialty)}&medico=${encodeURIComponent(formData.doctor)}&fecha=${formData.date}&hora=${formData.time}`;
     
     
@@ -547,7 +533,7 @@ function resetWizard() {
   const dniInput = document.getElementById('dniInput'); 
   if (dniInput) dniInput.value = '';
   
-  // Agregamos .wiz-day-chip a la limpieza
+  
   document.querySelectorAll('.wiz-spec-btn, .wiz-doc-card, .wiz-time-slot, .wiz-day-chip').forEach(el => el.classList.remove('selected'));
   
   const requestBtn = document.getElementById("requestTurnBtn");
@@ -556,7 +542,7 @@ function resetWizard() {
   const desc = document.getElementById('specialtyDesc');
   if (desc) desc.innerHTML = '<p class="text-muted">Selecciona una especialidad para ver más detalles</p>';
   
-  // Ocultamos la sección de horas al resetear
+ 
   const hoursSection = document.getElementById('hoursSection');
   if (hoursSection) hoursSection.style.display = 'none';
   
@@ -615,7 +601,6 @@ function showConfirmCard() {
 
   if (!validateStep(4)) return;
 
-  // 🔥 ocultar SOLO solicitar turno
   const requestBtn =
     document.getElementById("requestTurnBtn");
 
@@ -623,7 +608,6 @@ function showConfirmCard() {
     requestBtn.classList.add("d-none");
   }
 
-  // 🔥 mostrar card
   const card =
     document.getElementById("confirmCard");
 
@@ -647,7 +631,6 @@ function showConfirmCard() {
   document.getElementById("cTime").textContent =
     formData.time;
 
-  // 🔥 scroll automático
   setTimeout(() => {
 
     card.scrollIntoView({
@@ -688,8 +671,7 @@ function generarPDF() {
 }
 
 
-//MENU HAMBURGUESA EVER
-// MENU HAMBURGUESA
+
 const nav = document.querySelector("#nav");
 const abrir = document.querySelector("#abrir");
 const cerrar = document.querySelector("#cerrar");
