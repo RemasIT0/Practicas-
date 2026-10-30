@@ -1,50 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="EstiloTurnos.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <title>Turnos | Centro Médico Palacio</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="EstiloTurnos.css">
 </head>
 <body>
-    <header>
 
-    <div class="logo-container">
-        <img src="logoNUEVO.png" alt="" class="imglogo">
-
-        <div class="logo-info">
-            <span class="logo-text">Centro</span>
-            <span class="logo-subtext">Medico</span>
-            <strong class="palacio">Palacio</strong>
+<!-- Mismo header que index.html, con fondo azul -->
+<header class="header-turnos sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-turnos">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <img src="logoNUEVO.png" alt="Logo" width="50">
+        <div>
+          <span class="logo-text">Centro</span>
+          <span class="logo-subtext">Medico</span>
+          <strong class="palacio">Palacio</strong>
         </div>
-    </div>
+      </a>
 
-    <button class="abrir-menu" id="abrir">
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menú">
         <i class="bi bi-list"></i>
-    </button>
+      </button>
 
-    <nav class="nav" id="nav">
-
-        <button class="cerrar-menu" id="cerrar">
-            <i class="bi bi-x-lg"></i>
-        </button>
-
-        <ul class="nav-list"> 
-            <li><a href="index.html">INICIO</a></li>
-            <li><a href="index.html#servicios">SERVICIOS</a></li>
-            <li><a href="index.html#profesionales">PROFESIONALES</a></li>
-            <li><a href="index.html#contacto">CONTACTO</a></li>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto gap-lg-4 text-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#profesionales">Profesionales</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contacto">Contacto</a></li>
         </ul>
-
-    </nav>
+        <div class="text-center">
+          <a href="especialidadesturnos.html" class="btn btn-turnos">Turnos</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>
-    <!-- Sección de búsqueda de DNI -->
+
+<!-- Asistente para sacar turno (la lógica está en menu.js) -->
 <section class="dni-search-section">
   <div class="wizard-wrapper">
-    
+
     <!-- Barra de progreso -->
     <div class="wiz-stepper" style="--progress: 0%">
       <div class="wiz-step active" data-step="1">
@@ -63,27 +67,29 @@
         <span class="wiz-step-num">4</span>
         <span class="wiz-step-label">Fecha/Hora</span>
       </div>
-     </div>
-    <!-- Contenedor de slides -->
+    </div>
+
     <div class="wiz-slides">
-      
-      <!-- PASO 1: DNI -->
+
+      <!-- PASO 1: DNI (siempre obligatorio) -->
       <div class="wiz-slide active" id="slide-1">
         <div class="dni-icon wiz-icon">
           <i class="bi bi-card-checklist"></i>
         </div>
         <h2 class="dni-title">Agendar Turno</h2>
         <p class="dni-description">Ingrese su DNI para comenzar</p>
-        <p class="dni-help">¿Dudas? <a href="tel:38123243123">+54 (3865) 425356</a></p>
-        
-        <form class="dni-form" id="dniForm" onsubmit="return false;">
+        <!-- Se completa desde menu.js si se llegó desde un médico/especialidad del inicio -->
+        <p class="dni-help wiz-preselect" id="preselectInfo" hidden></p>
+        <p class="dni-help">¿Dudas? <a href="tel:+543865425356">+54 (3865) 425356</a></p>
+
+        <form class="dni-form" id="dniForm" novalidate>
           <div class="dni-input-group">
-            <input type="text" class="dni-input" id="dniInput" placeholder="Ej: 12345678" maxlength="9" pattern="[0-9]+">
+            <input type="text" class="dni-input" id="dniInput" placeholder="Ej: 12345678" maxlength="9" inputmode="numeric" autocomplete="off">
           </div>
-          <span class="dni-error" id="dniError"></span>
+          <span class="dni-error" id="dniError" aria-live="polite"></span>
           <button type="button" class="dni-btn-submit" id="nextFromDni">Continuar <i class="bi bi-arrow-right"></i></button>
         </form>
-        
+
         <p class="dni-security"><i class="bi bi-shield-check"></i> Tus datos están protegidos</p>
       </div>
 
@@ -94,16 +100,11 @@
         </div>
         <h2 class="dni-title">Seleccionar Especialidad</h2>
         <p class="dni-description">Elige el área médica que necesitas</p>
-        
+
         <div class="wiz-spec-grid" id="specialtyGrid"></div>
-        
-        <div class="wiz-spec-desc" id="specialtyDesc">
-          <p class="text-muted">Selecciona una especialidad para ver más detalles</p>
-        </div>
-        
+
         <div class="wiz-btn-group">
-          <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
-          
+          <button type="button" class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
         </div>
       </div>
 
@@ -114,38 +115,36 @@
         </div>
         <h2 class="dni-title">Seleccionar Profesional</h2>
         <p class="dni-description">Médicos disponibles en <span id="selectedSpecialtyName">-</span></p>
-        
+
         <div class="wiz-doc-list" id="doctorList"></div>
-        
+
         <div class="wiz-btn-group">
-          <button class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
-          
+          <button type="button" class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
         </div>
       </div>
 
       <!-- PASO 4: Fecha/Hora -->
-       <!-- PASO 4: Fecha/Hora -->
       <div class="wiz-slide" id="slide-4">
         <div class="dni-icon wiz-icon">
           <i class="bi bi-calendar-check"></i>
         </div>
         <h2 class="dni-title">Elegir Fecha y Hora</h2>
         <p class="dni-description">Disponibilidad para <span id="selectedDoctorName">-</span></p>
-        
-        <!-- Selector de días disponibles -->
+
+        <!-- Días disponibles -->
         <div class="wiz-days-section">
-          <label class="wiz-days-label">📅 Próximos días disponibles</label>
+          <label class="wiz-days-label"><i class="bi bi-calendar3"></i> Próximos días disponibles</label>
           <div class="wiz-days-grid" id="daysGrid"></div>
           <p class="wiz-days-hint" id="daysHint">Seleccioná un día para ver los horarios</p>
         </div>
-        
+
         <!-- Horarios (se muestran al elegir un día) -->
         <div class="wiz-hours-section" id="hoursSection" style="display: none;">
-          <label class="wiz-days-label">🕐 Horarios para el <span id="selectedDayLabel">-</span></label>
+          <label class="wiz-days-label"><i class="bi bi-clock"></i> Horarios para el <span id="selectedDayLabel">-</span></label>
           <div class="wiz-time-grid" id="timeSlots"></div>
         </div>
-        
-        <span class="dni-error" id="datetimeError"></span>
+
+        <span class="dni-error" id="datetimeError" aria-live="polite"></span>
 
         <div id="confirmCard" class="d-none">
           <h3>Confirmar turno</h3>
@@ -154,15 +153,15 @@
           <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
           <p><strong>Fecha:</strong> <span id="cDate"></span></p>
           <p><strong>Hora:</strong> <span id="cTime"></span></p>
-          <p class="text-danger fw-bold mt-3">⚠️ Por favor asistir 10 minutos antes del turno.</p>
-          <button class="btn btn-success mt-3" onclick="confirmAppointment()">Confirmar turno</button>
+          <p class="text-danger fw-bold mt-3"><i class="bi bi-exclamation-triangle-fill"></i> Por favor asistir 10 minutos antes del turno.</p>
+          <button type="button" class="btn btn-success mt-3" id="confirmTurnBtn" onclick="confirmAppointment()">Confirmar turno</button>
         </div>
-        
+
         <div class="wiz-btn-group bottom-buttons">
-          <button class="wiz-btn-back" onclick="prevStep()">
+          <button type="button" class="wiz-btn-back" onclick="prevStep()">
             <i class="bi bi-arrow-left"></i> Atrás
           </button>
-          <button id="requestTurnBtn" class="btn btn-primary d-none" onclick="showConfirmCard()">
+          <button type="button" id="requestTurnBtn" class="btn btn-primary d-none" onclick="showConfirmCard()">
             Solicitar turno
           </button>
         </div>
@@ -170,7 +169,7 @@
 
     </div>
   </div>
-</section>  
+</section>
 
 <footer class="footer">
   <div class="container">
@@ -192,8 +191,8 @@
         <p><i class="bi bi-telephone-fill"></i> +54 (3865) 425356</p>
         <p><i class="bi bi-envelope-fill"></i> admin@centromedicopalacio.com</p>
         <p>
-          <i class="bi bi-geo-alt-fill"></i> 
-          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" class="footer-link">
+          <i class="bi bi-geo-alt-fill"></i>
+          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" rel="noopener" class="footer-link">
             24 de Septiembre 2070
           </a>
         </p>
@@ -211,19 +210,15 @@
       <div class="col-md-3">
         <h5>Redes Sociales</h5>
         <div class="social-icons">
-
-          <a href="https://www.facebook.com/" target="_blank">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
             <i class="fab fa-facebook-f"></i>
           </a>
-
-          <a href="https://www.instagram.com/" target="_blank">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
             <i class="fab fa-instagram"></i>
           </a>
-
-          <a href="https://wa.me/543865425356" target="_blank">
+          <a href="https://wa.me/543865425356" target="_blank" rel="noopener" aria-label="WhatsApp">
             <i class="fab fa-whatsapp"></i>
           </a>
-
         </div>
       </div>
 
@@ -232,10 +227,10 @@
     <!-- MAPA -->
     <div class="row mt-4">
       <div class="col-12">
-        <iframe 
+        <iframe
           src="https://www.google.com/maps?q=24+de+Septiembre+2070&output=embed"
-          width="100%" 
-          height="200" 
+          width="100%"
+          height="200"
           style="border:0; border-radius:10px;"
           allowfullscreen=""
           loading="lazy">
@@ -245,7 +240,12 @@
 
   </div>
 </footer>
-</body>
-    <script src="menu.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Orden importante: datos y API antes de menu.js -->
+<script src="datos-medicos.js"></script>
+<script src="api-turnos.js"></script>
+<script src="menu.js"></script>
+</body>
 </html>

@@ -1,3 +1,8 @@
+/* =====================================================================
+   ESTILOS DE LA PÁGINA DE TURNOS (especialidadesturnos.html)
+   También los usa la página antigua TurnosPagina.html.
+   ===================================================================== */
+
 :root {
   --azul-oscuro: #003a87;
   --azul-medio: rgb(17, 63, 200);
@@ -7,13 +12,92 @@
   --negro: #000000;
   --gris-claro: azure;
   --accent: #2a7cc7;
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
+a { text-decoration: none; }
 
-/* ================= HEADER & NAV ================= */
-header { display: flex; align-items: center; justify-content: space-between; background: var(--azul-oscuro); padding-right: 1rem; width: 100%; z-index: 10; }
+/* ================= HEADER (igual al de index.html, con fondo azul) ================= */
+.header-turnos { z-index: 1030; }
+
+.navbar-turnos {
+  background: var(--azul-oscuro);
+  padding: 10px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: 0.3s;
+}
+
+.navbar-turnos .navbar-brand { color: #fff; }
+.navbar-turnos .logo-text { font-size: 20px; font-weight: 700; color: #fff; margin: 0; }
+.navbar-turnos .logo-subtext,
+.navbar-turnos .palacio { font-size: inherit; color: #fff; }
+
+.navbar-turnos .navbar-nav { margin-left: auto; margin-right: 20px !important; }
+
+.navbar-turnos .nav-link {
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+  position: relative;
+  transition: 0.3s;
+}
+.navbar-turnos .nav-link:hover,
+.navbar-turnos .nav-link:focus { color: #9cc9ff; }
+
+/* Subrayado animado al pasar el mouse */
+.navbar-turnos .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s var(--ease-suave), left 0.3s var(--ease-suave);
+}
+.navbar-turnos .nav-link:hover::after { left: 20%; width: 60%; }
+
+.btn-turnos {
+  background: linear-gradient(135deg,#0d6efd,#4da3ff);
+  color: white;
+  border-radius: 14px;
+  padding: 14px 30px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn-turnos:hover {
+  background: linear-gradient(135deg,#0b5ed7,#1f8fff);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.navbar-turnos .navbar-toggler { border: none; background: white; }
+.navbar-turnos .navbar-toggler i { font-size: 2rem; color: #0d6efd; }
+
+@media (max-width: 991px) {
+  .navbar-turnos .navbar-collapse {
+    margin-top: 20px;
+    background: linear-gradient(180deg, rgba(42,124,199,0.97), rgba(110,180,255,0.96));
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 40px 30px;
+    animation: slideDown 0.35s ease;
+  }
+  .navbar-turnos .navbar-nav { gap: 22px; }
+  .navbar-turnos .nav-link { letter-spacing: 1px; }
+  .navbar-turnos .nav-link:hover { color: #fff; transform: scale(1.03); }
+  .btn-turnos { margin-top: 25px; width: 100%; font-size: 1.1rem; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= HEADER ANTIGUO (solo TurnosPagina.html) ================= */
+header:not(.header-turnos) { display: flex; align-items: center; justify-content: space-between; background: var(--azul-oscuro); padding-right: 1rem; width: 100%; z-index: 10; }
 .imglogo { max-width: 6rem; margin: 10px; }
 .nav-list { display: flex; list-style: none; gap: 1rem; }
 .nav-list a { color: var(--blanco); text-decoration: none; font-size: 18px; padding: 10px 20px; position: relative; transition: color 0.3s; }
@@ -22,7 +106,7 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .nav-list a:hover::after { width: 100%; }
 .abrir-menu, .cerrar-menu { display: none; border: 0; background: transparent; color: var(--blanco); font-size: 2rem; cursor: pointer; }
 
-/* ================= LAYOUT & ANIMACIONES ================= */
+/* ================= PÁGINA ANTIGUA (TurnosPagina.html) ================= */
 .seccion-principal { min-height: 100vh; display: flex; align-items: center; background: var(--gris-claro); }
 .seccion-principal h1 { text-align: center; color: var(--negro); }
 .contenedortexto { display: flex; flex-direction: row; align-items: center; margin-top: 50px; justify-content: space-between; gap: 60px; width: 100%; padding: 0 40px; }
@@ -35,17 +119,15 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .moverimg { opacity: 0; transform: translateX(50px); animation: moverimagen 2s ease forwards; }
 @keyframes moverimagen { to { opacity: 1; transform: translateX(0); } }
 
-/* ================= BOTONES GLOBALES ================= */
 .btnturno { background: var(--azul-medio); color: var(--blanco); border: none; padding: 10px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; transition: 0.3s; }
 .btnturno:hover { background: var(--azul-hover); }
 .btnturno2 { background: rgb(3, 42, 160); color: var(--blanco); border: none; padding: 20px; font-size: 18px; cursor: pointer; border-radius: 30px; transition: 0.3s; }
 .btnturno2:hover { background: var(--azul-claro-hover); }
 
-/* ================= TARJETAS ================= */
 .EspecialidadesTitulo { display: flex; justify-content: center; align-items: center; padding: 40px; color: var(--negro); font-size: 28px; margin-top: 30px; }
 .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; border-radius: 20px; }
-.card { background: var(--blanco); border-radius: 50px; overflow: visible; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.3s; }
-.card:hover { transform: scale(1.05); }
+.card { background: var(--blanco); border-radius: 50px; overflow: visible; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: box-shadow 0.2s ease; }
+.card:hover { transform: scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 .card-img { width: 100%; height: 200px; object-fit: cover; }
 .card-content { padding: 15px; }
 .btn-toggle { width: 100%; padding: 10px; border: none; background: royalblue; color: var(--blanco); cursor: pointer; }
@@ -53,206 +135,213 @@ header { display: flex; align-items: center; justify-content: space-between; bac
 .card-extra a { display: block; padding: 3px 0; color: var(--negro); text-decoration: none; }
 .card.active { z-index: 999; }
 .card.active .card-extra { display: block; }
-.card {
-  transition: box-shadow 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
 
 /* ================= FOOTER ================= */
 .footer { background: #0b1b33; color: #ccc; padding: 60px 0; }
 .footer h5 { color: white; margin-bottom: 15px; }
 .footer p { font-size: 14px; }
-.social-icons span { display: inline-block; margin-right: 10px; font-size: 22px; cursor: pointer; transition: 0.3s; }
-.social-icons span:hover { color: #003a8f; }
 .footer-link { color: #ccc; text-decoration: none; }
 .footer-link:hover { color: white; }
+.social-icons span { display: inline-block; margin-right: 10px; font-size: 22px; cursor: pointer; transition: 0.3s; }
+.social-icons span:hover { color: #003a8f; }
+.social-icons a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; margin-right: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); color: white; font-size: 18px;
+  transition: 0.3s;
+}
+.social-icons a:hover { background: #2a7cc7; transform: translateY(-3px); }
 
-/* ================= WIZARD / DNI ================= */
-.dni-search-section { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(135deg, var(--gris-claro) 0%, #e9ecef 100%); }
-.wizard-wrapper { width: 95%; max-width: 820px; margin: 45px auto; }
+/* ================= ASISTENTE DE TURNOS ================= */
+.dni-search-section { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 30px 20px; background: linear-gradient(135deg, var(--gris-claro) 0%, #e9ecef 100%); }
+.wizard-wrapper { width: 95%; max-width: 820px; margin: 20px auto; animation: wizEntrada 0.6s var(--ease-suave) backwards; }
 
+/* ---------- Barra de progreso ---------- */
+.wiz-stepper { display: flex; justify-content: space-between; position: relative; margin-bottom: 28px; }
 
-
-/* ================= BARRA DE PROGRESO (WIZARD) - CORREGIDA ================= */
-.wiz-stepper { 
-  display: flex; 
-  justify-content: space-between; 
-  position: relative; 
-  margin-bottom: 35px; 
+/* Línea de fondo gris (del centro del paso 1 al centro del paso 4) */
+.wiz-stepper::before {
+  content: '';
+  position: absolute; top: 18px; left: 12.5%; right: 12.5%;
+  height: 6px; background: #e9ecef; border-radius: 3px; z-index: 1;
 }
 
-/* Línea de fondo gris */
-.wiz-stepper::before { 
-  content: ''; 
-  position: absolute; 
-  top: 18px; 
-  left: 12.5%;  /* Centro del paso 1 */
-  right: 12.5%; /* Centro del paso 4 */
-  height: 6px; 
-  background: #e9ecef; 
-  border-radius: 3px; 
-  z-index: 1; 
-}
-
-/* Línea de progreso azul - USANDO background-size */
-.wiz-stepper::after { 
-  content: ''; 
-  position: absolute; 
-  top: 18px; 
-  left: 12.5%;  /* Centro del paso 1 */
-  right: 12.5%; /* Centro del paso 4 */
-  height: 6px; 
-  background: linear-gradient(90deg, var(--azul-oscuro), var(--accent)); 
-  background-size: var(--progress, 0%) 100%; /* ✅ Forma correcta */
+/* Línea de progreso azul: su largo se controla con --progress desde menu.js */
+.wiz-stepper::after {
+  content: '';
+  position: absolute; top: 18px; left: 12.5%; right: 12.5%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--azul-oscuro), var(--accent));
+  background-size: var(--progress, 0%) 100%;
   background-repeat: no-repeat;
   background-position: left;
-  border-radius: 3px; 
-  z-index: 2; 
-  transition: background-size 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+  border-radius: 3px; z-index: 2;
+  transition: background-size 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.wiz-step { 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  position: relative; 
-  z-index: 3; 
-  flex: 1; 
+.wiz-step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 3; flex: 1; }
+.wiz-step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff; color: #6c757d; border: 2px solid #e9ecef;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; transition: 0.3s;
 }
-
-.wiz-step-num { 
-  width: 36px; 
-  height: 36px; 
-  border-radius: 50%; 
-  background: #fff; 
-  color: #6c757d; 
-  border: 2px solid #e9ecef; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-weight: 700; 
-  font-size: 14px; 
-  transition: 0.3s; 
+.wiz-step.active .wiz-step-num {
+  border-color: var(--azul-oscuro); color: var(--azul-oscuro);
+  box-shadow: 0 0 0 4px rgba(0,58,135,0.1);
+  animation: wizPulso 2.4s ease-out infinite;
 }
+.wiz-step.completed .wiz-step-num { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
+.wiz-step-label { margin-top: 8px; font-size: 12px; color: #6c757d; transition: 0.3s; }
+.wiz-step.active .wiz-step-label { color: var(--azul-oscuro); font-weight: 600; }
 
-.wiz-step.active .wiz-step-num { 
-  border-color: var(--azul-oscuro); 
-  color: var(--azul-oscuro); 
-  box-shadow: 0 0 0 4px rgba(0,58,135,0.1); 
+/* ---------- Contenedor de pasos ----------
+   Cada paso ocupa todo el recuadro y tiene su propio scroll interno.
+   El alto se adapta a la pantalla para mostrar la mayor cantidad posible. */
+.wiz-slides {
+  background: #fff; border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,58,135,0.12);
+  position: relative; padding: 30px;
+  min-height: clamp(500px, calc(100vh - 230px), 680px);
+  overflow: hidden;
 }
-
-.wiz-step.completed .wiz-step-num { 
-  background: var(--azul-oscuro); 
-  border-color: var(--azul-oscuro); 
-  color: #fff; 
+.wiz-slide {
+  position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.35s ease, transform 0.45s var(--ease-suave);
+  pointer-events: none; visibility: hidden;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  text-align: center;
+  overflow-y: auto; z-index: 1;
 }
-
-.wiz-step-label { 
-  margin-top: 8px; 
-  font-size: 12px; 
-  color: #6c757d; 
-  transition: 0.3s; 
-}
-
-.wiz-step.active .wiz-step-label { 
-  color: var(--azul-oscuro); 
-  font-weight: 600; 
-}
-
-
-
-
-
-/* Slides */
-.wiz-slides { background: #fff; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,58,135,0.12); position: relative; padding: 30px; min-height: 500px; box-sizing: border-box; overflow: hidden; }
-.wiz-slide { position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px; padding: 0; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; visibility: hidden; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; z-index: 1; }
 .wiz-slide.active { opacity: 1; transform: translateY(0); pointer-events: all; visibility: visible; z-index: 10; }
 
-/* Elementos comunes */
-.wiz-icon { width: 60px; height: 60px; margin: 0 auto 10px; background: linear-gradient(135deg, var(--azul-oscuro), var(--accent)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; box-shadow: 0 8px 20px rgba(0,58,135,0.25); flex-shrink: 0; }
-.wiz-title { font-size: 22px; font-weight: 700; color: var(--azul-oscuro); text-align: center; margin: 0; }
-.wiz-desc { font-size: 15px; color: #666; text-align: center; margin: 0; }
-.wiz-help { font-size: 13px; color: #888; text-align: center; margin: 0; }
-.wiz-help a { color: var(--accent); text-decoration: none; }
+/* ---------- Elementos comunes ---------- */
+.wiz-icon {
+  width: 60px; height: 60px; margin: 0 auto 10px;
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--accent));
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 26px; color: #fff; box-shadow: 0 8px 20px rgba(0,58,135,0.25); flex-shrink: 0;
+}
+.wiz-slide.active .wiz-icon { animation: wizIcono 0.5s var(--ease-suave) both; }
 
-/* Paso 1: DNI */
-#slide-1 { text-align: center; }
+.wiz-preselect { color: var(--azul-oscuro); background: #f0f7ff; border-radius: 10px; padding: 8px 14px; }
+
+/* Animación de entrada escalonada (la aplica menu.js con --i = posición) */
+.wiz-anim-item { animation: wizItem 0.4s var(--ease-suave) backwards; animation-delay: calc(var(--i, 0) * 35ms); }
+
+/* ---------- Paso 1: DNI ---------- */
+/* Centrado vertical con márgenes automáticos (no corta el contenido si no entra) */
+#slide-1 > .wiz-icon { margin-top: auto; }
+#slide-1 > .dni-security { margin-bottom: auto; }
 #slide-1 .dni-form { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 12px; }
 #slide-1 .dni-input-group { display: flex; gap: 10px; width: 100%; justify-content: center; }
 #slide-1 .dni-input { flex: 1; max-width: 340px; }
 #slide-1 .dni-btn-submit { align-self: center; min-width: 200px; }
 #slide-1 .dni-security { justify-content: center !important; }
 
-/* Paso 2: Especialidades */
-.wiz-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
-.wiz-spec-btn { padding: 14px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; font-size: 14px; font-weight: 500; color: #444; cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s; text-align: center; box-sizing: border-box; }
-.wiz-spec-btn:hover { border-color: var(--accent); background: #f0f7ff; }
-.wiz-spec-btn.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
-.wiz-spec-desc { width: 100%; background: #f8f9fa; border-radius: 12px; padding: 16px; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 14px; color: #555; line-height: 1.4; box-sizing: border-box; flex-shrink: 0; }
-
-/* Paso 3: Médicos */
-.wiz-doc-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-.wiz-doc-card { display: flex; align-items: center; gap: 12px; padding: 14px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; cursor: pointer; transition: background 0.2s, border-color 0.2s; box-sizing: border-box; }
-.wiz-doc-card:hover { border-color: var(--accent); background: #f0f7ff; }
-.wiz-doc-card.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
-.wiz-doc-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--azul-oscuro), var(--accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; flex-shrink: 0; }
-.wiz-doc-info { flex: 1; text-align: left; }
-.wiz-doc-name { font-weight: 600; font-size: 15px; }
-.wiz-doc-spec { font-size: 13px; opacity: 0.85; }
-.wiz-doc-schedule {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-/* Paso 4: Fecha/Hora */
-.wiz-dt-picker { width: 100%; text-align: left; }
-.wiz-dt-picker label { display: block; font-weight: 500; color: #444; margin-bottom: 8px; font-size: 14px; }
-.wiz-dt-input { width: 100%; padding: 13px; border: 2px solid #e0e6ed; border-radius: 12px; font-size: 15px; background: #fafbfc; box-sizing: border-box; }
-.wiz-dt-input:focus { border-color: var(--accent); background: #fff; outline: none; box-shadow: 0 0 0 4px rgba(42,124,199,0.12); }
-.wiz-time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; width: 100%; }
-.wiz-time-slot { padding: 12px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 10px; text-align: center; font-size: 14px; font-weight: 500; color: #444; cursor: pointer; transition: background 0.2s, border-color 0.2s; box-sizing: border-box; }
-.wiz-time-slot:hover { border-color: var(--accent); background: #f0f7ff; }
-.wiz-time-slot.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
-
-/* ✅ BOTONES DEL WIZARD (LO QUE FALTABA) */
-.wiz-btn-group { display: flex; gap: 14px; width: 100%; margin-top: auto; padding-top: 15px; flex-shrink: 0; }
-.wiz-btn-back, .wiz-btn-next, .wiz-btn-confirm {
-  flex: 1; padding: 14px; border: none; border-radius: 12px;
-  font-weight: 600; font-size: 15px; cursor: pointer;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-family: inherit; box-sizing: border-box; -webkit-appearance: none; appearance: none;
-}
-.wiz-btn-back { background: #f1f3f5; color: #000; }
-.wiz-btn-back:hover { background: #e9ecef; transform: translateY(-1px); }
-.wiz-btn-next { background: linear-gradient(135deg, var(--azul-oscuro), var(--accent)); color: #fff; }
-.wiz-btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,58,135,0.3); }
-.wiz-btn-next:disabled { background: #dee2e6; color: #6c757d; cursor: not-allowed; transform: none; box-shadow: none; }
-.wiz-btn-confirm { background: linear-gradient(135deg, #28a745, #20c997); color: #fff; }
-.wiz-btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(40,167,69,0.3); }
-
-/* Inputs & Errores */
 .dni-input { flex: 1; padding: 14px 18px; border: 2px solid #e0e6ed; border-radius: 12px; font-size: 16px; transition: 0.3s; outline: none; }
 .dni-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(42,124,199,0.15); }
 .dni-input::placeholder { color: #aaa; }
+.dni-input.is-invalid { border-color: #dc3545; }
 .dni-btn-submit { padding: 14px; background: linear-gradient(135deg, var(--azul-medio), var(--accent)); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 5px; }
 .dni-btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(42,124,199,0.4); }
+.dni-btn-submit:disabled { opacity: 0.75; cursor: wait; transform: none; box-shadow: none; }
 .dni-security { font-size: 13px; color: #888; margin: 20px 0 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .dni-security i { color: #28a745; }
 .dni-error { color: #dc3545; font-size: 13px; min-height: 18px; display: block; margin-bottom: 10px; text-align: center; }
 
-.btn-wsp {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: #25D366;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
+.btn-wsp { display: inline-block; margin-top: 8px; padding: 8px 12px; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; }
+
+/* ---------- Paso 2: Especialidades ---------- */
+.wiz-spec-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; }
+.wiz-spec-btn { padding: 14px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; font-size: 14px; font-weight: 500; color: #444; cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s; text-align: center; overflow-wrap: anywhere; }
+.wiz-spec-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); }
+.wiz-spec-btn.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
+
+/* ---------- Paso 3: Médicos ---------- */
+.wiz-doc-list { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; text-align: left; }
+.wiz-doc-card { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.25s var(--ease-suave), box-shadow 0.25s; }
+.wiz-doc-card:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,58,135,0.08); }
+.wiz-doc-card.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
+.wiz-doc-card.selected .wiz-doc-schedule { color: rgba(255,255,255,0.85); }
+.wiz-doc-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--azul-oscuro), var(--accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; flex-shrink: 0; }
+.wiz-doc-photo { width: 64px; height: 64px; object-fit: cover; object-position: top center; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,58,135,0.18); background: #e9ecef; }
+.wiz-doc-info { flex: 1; text-align: left; }
+.wiz-doc-name { font-weight: 600; font-size: 15px; }
+.wiz-doc-spec { font-size: 13px; opacity: 0.85; }
+.wiz-doc-schedule { font-size: 0.8rem; color: #666; }
+
+/* ---------- Paso 4: Días y horarios ---------- */
+.wiz-days-section,
+.wiz-hours-section { width: 100%; max-width: 700px; margin: 0 auto 20px; text-align: left; }
+.wiz-hours-section { animation: wizItem 0.4s var(--ease-suave) backwards; }
+.wiz-days-label { display: block; font-weight: 600; color: #444; margin-bottom: 12px; font-size: 14px; }
+.wiz-days-label i { color: var(--accent); margin-right: 4px; }
+.wiz-days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-bottom: 10px; }
+.wiz-day-chip { padding: 12px 8px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.wiz-day-chip:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); }
+.wiz-day-chip.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,58,135,0.25); }
+.wiz-day-name { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+.wiz-day-number { font-size: 20px; font-weight: 700; line-height: 1; }
+.wiz-day-month { font-size: 11px; opacity: 0.85; }
+.wiz-days-hint { font-size: 13px; color: #888; text-align: center; margin-top: 10px; }
+
+.wiz-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; width: 100%; }
+.wiz-time-slot { padding: 12px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 10px; text-align: center; font-size: 14px; font-weight: 500; color: #444; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.wiz-time-slot:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); }
+.wiz-time-slot.selected { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
+/* Horario ya reservado (lo informa api.obtenerTurnosOcupados) */
+.wiz-time-slot.disabled { opacity: 0.45; cursor: not-allowed; text-decoration: line-through; transform: none; border-color: #e9ecef; background: #f8f9fa; }
+
+#confirmCard:not(.d-none) { animation: wizItem 0.45s var(--ease-suave) backwards; }
+
+/* ---------- Botones del asistente ----------
+   Quedan fijos abajo del recuadro, así "Atrás" siempre está a la vista
+   sin tener que scrollear. */
+.wiz-btn-group {
+  display: flex; gap: 14px; width: 100%;
+  margin-top: auto; padding-top: 15px; flex-shrink: 0;
+  position: sticky; bottom: 0; z-index: 5;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #fff 18px);
+}
+.wiz-btn-back {
+  flex: 1; padding: 14px; border: none; border-radius: 12px;
+  font-weight: 600; font-size: 15px; cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: inherit; -webkit-appearance: none; appearance: none;
+  background: #f1f3f5; color: #000;
+}
+.wiz-btn-back:hover { background: #e9ecef; transform: translateY(-1px); }
+
+.bottom-buttons { justify-content: space-between; align-items: center; gap: 20px; }
+.bottom-buttons button { flex: 1; height: 60px; border-radius: 14px; }
+#requestTurnBtn { max-width: 250px; animation: wizItem 0.35s var(--ease-suave) backwards; }
+
+/* Sacudida corta para avisar un error en el DNI */
+.wiz-shake { animation: wizShake 0.4s ease; }
+
+/* ================= ANIMACIONES ================= */
+@keyframes wizEntrada { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes wizItem    { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes wizIcono   { from { opacity: 0; transform: scale(0.85); }      to { opacity: 1; transform: scale(1); } }
+@keyframes wizPulso {
+  0%   { box-shadow: 0 0 0 4px rgba(0,58,135,0.1); }
+  50%  { box-shadow: 0 0 0 7px rgba(0,58,135,0.06); }
+  100% { box-shadow: 0 0 0 4px rgba(0,58,135,0.1); }
+}
+@keyframes wizShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+
+/* Respeta a quienes tienen desactivadas las animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
 }
 
 /* ================= RESPONSIVE ================= */
@@ -260,258 +349,41 @@ header { display: flex; align-items: center; justify-content: space-between; bac
   .contenedortexto { flex-direction: column; text-align: center; padding: 0 20px; }
   .texto { align-items: center; flex: unset; max-width: 100%; transform: none; }
   .contenedorimg { justify-content: center; margin: 0; }
-  .wiz-slides { padding: 25px 20px; min-height: 460px; }
+  .wiz-slides { padding: 25px 20px; min-height: clamp(460px, calc(100vh - 200px), 680px); }
   .wiz-slide { top: 25px; left: 20px; right: 20px; bottom: 25px; }
-  .wiz-spec-grid, .wiz-time-grid { grid-template-columns: repeat(2, 1fr); }
+  .wiz-spec-grid, .wiz-time-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
 @media (max-width: 708px) {
-
-  header {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  .imglogo {
-    margin-bottom: 10px;
-  }
-
-  .abrir-menu,
-  .cerrar-menu {
-    display: block;
-  }
-
+  header:not(.header-turnos) { flex-direction: column; align-items: center; padding: 1rem; }
+  .imglogo { margin-bottom: 10px; }
+  .abrir-menu, .cerrar-menu { display: block; }
   .nav {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 1rem;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1rem;
-    background-color: rgb(255, 255, 255);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 0 100vmax rgba(0,0,0,0.5);
-    z-index: 1000;
+    opacity: 0; visibility: hidden; position: absolute;
+    display: flex; flex-direction: column; align-items: end; gap: 1rem;
+    top: 0; right: 0; bottom: 0; padding: 1rem;
+    background-color: rgb(255, 255, 255); backdrop-filter: blur(8px);
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,0.5); z-index: 1000;
   }
-
-  .nav.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    align-items: end;
-  }
-
-  .nav.visible .nav-list a {
-    color: black;
-    font-weight: bold;
-  }
-
-  .nav.visible .cerrar-menu {
-    color: black;
-    font-weight: bold;
-  }
-
+  .nav.visible { opacity: 1; visibility: visible; }
+  .nav-list { flex-direction: column; align-items: end; }
+  .nav.visible .nav-list a,
+  .nav.visible .cerrar-menu { color: black; font-weight: bold; }
 }
+
 @media (max-width: 576px) {
   .dni-input-group { flex-direction: column; }
-  .dni-btn-search { width: 100%; }
 }
+
 @media (max-width: 480px) {
-  .wizard-wrapper { width: 96%; margin: 20px auto; }
-  .wiz-slides { padding: 20px 15px; min-height: 440px; }
+  .wizard-wrapper { width: 96%; margin: 10px auto; }
+  .wiz-slides { padding: 20px 15px; min-height: clamp(440px, calc(100vh - 190px), 680px); }
   .wiz-slide { top: 20px; left: 15px; right: 15px; bottom: 20px; }
-  .wiz-spec-grid, .wiz-time-grid { grid-template-columns: 1fr; }
+  .wiz-spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wiz-spec-btn { padding: 12px 6px; font-size: 13px; }
+  .wiz-time-grid { grid-template-columns: repeat(3, 1fr); }
+  .wiz-days-grid { grid-template-columns: repeat(3, 1fr); }
   .wiz-btn-group { flex-direction: column; }
-  .wiz-title { font-size: 20px; }
+  .bottom-buttons { flex-direction: row; }
   #slide-1 .dni-input { max-width: 100%; }
-}
-
-.bottom-buttons{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    margin-top:40px;
-}
-
-.bottom-buttons button{
-    flex:1;
-    height:60px;
-    border-radius:14px;
-}
-
-#requestTurnBtn{
-    max-width:250px;
-}
-
-.logo-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-info{
-    display: flex;
-    flex-direction: column;
-    line-height: 0.9;
-    color: white;
-}
-
-.logo-text{
-    font-size: 14px;
-    font-weight: 300;
-}
-
-.logo-subtext{
-    font-size: 14px;
-    font-weight: 300;
-}
-
-.palacio{
-    font-size: 24px;
-    font-weight: bold;
-}
-
-
-/* === CENTRAR TODO EL CONTENIDO DE LOS SLIDES === */
-.wiz-slide {
-  text-align: center;      
-  align-items: center;     
-}
-
-.wiz-slide .wiz-icon {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Paso 3: Lista de médicos */
-.wiz-doc-list {
-  text-align: left;
-  width: 100%;
-  max-width: 600px;        
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.wiz-dt-picker {
-  text-align: left;
-  width: 100%;
-  max-width: 600px;       
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.wiz-spec-grid {
-  width: 100%;
-  max-width: 700px;        
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.wiz-spec-desc {
-  width: 100%;
-  max-width: 600px;        
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* ================= SELECTOR DE DÍAS (NUEVO) ================= */
-.wiz-days-section,
-.wiz-hours-section {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto 20px;
-  text-align: left;
-}
-
-.wiz-days-label {
-  display: block;
-  font-weight: 600;
-  color: #444;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-.wiz-days-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.wiz-day-chip {
-  padding: 12px 8px;
-  background: #f8f9fa;
-  border: 2px solid #e9ecef;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.wiz-day-chip:hover {
-  border-color: var(--accent);
-  background: #f0f7ff;
-  transform: translateY(-2px);
-}
-
-.wiz-day-chip.selected {
-  background: var(--azul-oscuro);
-  border-color: var(--azul-oscuro);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,58,135,0.25);
-}
-
-.wiz-day-name {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.8;
-}
-
-.wiz-day-number {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.wiz-day-month {
-  font-size: 11px;
-  opacity: 0.85;
-}
-
-.wiz-days-hint {
-  font-size: 13px;
-  color: #888;
-  text-align: center;
-  margin-top: 10px;
-}
-
-@media (max-width: 480px) {
-  .wiz-days-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Ocultar el cuadro de descripción de especialidad */
-#specialtyDesc {
-  display: none !important;
 }
