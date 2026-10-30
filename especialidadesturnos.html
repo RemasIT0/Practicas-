@@ -9,7 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <link rel="stylesheet" href="EstiloTurnos.css">
+    <link rel="stylesheet" href="mapa.css">
 </head>
 <body>
 
@@ -66,6 +68,10 @@
       <div class="wiz-step" data-step="4">
         <span class="wiz-step-num">4</span>
         <span class="wiz-step-label">Fecha/Hora</span>
+      </div>
+      <div class="wiz-step" data-step="5">
+        <span class="wiz-step-num">5</span>
+        <span class="wiz-step-label">Confirmar</span>
       </div>
     </div>
 
@@ -146,24 +152,88 @@
 
         <span class="dni-error" id="datetimeError" aria-live="polite"></span>
 
-        <div id="confirmCard" class="d-none">
-          <h3>Confirmar turno</h3>
-          <p><strong>DNI:</strong> <span id="cDni"></span></p>
-          <p><strong>Especialidad:</strong> <span id="cSpecialty"></span></p>
-          <p><strong>Médico:</strong> <span id="cDoctor"></span></p>
-          <p><strong>Fecha:</strong> <span id="cDate"></span></p>
-          <p><strong>Hora:</strong> <span id="cTime"></span></p>
-          <p class="text-danger fw-bold mt-3"><i class="bi bi-exclamation-triangle-fill"></i> Por favor asistir 10 minutos antes del turno.</p>
-          <button type="button" class="btn btn-success mt-3" id="confirmTurnBtn" onclick="confirmAppointment()">Confirmar turno</button>
-        </div>
-
         <div class="wiz-btn-group bottom-buttons">
           <button type="button" class="wiz-btn-back" onclick="prevStep()">
             <i class="bi bi-arrow-left"></i> Atrás
           </button>
           <button type="button" id="requestTurnBtn" class="btn btn-primary d-none" onclick="showConfirmCard()">
-            Solicitar turno
+            Continuar <i class="bi bi-arrow-right"></i>
           </button>
+        </div>
+      </div>
+
+      <!-- PASO 5: Confirmación (resumen y, al confirmar, pantalla de éxito) -->
+      <div class="wiz-slide" id="slide-5">
+
+        <!-- Resumen del turno: lo completa menu.js (showConfirmCard) -->
+        <div class="wiz-confirm" id="confirmView">
+          <h2 class="dni-title">Confirmá tu turno</h2>
+          <p class="dni-description">Revisá que los datos sean correctos antes de confirmar</p>
+
+          <div class="wiz-resumen">
+            <div class="wiz-resumen-medico">
+              <div id="cAvatar"></div>
+              <div>
+                <div class="wiz-resumen-nombre" id="cDoctor"></div>
+                <span class="wiz-resumen-esp" id="cSpecialty"></span>
+              </div>
+            </div>
+
+            <div class="wiz-resumen-grid">
+              <div class="wiz-resumen-item">
+                <span class="wiz-resumen-ico"><i class="bi bi-calendar-event"></i></span>
+                <div><span class="wiz-resumen-lbl">Fecha</span><span class="wiz-resumen-val" id="cDate"></span></div>
+              </div>
+              <div class="wiz-resumen-item">
+                <span class="wiz-resumen-ico"><i class="bi bi-clock"></i></span>
+                <div><span class="wiz-resumen-lbl">Hora</span><span class="wiz-resumen-val" id="cTime"></span></div>
+              </div>
+              <div class="wiz-resumen-item">
+                <span class="wiz-resumen-ico"><i class="bi bi-person-vcard"></i></span>
+                <div><span class="wiz-resumen-lbl">Paciente (DNI)</span><span class="wiz-resumen-val" id="cDni"></span></div>
+              </div>
+              <div class="wiz-resumen-item">
+                <span class="wiz-resumen-ico"><i class="bi bi-geo-alt"></i></span>
+                <div><span class="wiz-resumen-lbl">Lugar</span><span class="wiz-resumen-val">24 de Septiembre 2070</span></div>
+              </div>
+            </div>
+
+            <div class="wiz-resumen-aviso">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Por favor asistí <strong>10 minutos antes</strong> del turno con tu DNI.</span>
+            </div>
+          </div>
+
+          <span class="dni-error" id="confirmError" aria-live="polite"></span>
+
+          <div class="wiz-btn-group bottom-buttons">
+            <button type="button" class="wiz-btn-back" onclick="prevStep()">
+              <i class="bi bi-arrow-left"></i> Cambiar horario
+            </button>
+            <button type="button" id="confirmTurnBtn" class="wiz-btn-confirm" onclick="confirmAppointment()">
+              <i class="bi bi-check2-circle"></i> Confirmar turno
+            </button>
+          </div>
+        </div>
+
+        <!-- Pantalla de éxito (se muestra después de guardar el turno) -->
+        <div class="wiz-exito d-none" id="successView" aria-live="polite">
+          <div class="wiz-exito-check"><i class="bi bi-check-lg"></i></div>
+          <h2 class="dni-title">¡Turno confirmado!</h2>
+          <p class="wiz-exito-texto">
+            Te esperamos el <strong id="sFecha"></strong> a las <strong id="sHora"></strong> hs
+            con <strong id="sMedico"></strong>.
+          </p>
+          <p class="wiz-exito-nota"><i class="bi bi-file-earmark-arrow-down"></i> El comprobante se descargó automáticamente.</p>
+
+          <div class="wiz-btn-group bottom-buttons">
+            <button type="button" class="wiz-btn-back" onclick="generarPDF()">
+              <i class="bi bi-download"></i> Descargar comprobante
+            </button>
+            <button type="button" class="wiz-btn-next" onclick="resetWizard()">
+              <i class="bi bi-plus-circle"></i> Sacar otro turno
+            </button>
+          </div>
         </div>
       </div>
 
@@ -227,14 +297,8 @@
     <!-- MAPA -->
     <div class="row mt-4">
       <div class="col-12">
-        <iframe
-          src="https://www.google.com/maps?q=24+de+Septiembre+2070&output=embed"
-          width="100%"
-          height="200"
-          style="border:0; border-radius:10px;"
-          allowfullscreen=""
-          loading="lazy">
-        </iframe>
+        <!-- Mapa: se dibuja con mapa.js (Leaflet + OpenStreetMap) -->
+        <div class="mapa-cmp" role="region" aria-label="Mapa de ubicación del Centro Médico Palacio"></div>
       </div>
     </div>
 
@@ -247,5 +311,7 @@
 <script src="datos-medicos.js"></script>
 <script src="api-turnos.js"></script>
 <script src="menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="mapa.js"></script>
 </body>
 </html>

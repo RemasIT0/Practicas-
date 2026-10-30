@@ -5,7 +5,7 @@
      - datos-medicos.js  -> DATA (especialidades y médicos)
      - api-turnos.js     -> api y CONFIG (conexión con el backend)
 
-   Pasos: 1 DNI -> 2 Especialidad -> 3 Médico -> 4 Fecha y hora.
+   Pasos: 1 DNI -> 2 Especialidad -> 3 Médico -> 4 Fecha y hora -> 5 Confirmar.
    El DNI SIEMPRE se pide primero.
 
    PRESELECCIÓN DESDE LA PÁGINA DE INICIO
@@ -60,6 +60,14 @@ function formatearFecha(iso) {
   return iso.split('-').reverse().join('/');
 }
 
+// "AAAA-MM-DD" -> "jueves 5 de noviembre"
+function formatearFechaLarga(iso) {
+  const [anio, mes, dia] = iso.split('-').map(Number);
+  return new Date(anio, mes - 1, dia)
+    .toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })
+    .replace(',', '');
+}
+
 function icono(clase) {
   return `<i class="bi ${clase}"></i>`;
 }
@@ -85,6 +93,22 @@ function sacudir(el) {
   el.classList.remove('wiz-shake');
   void el.offsetWidth; // reinicia la animación
   el.classList.add('wiz-shake');
+}
+
+// Foto del médico, o su letra si no tiene foto o la foto no carga
+function crearAvatar(doc) {
+  const letra = document.createElement('div');
+  letra.className = 'wiz-doc-avatar';
+  letra.textContent = doc.avatar;
+  if (!doc.foto) return letra;
+
+  const img = document.createElement('img');
+  img.className = 'wiz-doc-avatar wiz-doc-photo';
+  img.src = doc.foto;
+  img.alt = doc.name;
+  img.loading = 'lazy';
+  img.onerror = () => img.replaceWith(letra);
+  return img;
 }
 
 function buscarEspecialidad(valor) {
@@ -128,7 +152,7 @@ function generarHorarios(doctor, date) {
 
 // ===== ESTADO DEL ASISTENTE =====
 let currentStep = 1;
-const totalSteps = 4;
+const totalSteps = 5;
 const formData = { dni: '', specialty: '', doctor: null, date: '', time: '' };
 let preseleccion = { specialty: '', doctor: null };
 
@@ -202,13 +226,7 @@ function renderDoctors(specialty) {
     card.className = 'wiz-doc-card';
     if (formData.doctor && formData.doctor.id === doc.id) card.classList.add('selected');
 
-    const avatarLetra = `<div class="wiz-doc-avatar">${escaparHTML(doc.avatar)}</div>`;
-    const avatar = doc.foto
-      ? `<img class="wiz-doc-avatar wiz-doc-photo" src="${escaparHTML(doc.foto)}" alt="${escaparHTML(doc.name)}" loading="lazy">`
-      : avatarLetra;
-
     card.innerHTML = `
-      ${avatar}
       <div class="wiz-doc-info">
         <div class="wiz-doc-name">${escaparHTML(doc.name)}</div>
         <div class="wiz-doc-spec">${escaparHTML(specialty)}${doc.notes ? ' · ' + escaparHTML(doc.notes) : ''}</div>
@@ -216,9 +234,7 @@ function renderDoctors(specialty) {
       </div>
     `;
 
-    // Si la foto no carga, se muestra la letra como antes
-    const foto = card.querySelector('.wiz-doc-photo');
-    if (foto) foto.onerror = () => { foto.outerHTML = avatarLetra; };
+    card.prepend(crearAvatar(doc));
 
     hacerClickeable(card, () => selectDoctor(doc, card));
     animarEntrada(card, i);
@@ -300,10 +316,17 @@ async function renderTimeSlots() {
       slot.setAttribute('aria-disabled', 'true');
       slot.title = 'Horario no disponible';
     } else {
+      if (time === formData.time) slot.classList.add('selected');
       hacerClickeable(slot, () => selectTime(time, slot));
     }
     container.appendChild(slot);
   });
+
+  // Si el horario elegido ya no está disponible (lo tomó otro paciente), se descarta
+  if (formData.time && (ocupados.includes(formData.time) || !horarios.includes(formData.time))) {
+    formData.time = '';
+  }
+  document.getElementById('requestTurnBtn').classList.toggle('d-none', !formData.time);
 }
 
 // ===== SELECCIONES =====
@@ -351,16 +374,12 @@ function selectTime(time, slot) {
 
   formData.time = time;
   document.getElementById('datetimeError').innerHTML = '';
-  document.getElementById('confirmCard').classList.add('d-none');
-
-  const btn = document.getElementById('requestTurnBtn');
-  btn.classList.remove('d-none');
+  document.getElementById('requestTurnBtn').classList.remove('d-none');
 }
 
-// Oculta "Solicitar turno" y la tarjeta de confirmación
+// Oculta el botón "Continuar" del paso 4
 function ocultarSolicitud() {
   document.getElementById('requestTurnBtn').classList.add('d-none');
-  document.getElementById('confirmCard').classList.add('d-none');
 }
 
 // Marca en el paso 2 la especialidad elegida (útil al volver atrás)
@@ -396,7 +415,9 @@ function changeStep(target) {
 
   if (target === 2) marcarEspecialidadSeleccionada();
   if (target === 3) renderDoctors(formData.specialty);
-  if (target === 4) renderAvailableDays();
+  // Al volver desde el paso 5 se conservan el día y el horario elegidos
+  if (target === 4 && currentStep < 4) renderAvailableDays();
+  if (target === 4 && currentStep === 5) renderTimeSlots();
 
   currentStep = target;
   mantenerAsistenteVisible();
@@ -490,7 +511,7 @@ function irDespuesDelDni() {
   }
 }
 
-// ===== PASO 4: CONFIRMACIÓN =====
+// ===== PASO 5: CONFIRMACIÓN =====
 function validarFechaHora() {
   const error = document.getElementById('datetimeError');
   if (!formData.date || !formData.time) {
@@ -501,24 +522,33 @@ function validarFechaHora() {
   return true;
 }
 
+// Completa el resumen y pasa al paso 5
 function showConfirmCard() {
   if (!validarFechaHora()) return;
 
-  document.getElementById('requestTurnBtn').classList.add('d-none');
-
-  document.getElementById('cDni').textContent = formData.dni;
-  document.getElementById('cSpecialty').textContent = formData.specialty;
+  const fechaLarga = formatearFechaLarga(formData.date);
+  document.getElementById('cAvatar').replaceChildren(crearAvatar(formData.doctor));
   document.getElementById('cDoctor').textContent = formData.doctor.name;
-  document.getElementById('cDate').textContent = formatearFecha(formData.date);
-  document.getElementById('cTime').textContent = formData.time;
+  document.getElementById('cSpecialty').textContent = formData.specialty;
+  document.getElementById('cDate').textContent = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
+  document.getElementById('cTime').textContent = `${formData.time} hs`;
+  document.getElementById('cDni').textContent = formData.dni;
+  document.getElementById('confirmError').innerHTML = '';
 
-  const card = document.getElementById('confirmCard');
-  card.classList.remove('d-none');
-  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  mostrarVistaConfirmacion(false);
+  changeStep(5);
+}
+
+// Alterna dentro del paso 5 entre el resumen y la pantalla de éxito
+function mostrarVistaConfirmacion(exito) {
+  document.getElementById('confirmView').classList.toggle('d-none', exito);
+  document.getElementById('successView').classList.toggle('d-none', !exito);
+  document.getElementById('slide-5').scrollTop = 0;
 }
 
 async function confirmAppointment() {
   const btn = document.getElementById('confirmTurnBtn');
+  const error = document.getElementById('confirmError');
   const textoOriginal = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = `${icono('bi-hourglass-split')} Guardando...`;
@@ -533,11 +563,9 @@ async function confirmAppointment() {
       hora: formData.time
     });
   } catch (err) {
-    document.getElementById('confirmCard').classList.add('d-none');
-    document.getElementById('datetimeError').innerHTML =
-      `${icono('bi-exclamation-triangle-fill')} ${escaparHTML(err.message || 'No se pudo guardar el turno. Intentá nuevamente.')}`;
-    formData.time = '';
-    renderTimeSlots(); // refresca por si el horario fue tomado por otro paciente
+    // Por ejemplo, si otro paciente tomó el horario: "Cambiar horario"
+    // vuelve al paso 4, donde los horarios se recargan.
+    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} ${escaparHTML(err.message || 'No se pudo guardar el turno. Intentá nuevamente.')}`;
     return;
   } finally {
     btn.disabled = false;
@@ -545,8 +573,15 @@ async function confirmAppointment() {
   }
 
   generarPDF();
-  alert('Turno confirmado. Se descargó el comprobante.');
-  resetWizard();
+
+  document.getElementById('sFecha').textContent = formatearFechaLarga(formData.date);
+  document.getElementById('sHora').textContent = formData.time;
+  // Espacio no separable para que "Dr." no quede solo al final de una línea
+  document.getElementById('sMedico').textContent = formData.doctor.name.replace(/^(\S+\.) /, '$1\u00a0');
+  mostrarVistaConfirmacion(true);
+
+  // La barra de progreso queda completa
+  document.querySelector('.wiz-step[data-step="5"]').classList.replace('active', 'completed');
 }
 
 function generarPDF() {
@@ -593,6 +628,7 @@ function resetWizard() {
   requestAnimationFrame(() => {
     if (currentSlide) currentSlide.style.transition = '';
     changeStep(1);
+    mostrarVistaConfirmacion(false);
   });
 }
 

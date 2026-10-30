@@ -1,7 +1,7 @@
 /* =====================================================================
    DATOS DE ESPECIALIDADES Y MÉDICOS
    ---------------------------------------------------------------------
-   NOTA PARA EL INGENIERO:
+   NOTA :
    Estos datos hoy están escritos a mano. Cuando exista la base de datos,
    este objeto puede reemplazarse por lo que devuelva el backend, siempre
    que respete la MISMA FORMA (ver la descripción de cada campo abajo).
