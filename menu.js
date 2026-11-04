@@ -587,19 +587,113 @@ async function confirmAppointment() {
 function generarPDF() {
   if (!window.jspdf) return; // la librería no cargó (sin internet)
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
+  const ancho = doc.internal.pageSize.getWidth(); // 210 mm
+  const margen = 20;
+  const azul = [0, 149, 218];      // color del logo CMP
+  const grisTexto = [90, 98, 110];
+  const oscuro = [33, 37, 41];
+
+  // ---- Encabezado: logo + nombre del centro ----
+  const logoAncho = 26;
+  let logoAlto = 0;
+  if (typeof LOGO_PDF !== 'undefined') {
+    logoAlto = logoAncho * LOGO_PDF.alto / LOGO_PDF.ancho; // respeta la proporción original
+    doc.addImage(LOGO_PDF.data, 'PNG', margen, 14, logoAncho, logoAlto);
+  }
+  const xTexto = logoAlto ? margen + logoAncho + 6 : margen;
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
-  doc.text("Comprobante de Turno Médico", 20, 20);
+  doc.setTextColor(...azul);
+  doc.text('Centro Médico Palacio', xTexto, 25);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(...grisTexto);
+  doc.text('24 de Septiembre 2070', xTexto, 31.5);
+  doc.text('Tel.: +54 (3865) 425356  ·  admin@centromedicopalacio.com', xTexto, 36.5);
 
-  doc.setFontSize(12);
-  doc.text(`DNI: ${formData.dni}`, 20, 40);
-  doc.text(`Especialidad: ${formData.specialty}`, 20, 50);
-  doc.text(`Médico: ${formData.doctor.name}`, 20, 60);
-  doc.text(`Fecha: ${formatearFecha(formData.date)}`, 20, 70);
-  doc.text(`Hora: ${formData.time}`, 20, 80);
-  doc.text("Por favor asistir 10 minutos antes del turno.", 20, 100);
-  doc.text("Centro Médico Palacio", 20, 115);
+  const yLinea = Math.max(14 + logoAlto, 40) + 5;
+  doc.setDrawColor(...azul);
+  doc.setLineWidth(0.8);
+  doc.line(margen, yLinea, ancho - margen, yLinea);
+
+  // ---- Título ----
+  let y = yLinea + 16;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(20);
+  doc.setTextColor(...oscuro);
+  doc.text('COMPROBANTE DE TURNO', ancho / 2, y, { align: 'center' });
+  y += 7;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...grisTexto);
+  const hoy = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  doc.text(`Emitido el ${hoy}`, ancho / 2, y, { align: 'center' });
+
+  // ---- Datos del turno ----
+  const filas = [
+    ['Paciente (DNI)', formData.dni],
+    ['Especialidad', formData.specialty],
+    ['Profesional', formData.doctor.name],
+    ['Fecha', `${formatearFecha(formData.date)} (${formatearFechaLarga(formData.date)})`],
+    ['Hora', `${formData.time} hs`],
+    ['Lugar', 'Centro Médico Palacio - 24 de Septiembre 2070']
+  ];
+  const altoFila = 11;
+  const yCaja = y + 10;
+  const anchoCaja = ancho - margen * 2;
+  doc.setFillColor(244, 249, 253);
+  doc.setDrawColor(205, 226, 240);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margen, yCaja, anchoCaja, filas.length * altoFila + 6, 3, 3, 'FD');
+
+  y = yCaja + 3;
+  const xValor = margen + 50;
+  filas.forEach(([etiqueta, valor], i) => {
+    const yBase = y + i * altoFila + 7.5;
+    if (i > 0) {
+      doc.setDrawColor(220, 232, 242);
+      doc.line(margen + 6, y + i * altoFila, ancho - margen - 6, y + i * altoFila);
+    }
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...grisTexto);
+    doc.text(etiqueta.toUpperCase(), margen + 6, yBase);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(...oscuro);
+    // Si el valor es muy largo, se recorta al ancho disponible en una sola línea
+    const maxAncho = ancho - margen - 6 - xValor;
+    doc.text(doc.splitTextToSize(String(valor), maxAncho)[0], xValor, yBase);
+  });
+
+  // ---- Aviso ----
+  y = yCaja + filas.length * altoFila + 6 + 10;
+  doc.setFillColor(230, 244, 252);
+  doc.rect(margen, y, anchoCaja, 14, 'F');
+  doc.setFillColor(...azul);
+  doc.rect(margen, y, 1.5, 14, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...oscuro);
+  doc.text('Por favor asistir 10 minutos antes del turno con su DNI.', margen + 7, y + 8.8);
+
+  // ---- Pie de página con contacto ----
+  const alto = doc.internal.pageSize.getHeight();
+  doc.setDrawColor(...azul);
+  doc.setLineWidth(0.4);
+  doc.line(margen, alto - 30, ancho - margen, alto - 30);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...azul);
+  doc.text('Centro Médico Palacio', ancho / 2, alto - 23, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...grisTexto);
+  doc.text('24 de Septiembre 2070  ·  Tel.: +54 (3865) 425356  ·  admin@centromedicopalacio.com',
+    ancho / 2, alto - 17.5, { align: 'center' });
+  doc.text('Horario de atención: Lunes a Viernes de 16:00 a 20:30', ancho / 2, alto - 12.5, { align: 'center' });
 
   doc.save(`Turno_${formData.dni}.pdf`);
 }
