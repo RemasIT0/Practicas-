@@ -764,6 +764,8 @@ section{
 
 /* Paso 2: especialidades */
 .cf-grilla{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* Opción que ocupa toda la fila (nombres largos) */
+.cf-opcion-ancha{ grid-column: 1 / -1; }
 .cf-opcion{
   background: #fff;
   border: 1.5px solid #e3eaf3;
