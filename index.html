@@ -10,8 +10,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="mapa.css">
+<link rel="stylesheet" href="styles.css?v=20261112b">
+<link rel="stylesheet" href="mapa.css?v=20261112b">
+<link rel="stylesheet" href="area-privada.css?v=20261112b">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -40,7 +41,10 @@
           <li class="nav-item"><a class="nav-link" href="#profesionales">Profesionales</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
         </ul>
-        <div class="text-center">
+        <div class="nav-acciones">
+          <button type="button" class="btn btn-area-privada" data-area-privada>
+            <i class="bi bi-lock-fill"></i> Área privada
+          </button>
           <a href="especialidadesturnos.html" class="btn btn-turnos">Turnos</a>
         </div>
       </div>
@@ -56,7 +60,7 @@
     <div class="hero-text">
       <h1>Centro<br>Medico<br>Palacio</h1>
       <p>CMP nace con el propósito de ofrecer atención médica de alto nivel, respaldada por profesionales especializados y tecnología moderna.</p>
-      <button class="btn-main" onclick="scrollToSection('servicios')">Ver más</button>
+      <button class="btn-main" onclick="irASeccion('servicios')">Ver más</button>
     </div>
   </div>
 </section>
@@ -69,7 +73,7 @@
     </div>
     <div class="row g-4">
       <div class="col-md-4 reveal reveal-delay-1">
-        <div class="service-card" onclick="scrollToSection('consultas')">
+        <div class="service-card" onclick="irASeccion('consultas')">
           <div class="service-icon icon-blue"><i class="fa-solid fa-stethoscope"></i></div>
           <h5>Consultas Médicas</h5>
           <p>Atención personalizada en múltiples especialidades médicas.</p>
@@ -77,7 +81,7 @@
         </div>
       </div>
       <div class="col-md-4 reveal reveal-delay-2">
-        <div class="service-card" onclick="scrollToSection('estudios')">
+        <div class="service-card" onclick="irASeccion('estudios')">
           <div class="service-icon icon-red"><i class="fa-solid fa-heart-pulse"></i></div>
           <h5>Estudios Médicos</h5>
           <p>Diagnóstico preciso con tecnología moderna.</p>
@@ -85,7 +89,7 @@
         </div>
       </div>
       <div class="col-md-4 reveal reveal-delay-3">
-        <div class="service-card" onclick="scrollToSection('cirugias')">
+        <div class="service-card" onclick="irASeccion('cirugias')">
           <div class="service-icon icon-pink"><i class="fa-solid fa-user-doctor"></i></div>
           <h5>Cirugías</h5>
           <p>Procedimientos seguros realizados por profesionales especializados.</p>
@@ -100,7 +104,7 @@
   <div class="container text-center">
     <h3 class="reveal">Atención médica de calidad</h3>
     <p class="mb-5 reveal reveal-delay-1">Más de 20 profesionales y tecnología moderna para brindarte el mejor cuidado.</p>
-    <div class="row">
+    <div class="row fila-3-movil">
       <div class="col-md-4 reveal reveal-delay-1">
         <div class="trust-item">
           <h4><span class="counter" data-count="20" data-prefix="+">0</span></h4>
@@ -126,7 +130,7 @@
 <section id="consultas" class="bg-light py-5">
   <div class="container">
     <h2 class="mb-5 text-center reveal" style="color: var(--primary);"><i class="fa-solid fa-stethoscope"></i> Consultas Médicas</h2>
-    <div class="row g-4">
+    <div class="row g-4 grilla-2-movil">
       <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-ear icon-card blue"></i><h5>Otorrinolaringología</h5><a href="especialidadesturnos.html?especialidad=otorrinolaringologia" class="btn btn-primary mt-3">Reservar turno</a></div></div>
       <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-capsule icon-card green"></i><h5>Gastroenterología</h5><a href="especialidadesturnos.html?especialidad=gastroenterologia" class="btn btn-primary mt-3">Reservar turno</a></div></div>
       <div class="col-md-4 reveal"><div class="card text-center p-4 shadow-sm h-100"><i class="bi bi-heart-pulse icon-card red"></i><h5>Cardiología</h5><a href="especialidadesturnos.html?especialidad=cardiologia" class="btn btn-primary mt-3">Reservar turno</a></div></div>
@@ -148,7 +152,8 @@
 <section id="estudios" class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-5 reveal" style="color: var(--primary);">Estudios Médicos</h2>
-    <div class="row g-4">
+    <p class="desliza-movil" aria-hidden="true"><i class="bi bi-arrow-left-right"></i> Deslizá para ver más</p>
+    <div class="row g-4 carrusel-movil">
       <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card blue"><i class="fa-solid fa-ear-listen"></i></div><h5>Otorrinolaringología</h5></div><ul class="estudio-list"><li>Rinofibrolaringoscopia</li><li>Fibroscopia</li><li>Rinoscopia</li><li>Otomicroscopia</li><li>Laringoscopia</li></ul></div></div>
       <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card green"><i class="bi bi-capsule"></i></div><h5>Gastroenterología</h5></div><ul class="estudio-list"><li>Endoscopias digestivas</li></ul></div></div>
       <div class="col-md-6 reveal"><div class="estudio-card"><div class="estudio-header"><div class="icon-card purple"><i class="fa-solid fa-brain"></i></div><h5>Neurología</h5></div><ul class="estudio-list"><li>Electroencefalograma</li><li>Electromiograma</li></ul></div></div>
@@ -163,7 +168,8 @@
 <section id="cirugias" class="bg-light py-5">
   <div class="container">
     <h2 class="text-center mb-5 reveal" style="color: var(--primary);"> Cirugías</h2>
-    <div class="row g-4">
+    <p class="desliza-movil" aria-hidden="true"><i class="bi bi-arrow-left-right"></i> Deslizá para ver más</p>
+    <div class="row g-4 carrusel-movil">
       <div class="col-md-4 reveal reveal-delay-1"><div class="cirugia-card"><h5>Otorrinolaringología</h5><ul><li>Amigdalectomía</li><li>Adenoidectomía</li><li>Cirugía funcional de nariz</li><li>Cirugía estética de nariz</li><li>Cirugías de oído</li></ul></div></div>
       <div class="col-md-4 reveal reveal-delay-2"><div class="cirugia-card"><h5>Cirugía General y Digestiva</h5><ul><li>Laparoscopía: apéndice, vesícula, hernias, reflujo, tumores</li><li>Cirugía ambulatoria: verrugas, abscesos, lipomas, quistes</li><li>Cirugía percutánea guiada por ecografía</li></ul></div></div>
       <div class="col-md-4 reveal reveal-delay-3"><div class="cirugia-card"><h5>Ginecología</h5><ul><li>Histerectomía</li><li>Quistes de ovario</li></ul></div></div>
@@ -179,7 +185,7 @@
     <div class="title text-center reveal">
       <h2>Staff Médico</h2>
     </div>
-    <div class="row g-4">
+    <div class="row g-4 staff-lista">
       <div class="col-md-3 col-sm-6 reveal">
         <div class="staff-card">
           <div class="staff-img-wrap">
@@ -527,50 +533,126 @@
   </div>
 </section>
 
-<!-- COMO FUNCIONA PARA LA SECCION DE TURNOS -->
-<section class="how-section">
-  <div class="container text-center">
+<!-- COMO FUNCIONA: demostración animada del sistema de turnos (como-funciona.js) -->
+<section class="how-section" id="como-funciona">
+  <div class="container">
 
-    <h2 class="mb-3 reveal">¿Cómo funciona?</h2>
-    <p class="mb-5 reveal reveal-delay-1">Reservá tu turno en 3 simples pasos</p>
+    <div class="text-center">
+      <h2 class="mb-3 reveal">¿Cómo funciona?</h2>
+      <p class="mb-5 reveal reveal-delay-1">Sacá tu turno online en 5 pasos simples</p>
+    </div>
 
-    <div class="row justify-content-center">
+    <div class="cf-demo reveal" id="comoFunciona">
 
-      <div class="col-md-4 reveal reveal-delay-1">
-        <div class="step-card">
-          <div class="step-number">01</div>
-          <div class="icon-circle">
-            <i class="bi bi-search"></i>
-          </div>
-          <h5>Elegí especialidad</h5>
-          <p>Seleccioná la especialidad médica que necesitás</p>
+      <!-- Lista de pasos: avanzan solos y también se pueden tocar -->
+      <div class="cf-lado-pasos">
+        <div class="cf-pasos" role="tablist" aria-label="Pasos para sacar un turno">
+          <button type="button" class="cf-paso activo" role="tab" aria-selected="true" data-paso="0">
+            <span class="cf-paso-num"><i class="bi bi-person-vcard"></i></span>
+            <span class="cf-paso-texto"><strong>1. Ingresá tu DNI</strong><small>Te reconocemos y vemos tu nombre.</small></span>
+            <span class="cf-paso-barra"></span>
+          </button>
+          <button type="button" class="cf-paso" role="tab" aria-selected="false" data-paso="1">
+            <span class="cf-paso-num"><i class="bi bi-heart-pulse"></i></span>
+            <span class="cf-paso-texto"><strong>2. Elegí la especialidad</strong><small>Todas las áreas del centro en un solo lugar.</small></span>
+            <span class="cf-paso-barra"></span>
+          </button>
+          <button type="button" class="cf-paso" role="tab" aria-selected="false" data-paso="2">
+            <span class="cf-paso-num"><i class="bi bi-person-badge"></i></span>
+            <span class="cf-paso-texto"><strong>3. Seleccioná el profesional</strong><small>Con su foto, horarios y cobertura.</small></span>
+            <span class="cf-paso-barra"></span>
+          </button>
+          <button type="button" class="cf-paso" role="tab" aria-selected="false" data-paso="3">
+            <span class="cf-paso-num"><i class="bi bi-calendar-check"></i></span>
+            <span class="cf-paso-texto"><strong>4. Elegí día y horario</strong><small>Solo ves los turnos realmente disponibles.</small></span>
+            <span class="cf-paso-barra"></span>
+          </button>
+          <button type="button" class="cf-paso" role="tab" aria-selected="false" data-paso="4">
+            <span class="cf-paso-num"><i class="bi bi-check2-circle"></i></span>
+            <span class="cf-paso-texto"><strong>5. Confirmá tu turno</strong><small>Y descargá el comprobante en PDF.</small></span>
+            <span class="cf-paso-barra"></span>
+          </button>
+        </div>
+        <div class="cf-acciones">
+          <a href="especialidadesturnos.html" class="cf-probar">Sacar mi turno <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
 
-      <div class="col-md-4 reveal reveal-delay-2">
-        <div class="step-card">
-          <div class="step-number">02</div>
-          <div class="icon-circle">
-            <i class="bi bi-person-badge"></i>
-          </div>
-          <h5>Seleccioná profesional</h5>
-          <p>Elegí el médico según disponibilidad</p>
-        </div>
-      </div>
+      <!-- Celular con la pantalla de turnos (solo ilustrativo) -->
+      <div class="cf-lado-celular" aria-hidden="true">
+        <div class="cf-celular">
+          <div class="cf-pantalla">
+            <div class="cf-barra-sup"><img src="logoNUEVO.png" alt=""> Turnos online</div>
+            <div class="cf-mini-stepper"><i class="hecho"></i><i></i><i></i><i></i><i></i></div>
 
-      <div class="col-md-4 reveal reveal-delay-3">
-        <div class="step-card">
-          <div class="step-number">03</div>
-          <div class="icon-circle">
-            <i class="bi bi-calendar-check"></i>
+            <!-- Escena 1: DNI -->
+            <div class="cf-escena activa">
+              <p class="cf-titulo">Agendar turno</p>
+              <p class="cf-sub">Ingresá tu DNI para comenzar</p>
+              <div class="cf-input"><span class="cf-tipeo">12345678</span></div>
+              <div class="cf-btn cf-objetivo" style="--d: 1.9s">Continuar <i class="bi bi-arrow-right"></i><span class="cf-tap"></span></div>
+              <div class="cf-aparece cf-ok" style="--d: 2.5s"><i class="bi bi-person-check-fill"></i> Paciente reconocido</div>
+            </div>
+
+            <!-- Escena 2: Especialidad -->
+            <div class="cf-escena">
+              <p class="cf-titulo">Especialidad</p>
+              <div class="cf-grilla">
+                <span class="cf-opcion cf-objetivo" style="--d: 1.4s">Cardiología<span class="cf-tap"></span></span>
+                <span class="cf-opcion">Dermatología</span>
+                <span class="cf-opcion">Neurología</span>
+                <span class="cf-opcion">Odontología</span>
+                <span class="cf-opcion">Nutrición</span>
+                <span class="cf-opcion">Psicología</span>
+              </div>
+            </div>
+
+            <!-- Escena 3: Profesional -->
+            <div class="cf-escena">
+              <p class="cf-titulo">Profesionales</p>
+              <p class="cf-sub">Cardiología</p>
+              <div class="cf-medico cf-objetivo" style="--d: 1.4s">
+                <img src="img/palacio3.jpeg" alt="">
+                <span><strong>Dr. Gerardo M. Palacio</strong><small>Todas las obras sociales</small></span>
+                <span class="cf-tap"></span>
+              </div>
+            </div>
+
+            <!-- Escena 4: Fecha y hora -->
+            <div class="cf-escena">
+              <p class="cf-titulo">Fecha y hora</p>
+              <div class="cf-dias">
+                <span class="cf-dia cf-objetivo" style="--d: 1s"><b>LUN</b>16<span class="cf-tap"></span></span>
+                <span class="cf-dia"><b>MAR</b>17</span>
+                <span class="cf-dia cf-dia-feriado"><b>LUN</b>23<em>Feriado</em></span>
+              </div>
+              <div class="cf-horas cf-aparece" style="--d: 1.5s">
+                <span class="cf-hora">16:00</span>
+                <span class="cf-hora cf-objetivo" style="--d: 2.3s">16:30<span class="cf-tap"></span></span>
+                <span class="cf-hora">17:00</span>
+                <span class="cf-hora">17:30</span>
+              </div>
+            </div>
+
+            <!-- Escena 5: Confirmación -->
+            <div class="cf-escena">
+              <div class="cf-resumen">
+                <img src="img/palacio3.jpeg" alt="">
+                <span><strong>Lunes 16 · 16:30 hs</strong><small>Dr. Gerardo M. Palacio</small></span>
+              </div>
+              <div class="cf-btn cf-btn-verde cf-objetivo" style="--d: 0.9s">Confirmar turno<span class="cf-tap"></span></div>
+              <div class="cf-exito cf-aparece" style="--d: 1.5s">
+                <span class="cf-check"><i class="bi bi-check-lg"></i></span>
+                <strong>¡Turno confirmado!</strong>
+                <small><i class="bi bi-file-earmark-arrow-down"></i> Comprobante descargado</small>
+              </div>
+            </div>
+
           </div>
-          <h5>Reservá turno</h5>
-          <p>Confirmá fecha y horario</p>
         </div>
       </div>
 
     </div>
-
   </div>
 </section>
 
@@ -585,17 +667,28 @@
 <footer id="contacto" class="footer reveal">
   <div class="container">
     <div class="row">
+
+      <!-- LOGO + DESCRIPCIÓN -->
       <div class="col-md-3">
         <img src="logoNUEVO.png" alt="CMP" style="height:60px; margin-bottom:10px;">
         <h5>Centro Médico Palacio</h5>
         <p>Brindamos atención médica de calidad con profesionales especializados para cuidar tu salud y la de tu familia.</p>
       </div>
+
+      <!-- CONTACTO -->
       <div class="col-md-3">
         <h5>Contacto</h5>
-        <p><i class="bi bi-telephone-fill"></i> +54 (3865) 425356</p>
-        <p><i class="bi bi-envelope-fill"></i> admin@centromedicopalacio.com</p>
-        <p><i class="bi bi-geo-alt-fill"></i> <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" class="footer-link">24 de Septiembre 2070</a></p>
+        <!-- TELÉFONO: a confirmar por el centro (completar cuando esté confirmado) -->
+        <p><i class="bi bi-envelope-fill"></i> <a href="mailto:admin@centromedicopalacio.com" class="footer-link">admin@centromedicopalacio.com</a></p>
+        <p>
+          <i class="bi bi-geo-alt-fill"></i>
+          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070,+Concepci%C3%B3n,+Tucum%C3%A1n" target="_blank" rel="noopener" class="footer-link">
+            24 de Septiembre 2070<br>Concepción (CP 4146), Tucumán
+          </a>
+        </p>
       </div>
+
+      <!-- HORARIOS -->
       <div class="col-md-3">
         <h5>Horarios</h5>
         <p>Lunes, Miércoles, Viernes: 16:00 - 20:30</p>
@@ -603,29 +696,66 @@
         <p>Sábados: Cerrado</p>
         <p>Domingos: Cerrado</p>
       </div>
+
+      <!-- REDES -->
       <div class="col-md-3">
         <h5>Redes Sociales</h5>
         <div class="social-icons">
-          <a href="https://www.facebook.com/share/17XspoK9Nt/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/centromedicopalacio?igsh=MW14YTgwczB3cjA1dA==" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/543865762230" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/share/17XspoK9Nt/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/centromedicopalacio?igsh=MW14YTgwczB3cjA1dA==" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <!-- WHATSAPP: a confirmar por el centro (agregar el ícono cuando el número esté confirmado) -->
         </div>
       </div>
+
     </div>
+
+    <!-- MAPA -->
     <div class="row mt-4">
       <div class="col-12">
         <!-- Mapa: se dibuja con mapa.js (Leaflet + OpenStreetMap) -->
         <div class="mapa-cmp" role="region" aria-label="Mapa de ubicación del Centro Médico Palacio"></div>
       </div>
     </div>
+
+    <!-- COPYRIGHT -->
+    <div class="footer-legal">
+      <span>&copy; 2026 Centro Médico Palacio. Todos los derechos reservados.</span>
+      <span>Frontend desarrollado por Ever Molina y Jimena Costilla</span>
+      <!-- BACKEND: a completar (ingeniero del centro) -->
+    </div>
+
   </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="mapa.js"></script>
+<script src="mapa.js?v=20261112b"></script>
+<!-- Área privada: conexión con el servidor (api-turnos.js) y ventana de contraseña -->
+<script src="api-turnos.js?v=20261112b"></script>
+<script src="area-privada.js?v=20261112b"></script>
+<script src="como-funciona.js?v=20261112b"></script>
 <script>
-function scrollToSection(id){
+// Baja suavemente hasta la sección indicada
+function irASeccion(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// Menú de celular: al tocar un enlace interno, primero se cierra el menú
+// y recién después se baja a la sección (evita el salto cuando el menú se pliega)
+function activarEnlacesDelMenu(){
+  document.querySelectorAll('#navbarNav .nav-link[href^="#"]').forEach(enlace => {
+    enlace.addEventListener('click', e => {
+      const menu = document.getElementById('navbarNav');
+      if (!menu.classList.contains('show')) return; // en computadora no hace falta
+      e.preventDefault();
+      const destino = enlace.getAttribute('href');
+      menu.addEventListener('hidden.bs.collapse', () => {
+        if (destino === '#') window.scrollTo({ top: 0, behavior: 'smooth' });
+        else document.querySelector(destino).scrollIntoView({ behavior: 'smooth' });
+        history.replaceState(null, '', destino);
+      }, { once: true });
+      bootstrap.Collapse.getOrCreateInstance(menu).hide();
+    });
+  });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -633,6 +763,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const navbar = document.querySelector('.custom-navbar');
   const actualizarNavbar = () => navbar.classList.toggle('scrolled', window.scrollY > 20);
   actualizarNavbar();
+  activarEnlacesDelMenu();
   window.addEventListener('scroll', actualizarNavbar, { passive: true });
 
   // Aparición escalonada en grillas con muchas tarjetas (consultas, estudios, staff)
@@ -658,33 +789,34 @@ document.addEventListener("DOMContentLoaded", function() {
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        animateCounter(entry.target);
+        animarContador(entry.target);
         counterObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.5 });
   counters.forEach(counter => counterObserver.observe(counter));
 
-  function animateCounter(el) {
+  // Cuenta de 0 al número final (ej. "+5.000") con desaceleración
+  function animarContador(el) {
     const target = parseInt(el.getAttribute('data-count'));
     const prefix = el.getAttribute('data-prefix') || '';
     const suffix = el.getAttribute('data-suffix') || '';
     const duration = 2000;
     const startTime = performance.now();
 
-    function update(currentTime) {
+    function actualizarNumero(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easeOut * target);
       el.textContent = prefix + current.toLocaleString('es-AR') + suffix;
       if (progress < 1) {
-        requestAnimationFrame(update);
+        requestAnimationFrame(actualizarNumero);
       } else {
         el.textContent = prefix + target.toLocaleString('es-AR') + suffix;
       }
     }
-    requestAnimationFrame(update);
+    requestAnimationFrame(actualizarNumero);
   }
 });
 </script>

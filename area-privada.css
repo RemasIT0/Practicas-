@@ -1,0 +1,155 @@
+/* =====================================================================
+   ÁREA PRIVADA: botón del encabezado y ventana de contraseña
+   (lo usan index.html y especialidadesturnos.html; ver area-privada.js)
+   ===================================================================== */
+
+/* ---------- Botones del encabezado ---------- */
+.nav-acciones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-area-privada {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+.btn-area-privada:hover,
+.btn-area-privada:focus-visible {
+  background: #eef4ff;
+  color: #0b5ed7;
+  border-color: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+/* En la página de turnos el encabezado es azul */
+.navbar-turnos .btn-area-privada {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.75);
+}
+.navbar-turnos .btn-area-privada:hover,
+.navbar-turnos .btn-area-privada:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Menú de celular: botones uno debajo del otro, a todo el ancho */
+@media (max-width: 991px) {
+  .nav-acciones {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 25px;
+  }
+  .nav-acciones .btn-turnos { margin-top: 0; }
+  .nav-acciones .btn-area-privada {
+    justify-content: center;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    border-radius: 14px;
+    background: #fff;
+    color: #0d6efd;
+    border-color: #fff;
+  }
+}
+
+/* ---------- Ventana de contraseña ---------- */
+.ap-modal .modal-dialog { max-width: 420px; }
+
+.ap-contenido {
+  position: relative;
+  border: none;
+  border-radius: 20px;
+  padding: 34px 30px 26px;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 20px 50px rgba(0, 58, 135, 0.25);
+}
+
+.ap-cerrar { position: absolute; top: 16px; right: 16px; }
+
+.ap-icono {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  background: linear-gradient(135deg, #003a87, #2a7cc7);
+  box-shadow: 0 8px 20px rgba(0, 58, 135, 0.25);
+}
+
+.ap-titulo { font-size: 22px; font-weight: 700; color: #003a87; margin: 0 0 6px; }
+.ap-subtitulo { font-size: 14px; color: #5f6c7b; margin: 0 0 22px; }
+
+.ap-label { display: block; text-align: left; font-weight: 600; font-size: 14px; color: #1f2d3d; margin-bottom: 6px; }
+
+.ap-campo { position: relative; }
+.ap-input {
+  width: 100%;
+  padding: 13px 48px 13px 16px;
+  border: 2px solid #e0e6ed;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.ap-input:focus { border-color: #2a7cc7; box-shadow: 0 0 0 4px rgba(42, 124, 199, 0.15); }
+.ap-input.ap-invalido { border-color: #dc3545; animation: apSacudida 0.4s ease; }
+
+.ap-ver {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: #5f6c7b;
+  font-size: 18px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.ap-ver:hover { color: #003a87; }
+
+.ap-error { color: #dc3545; font-size: 13px; min-height: 18px; margin: 6px 0 10px; text-align: left; }
+
+.ap-ingresar {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #003a87, #2a7cc7);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ap-ingresar:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 58, 135, 0.3); }
+.ap-ingresar:disabled { opacity: 0.75; cursor: wait; transform: none; box-shadow: none; }
+
+.ap-nota { font-size: 13px; color: #5f6c7b; margin: 16px 0 0; }
+
+@keyframes apSacudida {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-input.ap-invalido { animation: none; }
+}

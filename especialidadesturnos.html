@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-    <link rel="stylesheet" href="EstiloTurnos.css">
-    <link rel="stylesheet" href="mapa.css">
+    <link rel="stylesheet" href="EstiloTurnos.css?v=20261112b">
+    <link rel="stylesheet" href="mapa.css?v=20261112b">
+    <link rel="stylesheet" href="area-privada.css?v=20261112b">
 </head>
 <body>
 
@@ -39,7 +40,10 @@
           <li class="nav-item"><a class="nav-link" href="index.html#profesionales">Profesionales</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#contacto">Contacto</a></li>
         </ul>
-        <div class="text-center">
+        <div class="nav-acciones">
+          <button type="button" class="btn btn-area-privada" data-area-privada>
+            <i class="bi bi-lock-fill"></i> Área privada
+          </button>
           <a href="especialidadesturnos.html" class="btn btn-turnos">Turnos</a>
         </div>
       </div>
@@ -74,6 +78,9 @@
         <span class="wiz-step-label">Confirmar</span>
       </div>
     </div>
+
+    <!-- Nombre del paciente (lo completa menu.js después de validar el DNI) -->
+    <p class="wiz-paciente" id="pacienteInfo" hidden aria-live="polite"></p>
 
     <div class="wiz-slides">
 
@@ -110,7 +117,7 @@
         <div class="wiz-spec-grid" id="specialtyGrid"></div>
 
         <div class="wiz-btn-group">
-          <button type="button" class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
+          <button type="button" class="wiz-btn-back" onclick="volverPasoAnterior()"><i class="bi bi-arrow-left"></i> Atrás</button>
         </div>
       </div>
 
@@ -125,7 +132,7 @@
         <div class="wiz-doc-list" id="doctorList"></div>
 
         <div class="wiz-btn-group">
-          <button type="button" class="wiz-btn-back" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Atrás</button>
+          <button type="button" class="wiz-btn-back" onclick="volverPasoAnterior()"><i class="bi bi-arrow-left"></i> Atrás</button>
         </div>
       </div>
 
@@ -141,7 +148,14 @@
         <div class="wiz-days-section">
           <label class="wiz-days-label"><i class="bi bi-calendar3"></i> Próximos días disponibles</label>
           <div class="wiz-days-grid" id="daysGrid"></div>
+          <div class="wiz-days-leyenda" aria-hidden="true">
+            <span><i class="ley ley-disponible"></i> Disponible</span>
+            <span><i class="ley ley-sin-turnos"></i> Sin turnos</span>
+            <span><i class="ley ley-feriado"></i> Feriado</span>
+          </div>
           <p class="wiz-days-hint" id="daysHint">Seleccioná un día para ver los horarios</p>
+          <!-- Aviso al tocar un feriado o un día sin turnos -->
+          <p class="wiz-fecha-aviso" id="fechaAviso" role="alert" hidden></p>
         </div>
 
         <!-- Horarios (se muestran al elegir un día) -->
@@ -153,10 +167,10 @@
         <span class="dni-error" id="datetimeError" aria-live="polite"></span>
 
         <div class="wiz-btn-group bottom-buttons">
-          <button type="button" class="wiz-btn-back" onclick="prevStep()">
+          <button type="button" class="wiz-btn-back" onclick="volverPasoAnterior()">
             <i class="bi bi-arrow-left"></i> Atrás
           </button>
-          <button type="button" id="requestTurnBtn" class="btn btn-primary d-none" onclick="showConfirmCard()">
+          <button type="button" id="requestTurnBtn" class="btn btn-primary d-none" onclick="mostrarResumenDelTurno()">
             Continuar <i class="bi bi-arrow-right"></i>
           </button>
         </div>
@@ -165,7 +179,7 @@
       <!-- PASO 5: Confirmación (resumen y, al confirmar, pantalla de éxito) -->
       <div class="wiz-slide" id="slide-5">
 
-        <!-- Resumen del turno: lo completa menu.js (showConfirmCard) -->
+        <!-- Resumen del turno: lo completa menu.js (mostrarResumenDelTurno) -->
         <div class="wiz-confirm" id="confirmView">
           <h2 class="dni-title">Confirmá tu turno</h2>
           <p class="dni-description">Revisá que los datos sean correctos antes de confirmar</p>
@@ -190,12 +204,18 @@
               </div>
               <div class="wiz-resumen-item">
                 <span class="wiz-resumen-ico"><i class="bi bi-person-vcard"></i></span>
-                <div><span class="wiz-resumen-lbl">Paciente (DNI)</span><span class="wiz-resumen-val" id="cDni"></span></div>
+                <div><span class="wiz-resumen-lbl">Paciente</span><span class="wiz-resumen-val" id="cPaciente"></span><span class="wiz-resumen-sub" id="cDni"></span></div>
               </div>
               <div class="wiz-resumen-item">
                 <span class="wiz-resumen-ico"><i class="bi bi-geo-alt"></i></span>
                 <div><span class="wiz-resumen-lbl">Lugar</span><span class="wiz-resumen-val">24 de Septiembre 2070</span></div>
               </div>
+            </div>
+
+            <!-- Indicaciones del médico (solo lectura; las carga menu.js) -->
+            <div class="wiz-indicaciones" id="cIndicaciones" hidden>
+              <div class="wiz-indicaciones-t"><i class="bi bi-clipboard2-pulse"></i> Indicaciones del profesional</div>
+              <p id="cIndicacionesTexto"></p>
             </div>
 
             <div class="wiz-resumen-aviso">
@@ -207,10 +227,10 @@
           <span class="dni-error" id="confirmError" aria-live="polite"></span>
 
           <div class="wiz-btn-group bottom-buttons">
-            <button type="button" class="wiz-btn-back" onclick="prevStep()">
+            <button type="button" class="wiz-btn-back" onclick="volverPasoAnterior()">
               <i class="bi bi-arrow-left"></i> Cambiar horario
             </button>
-            <button type="button" id="confirmTurnBtn" class="wiz-btn-confirm" onclick="confirmAppointment()">
+            <button type="button" id="confirmTurnBtn" class="wiz-btn-confirm" onclick="confirmarTurno()">
               <i class="bi bi-check2-circle"></i> Confirmar turno
             </button>
           </div>
@@ -227,10 +247,10 @@
           <p class="wiz-exito-nota"><i class="bi bi-file-earmark-arrow-down"></i> El comprobante se descargó automáticamente.</p>
 
           <div class="wiz-btn-group bottom-buttons">
-            <button type="button" class="wiz-btn-back" onclick="generarPDF()">
+            <button type="button" class="wiz-btn-back" onclick="descargarComprobantePDF()">
               <i class="bi bi-download"></i> Descargar comprobante
             </button>
-            <button type="button" class="wiz-btn-next" onclick="resetWizard()">
+            <button type="button" class="wiz-btn-next" onclick="reiniciarAsistente()">
               <i class="bi bi-plus-circle"></i> Sacar otro turno
             </button>
           </div>
@@ -249,21 +269,18 @@
       <div class="col-md-3">
         <img src="logoNUEVO.png" alt="CMP" style="height:60px; margin-bottom:10px;">
         <h5>Centro Médico Palacio</h5>
-        <p>
-          Brindamos atención médica de calidad con profesionales especializados
-          para cuidar tu salud y la de tu familia.
-        </p>
+        <p>Brindamos atención médica de calidad con profesionales especializados para cuidar tu salud y la de tu familia.</p>
       </div>
 
       <!-- CONTACTO -->
       <div class="col-md-3">
         <h5>Contacto</h5>
-        <p><i class="bi bi-telephone-fill"></i> +54 (3865) 425356</p>
-        <p><i class="bi bi-envelope-fill"></i> admin@centromedicopalacio.com</p>
+        <!-- TELÉFONO: a confirmar por el centro (completar cuando esté confirmado) -->
+        <p><i class="bi bi-envelope-fill"></i> <a href="mailto:admin@centromedicopalacio.com" class="footer-link">admin@centromedicopalacio.com</a></p>
         <p>
           <i class="bi bi-geo-alt-fill"></i>
-          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070" target="_blank" rel="noopener" class="footer-link">
-            24 de Septiembre 2070
+          <a href="https://www.google.com/maps?q=24+de+Septiembre+2070,+Concepci%C3%B3n,+Tucum%C3%A1n" target="_blank" rel="noopener" class="footer-link">
+            24 de Septiembre 2070<br>Concepción (CP 4146), Tucumán
           </a>
         </p>
       </div>
@@ -271,7 +288,8 @@
       <!-- HORARIOS -->
       <div class="col-md-3">
         <h5>Horarios</h5>
-        <p>Lunes a Viernes: 16:00 - 20:30</p>
+        <p>Lunes, Miércoles, Viernes: 16:00 - 20:30</p>
+        <p>Martes y Jueves: 8:00 - 20:30</p>
         <p>Sábados: Cerrado</p>
         <p>Domingos: Cerrado</p>
       </div>
@@ -280,15 +298,9 @@
       <div class="col-md-3">
         <h5>Redes Sociales</h5>
         <div class="social-icons">
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://wa.me/543865425356" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-          </a>
+          <a href="https://www.facebook.com/share/17XspoK9Nt/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/centromedicopalacio?igsh=MW14YTgwczB3cjA1dA==" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <!-- WHATSAPP: a confirmar por el centro (agregar el ícono cuando el número esté confirmado) -->
         </div>
       </div>
 
@@ -302,17 +314,26 @@
       </div>
     </div>
 
+    <!-- COPYRIGHT -->
+    <div class="footer-legal">
+      <span>&copy; 2026 Centro Médico Palacio. Todos los derechos reservados.</span>
+      <span>Frontend desarrollado por Ever Molina y Jimena Costilla</span>
+      <!-- BACKEND: a completar (ingeniero del centro) -->
+    </div>
+
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!-- Orden importante: datos y API antes de menu.js -->
-<script src="logo-pdf.js"></script>
-<script src="datos-medicos.js"></script>
-<script src="api-turnos.js"></script>
-<script src="menu.js"></script>
+<script src="logo-pdf.js?v=20261112b"></script>
+<script src="datos-medicos.js?v=20261112b"></script>
+<script src="feriados.js?v=20261112b"></script>
+<script src="api-turnos.js?v=20261112b"></script>
+<script src="area-privada.js?v=20261112b"></script>
+<script src="menu.js?v=20261112b"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="mapa.js"></script>
+<script src="mapa.js?v=20261112b"></script>
 </body>
 </html>

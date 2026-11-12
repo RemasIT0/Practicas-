@@ -4,9 +4,10 @@
    NOTA :
    Este es el ÚNICO archivo que hace falta modificar para conectar el
    sistema de turnos con la base de datos. El resto de la página
-   (menu.js) solo llama a las funciones de abajo y espera la respuesta.
+   (menu.js y area-privada.js) solo llama a las funciones de abajo y
+   espera la respuesta.
 
-   Hoy las funciones trabajan con datos de prueba en memoria (no se
+   Hoy las funciones trabajan con DATOS DE PRUEBA en memoria (no se
    guarda nada). Para conectarlas:
      1. Completar CONFIG.urlApi con la dirección del backend.
      2. Reemplazar el cuerpo de cada función por la llamada real
@@ -18,9 +19,9 @@
    (sin conexión, error del servidor) deben lanzar un Error: la página
    ya muestra un mensaje al paciente en ese caso.
 
-   SEGURIDAD: la validación del DNI y la disponibilidad de horarios
-   también deben controlarse en el servidor; lo que se valida aquí en el
-   navegador puede ser salteado por cualquiera.
+   SEGURIDAD: la validación del DNI, la disponibilidad de horarios y la
+   contraseña del área privada deben controlarse en el servidor; lo que
+   se valida aquí en el navegador puede ser salteado por cualquiera.
    ===================================================================== */
 
 const CONFIG = {
@@ -29,39 +30,57 @@ const CONFIG = {
 
   // Número de WhatsApp al que se deriva al paciente si su DNI no está
   // registrado (formato internacional, sin "+" ni espacios).
-  // VERIFICAR: es distinto al que figura en el pie de página.
-  whatsappContacto: "5493815551234",
+  // A CONFIRMAR: mientras esté vacío, no se muestra el botón de WhatsApp.
+  whatsappContacto: "",
+
+  // Página a la que lleva el "Área privada" después de ingresar la contraseña.
+  // Hoy apunta a la carpeta local del panel; cambiarla por la dirección real
+  // cuando el panel esté publicado.
+  urlPanelAdmin: "../Administrador Palacios (Practicas)/practicas3/index.html",
 
   // Cuántos días hacia adelante se buscan fechas disponibles,
-  // y cuántas fechas como máximo se muestran.
+  // y cuántas fechas disponibles como máximo se muestran.
   diasABuscar: 21,
   maxDiasMostrados: 8,
 
-  // Duración de cada turno en minutos.
+  // Duración de cada turno en minutos (si el médico no tiene una propia,
+  // ver "duracionMin" en datos-medicos.js).
   duracionTurnoMin: 30
 };
 
 // ---------------------------------------------------------------------
-// DATOS DE PRUEBA (borrar cuando se conecte la base de datos)
+// DATOS DE PRUEBA — NO USAR EN PRODUCCIÓN
+// Borrar cuando se conecte la base de datos.
 // ---------------------------------------------------------------------
-const PACIENTES_DE_PRUEBA = ["12345678", "87654321", "40111222"];
+const PACIENTES_DE_PRUEBA = [
+  { dni: "12345678", nombre: "Paciente", apellido: "de Prueba Uno" },
+  { dni: "87654321", nombre: "Paciente", apellido: "de Prueba Dos" },
+  { dni: "40111222", nombre: "Paciente", apellido: "de Prueba Tres" }
+];
 const turnosDePrueba = []; // { dni, medicoId, especialidad, fecha, hora }
+const CLAVE_DE_PRUEBA = "palacio2026";
+// Clave del navegador donde el panel de administración (indicaciones.js)
+// guarda las indicaciones de prueba. Solo se comparte si ambas páginas se
+// abren desde el mismo origen (por ejemplo, las dos como archivos locales).
+const CLAVE_INDICACIONES_PRUEBA = "cmp_indicaciones_medicos";
 
 const api = {
 
   /**
-   * Verifica si un DNI corresponde a un paciente registrado.
+   * Busca un paciente registrado por su DNI.
    * @param {string} dni  Solo números, 7 a 9 dígitos (ya validado).
-   * @returns {Promise<boolean>} true si está registrado.
+   * @returns {Promise<{dni:string, nombre:string, apellido:string} | null>}
+   *          null si el DNI no está registrado.
    */
-  async verificarPaciente(dni) {
+  async obtenerPaciente(dni) {
     // EJEMPLO con backend:
     // const res = await fetch(`${CONFIG.urlApi}/pacientes/${dni}`);
-    // if (res.status === 404) return false;
-    // if (!res.ok) throw new Error("Error al verificar el paciente");
-    // return true;
+    // if (res.status === 404) return null;
+    // if (!res.ok) throw new Error("Error al buscar el paciente");
+    // const p = await res.json();
+    // return { dni: p.dni, nombre: p.nombre, apellido: p.apellido };
 
-    return PACIENTES_DE_PRUEBA.includes(dni);
+    return PACIENTES_DE_PRUEBA.find(p => p.dni === dni) || null;
   },
 
   /**
@@ -108,5 +127,54 @@ const api = {
       fecha: turno.fecha,
       hora: turno.hora
     });
+  },
+
+  /**
+   * Devuelve las indicaciones que el médico dejó para sus pacientes
+   * (se escriben en el panel de administración, pantalla "ADM Médicos").
+   * @param {string} medicoId  El "id" del médico (ver datos-medicos.js).
+   * @returns {Promise<string>} Texto plano; "" si no hay indicaciones.
+   */
+  async obtenerIndicaciones(medicoId) {
+    // EJEMPLO con backend:
+    // const res = await fetch(`${CONFIG.urlApi}/medicos/${medicoId}/indicaciones`);
+    // if (res.status === 404) return "";
+    // if (!res.ok) throw new Error("Error al consultar las indicaciones");
+    // return (await res.json()).texto || "";
+
+    // Prueba: primero lo guardado desde el panel en este navegador,
+    // si no, el texto inicial de datos-medicos.js
+    try {
+      const guardadas = JSON.parse(localStorage.getItem(CLAVE_INDICACIONES_PRUEBA) || "{}");
+      if (typeof guardadas[medicoId] === "string") return guardadas[medicoId];
+    } catch (e) { /* sin acceso al almacenamiento: se usa el texto inicial */ }
+    for (const medicos of Object.values(DATA.doctors)) {
+      const medico = medicos.find(m => m.id === medicoId);
+      if (medico) return medico.indicaciones || "";
+    }
+    return "";
+  },
+
+  /**
+   * Verifica la contraseña del área privada (médicos y administración).
+   * @param {string} clave
+   * @returns {Promise<{ok:boolean, rol?:string}>}
+   * IMPORTANTE: hoy es una verificación DE PRUEBA, visible en este
+   * archivo. NO protege nada hasta conectarla con el login del servidor,
+   * y el panel también debe exigir la sesión del lado del servidor.
+   */
+  async iniciarSesion(clave) {
+    // EJEMPLO con backend:
+    // const res = await fetch(`${CONFIG.urlApi}/login`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   credentials: "include",            // para que el servidor guarde la sesión
+    //   body: JSON.stringify({ clave })
+    // });
+    // if (res.status === 401) return { ok: false };
+    // if (!res.ok) throw new Error("No se pudo iniciar sesión");
+    // return { ok: true, rol: (await res.json()).rol };
+
+    return clave === CLAVE_DE_PRUEBA ? { ok: true, rol: "administrador" } : { ok: false };
   }
 };

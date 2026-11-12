@@ -20,9 +20,19 @@
      hours     -> horario de atención por día de la semana, usado para
                   generar los turnos disponibles:
                   { númeroDeDía: ["HH:MM inicio", "HH:MM fin"] }
+                  Si un día atiende en dos franjas (mañana y tarde):
+                  { 2: [["08:00", "12:00"], ["16:00", "20:30"]] }
                   Días: 0=Dom, 1=Lun, 2=Mar, 3=Mié, 4=Jue, 5=Vie, 6=Sáb.
-                  El último turno ofrecido empieza 30 min antes del fin.
+                  El último turno ofrecido es el que termina justo a la
+                  hora de fin (con turnos de 30 min y fin 20:30 -> 20:00).
                   IMPORTANTE: debe coincidir con el texto de "schedule".
+     duracionMin -> duración de cada turno en minutos (opcional; si no
+                  está, se usa CONFIG.duracionTurnoMin de api-turnos.js).
+     indicaciones -> texto inicial de las indicaciones para el paciente
+                  (opcional). Se muestran antes de confirmar el turno.
+                  Cuando se conecte la base de datos, las indicaciones
+                  vienen de api.obtenerIndicaciones() y se editan en el
+                  panel de administración ("ADM Médicos").
    ===================================================================== */
 
 const DATA = {
@@ -74,7 +84,9 @@ const DATA = {
         foto: "img/palacio3.jpeg",
         schedule: "Lunes y Miércoles de 16:00 a 20:30, Martes y Jueves de 14:00 a 18:30",
         notes: "Todas las obras sociales",
-        hours: { 1: ["16:00", "20:30"], 2: ["14:00", "18:30"], 3: ["16:00", "20:30"], 4: ["14:00", "18:30"] }
+        hours: { 1: ["16:00", "20:30"], 2: ["14:00", "18:30"], 3: ["16:00", "20:30"], 4: ["14:00", "18:30"] },
+        // Texto de ejemplo del pedido: CONFIRMAR con el médico
+        indicaciones: "Recordá traer los estudios anteriores y la documentación médica."
       }
     ],
 
@@ -208,7 +220,9 @@ const DATA = {
         foto: "img/delafuente.jpeg",
         schedule: "Lunes a Viernes de 16:00 a 20:30",
         notes: "Ortodoncia",
-        hours: { 1: ["16:00", "20:30"], 2: ["16:00", "20:30"], 3: ["16:00", "20:30"], 4: ["16:00", "20:30"], 5: ["16:00", "20:30"] }
+        hours: { 1: ["16:00", "20:30"], 2: ["16:00", "20:30"], 3: ["16:00", "20:30"], 4: ["16:00", "20:30"], 5: ["16:00", "20:30"] },
+        // Texto de ejemplo del pedido: CONFIRMAR con la médica
+        indicaciones: "Por favor, asistir con ropa cómoda."
       }
     ],
 

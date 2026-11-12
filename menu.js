@@ -15,7 +15,7 @@
      especialidadesturnos.html?medico=gerardo-palacio
          -> después del DNI salta directo a fecha y hora (paso 4).
    "especialidad" es el nombre sin acentos, en minúsculas y con guiones
-   (ver normalizar()). "medico" es el campo "id" de datos-medicos.js.
+   (ver normalizarTexto()). "medico" es el campo "id" de datos-medicos.js.
    Si el parámetro no coincide con ningún dato, se ignora y se sigue
    el recorrido normal.
    ===================================================================== */
@@ -25,7 +25,7 @@ const DIAS_CORTOS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 const MESES_CORTOS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 // "Cirugía General" -> "cirugia-general"
-function normalizar(texto) {
+function normalizarTexto(texto) {
   return String(texto)
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .toLowerCase().trim()
@@ -33,25 +33,28 @@ function normalizar(texto) {
     .replace(/^-+|-+$/g, '');
 }
 
+// Evita que un texto se interprete como HTML
 function escaparHTML(texto) {
   const div = document.createElement('div');
   div.textContent = texto ?? '';
   return div.innerHTML;
 }
 
-function aMinutos(hora) {
+// "16:30" -> 990 minutos
+function horaAMinutos(hora) {
   const [h, m] = hora.split(':').map(Number);
   return h * 60 + m;
 }
 
-function aHora(minutos) {
+// 990 minutos -> "16:30"
+function minutosAHora(minutos) {
   const h = Math.floor(minutos / 60);
   const m = minutos % 60;
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 // Fecha local en formato "AAAA-MM-DD" (no usar toISOString: usa UTC)
-function fechaISO(date) {
+function fechaAFormatoISO(date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
@@ -68,7 +71,8 @@ function formatearFechaLarga(iso) {
     .replace(',', '');
 }
 
-function icono(clase) {
+// HTML de un ícono de Bootstrap Icons
+function htmlIcono(clase) {
   return `<i class="bi ${clase}"></i>`;
 }
 
@@ -88,7 +92,8 @@ function animarEntrada(el, indice) {
   el.style.setProperty('--i', indice);
 }
 
-function sacudir(el) {
+// Sacudida corta para marcar un campo con error
+function sacudirCampo(el) {
   if (!el) return;
   el.classList.remove('wiz-shake');
   void el.offsetWidth; // reinicia la animación
@@ -96,7 +101,7 @@ function sacudir(el) {
 }
 
 // Foto del médico, o su letra si no tiene foto o la foto no carga
-function crearAvatar(doc) {
+function crearFotoDelMedico(doc) {
   const letra = document.createElement('div');
   letra.className = 'wiz-doc-avatar';
   letra.textContent = doc.avatar;
@@ -111,15 +116,16 @@ function crearAvatar(doc) {
   return img;
 }
 
+// Busca una especialidad por su nombre en la URL ("cirugia-general")
 function buscarEspecialidad(valor) {
-  const buscado = normalizar(valor);
-  return Object.keys(DATA.doctors).find(nombre => normalizar(nombre) === buscado) || null;
+  const buscado = normalizarTexto(valor);
+  return Object.keys(DATA.doctors).find(nombre => normalizarTexto(nombre) === buscado) || null;
 }
 
 // Devuelve { specialty, doctor } o null. Si el médico atiende en varias
 // especialidades, se prioriza "especialidadPreferida".
 function buscarMedico(id, especialidadPreferida) {
-  const buscado = normalizar(id);
+  const buscado = normalizarTexto(id);
   const especialidades = Object.keys(DATA.doctors);
   if (especialidadPreferida) {
     especialidades.sort((a, b) => (b === especialidadPreferida) - (a === especialidadPreferida));
@@ -131,41 +137,56 @@ function buscarMedico(id, especialidadPreferida) {
   return null;
 }
 
-// Horarios de atención de un médico para una fecha (sin los ya pasados si es hoy)
-function generarHorarios(doctor, date) {
-  const rango = doctor.hours[date.getDay()];
-  if (!rango) return [];
+// Franjas de atención de un médico en un día de la semana, en minutos y ordenadas
+// (acepta una franja ["16:00", "20:30"] o varias [["08:00", "12:00"], ["16:00", "20:30"]])
+function franjasDelDia(doctor, diaSemana) {
+  const dato = doctor.hours[diaSemana];
+  if (!dato) return [];
+  const franjas = Array.isArray(dato[0]) ? dato : [dato];
+  return franjas
+    .map(([inicio, fin]) => [horaAMinutos(inicio), horaAMinutos(fin)])
+    .filter(([inicio, fin]) => inicio < fin)   // descarta franjas mal cargadas
+    .sort((a, b) => a[0] - b[0]);
+}
 
-  const inicio = aMinutos(rango[0]);
-  const fin = aMinutos(rango[1]);
+// Horarios de atención de un médico para una fecha (sin los ya pasados si es hoy)
+function generarHorariosDelDia(doctor, date) {
+  const duracion = doctor.duracionMin || CONFIG.duracionTurnoMin;
   const ahora = new Date();
-  const esHoy = fechaISO(date) === fechaISO(ahora);
+  const esHoy = fechaAFormatoISO(date) === fechaAFormatoISO(ahora);
   const minutosAhora = ahora.getHours() * 60 + ahora.getMinutes();
 
-  const horarios = [];
-  for (let m = inicio; m < fin; m += CONFIG.duracionTurnoMin) {
-    if (esHoy && m <= minutosAhora) continue;
-    horarios.push(aHora(m));
+  const inicios = new Set(); // Set: un mismo horario nunca aparece dos veces
+  let finAnterior = 0;
+  for (const [inicio, fin] of franjasDelDia(doctor, date.getDay())) {
+    // Si una franja se superpone con la anterior, arranca donde terminó la otra
+    // Cada turno debe terminar dentro de la franja (inicio + duración <= fin)
+    for (let m = Math.max(inicio, finAnterior); m + duracion <= fin; m += duracion) {
+      if (esHoy && m <= minutosAhora) continue;
+      inicios.add(m);
+    }
+    finAnterior = Math.max(finAnterior, fin);
   }
-  return horarios;
+  return [...inicios].sort((a, b) => a - b).map(minutosAHora);
 }
 
 // ===== ESTADO DEL ASISTENTE =====
 let currentStep = 1;
 const totalSteps = 5;
-const formData = { dni: '', specialty: '', doctor: null, date: '', time: '' };
+const formData = { dni: '', paciente: null, specialty: '', doctor: null, date: '', time: '' };
 let preseleccion = { specialty: '', doctor: null };
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.getElementById('specialtyGrid')) return; // no es la página de turnos
 
-  leerPreseleccion();
-  renderSpecialties();
-  setupEventListeners();
+  leerPreseleccionDeLaURL();
+  mostrarEspecialidades();
+  configurarEventosDelDni();
 });
 
-function leerPreseleccion() {
+// Lee ?especialidad= o ?medico= de la URL y muestra el aviso en el paso 1
+function leerPreseleccionDeLaURL() {
   const params = new URLSearchParams(window.location.search);
   const specialty = params.get('especialidad') ? buscarEspecialidad(params.get('especialidad')) : null;
   const encontrado = params.get('medico') ? buscarMedico(params.get('medico'), specialty) : null;
@@ -180,12 +201,13 @@ function leerPreseleccion() {
   if (!aviso || !preseleccion.specialty) return;
 
   aviso.innerHTML = preseleccion.doctor
-    ? `${icono('bi-person-badge')} Turno con <strong>${escaparHTML(preseleccion.doctor.name)}</strong> · ${escaparHTML(preseleccion.specialty)}`
-    : `${icono('bi-heart-pulse')} Especialidad: <strong>${escaparHTML(preseleccion.specialty)}</strong>`;
+    ? `${htmlIcono('bi-person-badge')} Turno con <strong>${escaparHTML(preseleccion.doctor.name)}</strong> · ${escaparHTML(preseleccion.specialty)}`
+    : `${htmlIcono('bi-heart-pulse')} Especialidad: <strong>${escaparHTML(preseleccion.specialty)}</strong>`;
   aviso.hidden = false;
 }
 
-function setupEventListeners() {
+// Eventos del campo DNI y del botón "Continuar"
+function configurarEventosDelDni() {
   const dniInput = document.getElementById('dniInput');
   dniInput.addEventListener('input', e => {
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
@@ -193,15 +215,16 @@ function setupEventListeners() {
     e.target.classList.remove('is-invalid');
   });
 
-  document.getElementById('nextFromDni').addEventListener('click', continuarDesdeDni);
+  document.getElementById('nextFromDni').addEventListener('click', verificarDniYContinuar);
   document.getElementById('dniForm').addEventListener('submit', e => {
     e.preventDefault();
-    continuarDesdeDni();
+    verificarDniYContinuar();
   });
 }
 
 // ===== RENDERIZADO =====
-function renderSpecialties() {
+// Paso 2: crea los botones de especialidades
+function mostrarEspecialidades() {
   const grid = document.getElementById('specialtyGrid');
   grid.innerHTML = '';
 
@@ -211,13 +234,14 @@ function renderSpecialties() {
     btn.className = 'wiz-spec-btn';
     btn.textContent = name;
     btn.dataset.specialty = name;
-    btn.onclick = () => selectSpecialty(name, btn);
+    btn.onclick = () => elegirEspecialidad(name, btn);
     animarEntrada(btn, i);
     grid.appendChild(btn);
   });
 }
 
-function renderDoctors(specialty) {
+// Paso 3: crea las tarjetas de los médicos de la especialidad
+function mostrarMedicos(specialty) {
   const list = document.getElementById('doctorList');
   list.innerHTML = '';
 
@@ -234,57 +258,136 @@ function renderDoctors(specialty) {
       </div>
     `;
 
-    card.prepend(crearAvatar(doc));
+    card.prepend(crearFotoDelMedico(doc));
 
-    hacerClickeable(card, () => selectDoctor(doc, card));
+    hacerClickeable(card, () => elegirMedico(doc, card));
     animarEntrada(card, i);
     list.appendChild(card);
   });
 }
 
-function renderAvailableDays() {
+// Paso 4: muestra los próximos días en que atiende el médico, marcando
+// los disponibles, los que no tienen turnos y los feriados
+async function mostrarDiasDisponibles() {
   const container = document.getElementById('daysGrid');
   const hint = document.getElementById('daysHint');
   const hoursSection = document.getElementById('hoursSection');
+  const doctor = formData.doctor;
 
   container.innerHTML = '';
   hoursSection.style.display = 'none';
   formData.date = '';
   formData.time = '';
-  ocultarSolicitud();
-  if (!formData.doctor) return;
+  ocultarBotonContinuar();
+  ocultarAvisoDeFecha();
+  if (!doctor) return;
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  let availableCount = 0;
+  hint.textContent = 'Buscando días disponibles...';
+  hint.style.color = '#888';
 
-  for (let i = 0; i < CONFIG.diasABuscar && availableCount < CONFIG.maxDiasMostrados; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    if (generarHorarios(formData.doctor, date).length === 0) continue;
-
-    const chip = document.createElement('div');
-    chip.className = 'wiz-day-chip';
-    chip.innerHTML = `
-      <span class="wiz-day-name">${DIAS_CORTOS[date.getDay()]}</span>
-      <span class="wiz-day-number">${date.getDate()}</span>
-      <span class="wiz-day-month">${MESES_CORTOS[date.getMonth()]}</span>`;
-    hacerClickeable(chip, () => selectDay(date, chip));
-    animarEntrada(chip, availableCount);
-    container.appendChild(chip);
-    availableCount++;
+  let dias;
+  try {
+    dias = await calcularDiasDelMedico(doctor);
+  } catch (err) {
+    hint.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} No pudimos consultar la disponibilidad. Intentá nuevamente.`;
+    hint.style.color = '#dc3545';
+    return;
   }
+  if (formData.doctor !== doctor) return; // el paciente cambió de médico mientras se esperaba
 
-  if (availableCount === 0) {
-    hint.innerHTML = `${icono('bi-x-circle')} Sin disponibilidad en los próximos ${CONFIG.diasABuscar} días`;
+  dias.forEach((dia, i) => container.appendChild(crearChipDeDia(dia, i)));
+
+  const disponibles = dias.filter(d => d.estado === 'disponible').length;
+  if (disponibles === 0) {
+    hint.innerHTML = `${htmlIcono('bi-x-circle')} Sin disponibilidad en los próximos ${CONFIG.diasABuscar} días`;
     hint.style.color = '#dc3545';
   } else {
-    hint.textContent = `Próximos ${availableCount} días disponibles`;
+    hint.textContent = `Próximos ${disponibles} días disponibles`;
     hint.style.color = '#888';
   }
 }
 
-async function renderTimeSlots() {
+// Recorre los próximos días y clasifica cada día de atención del médico
+// como 'disponible', 'sin-turnos' (todo ocupado o ya pasado) o 'feriado'
+async function calcularDiasDelMedico(doctor) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const dias = [];
+  let disponibles = 0;
+
+  for (let i = 0; i < CONFIG.diasABuscar && disponibles < CONFIG.maxDiasMostrados; i++) {
+    const date = new Date(hoy);
+    date.setDate(hoy.getDate() + i);
+    if (franjasDelDia(doctor, date.getDay()).length === 0) continue; // ese día no atiende
+
+    const fecha = fechaAFormatoISO(date);
+    const feriado = nombreDelFeriado(fecha);
+    if (feriado) {
+      dias.push({ date, estado: 'feriado', feriado });
+      continue;
+    }
+
+    const horarios = generarHorariosDelDia(doctor, date);
+    let libres = horarios.length;
+    if (libres > 0) {
+      const ocupados = await api.obtenerTurnosOcupados(doctor.id, fecha);
+      libres = horarios.filter(h => !ocupados.includes(h)).length;
+    }
+    dias.push({ date, estado: libres > 0 ? 'disponible' : 'sin-turnos' });
+    if (libres > 0) disponibles++;
+  }
+  return dias;
+}
+
+// Tarjeta de un día; los feriados y los días sin turnos no se pueden elegir
+function crearChipDeDia(dia, indice) {
+  const { date, estado, feriado } = dia;
+  const chip = document.createElement('div');
+  chip.className = 'wiz-day-chip' + (estado === 'disponible' ? '' : ` wiz-day-${estado}`);
+  const etiqueta = estado === 'feriado' ? 'FERIADO' : (estado === 'sin-turnos' ? 'Sin turnos' : '');
+  chip.innerHTML = `
+    <span class="wiz-day-name">${DIAS_CORTOS[date.getDay()]}</span>
+    <span class="wiz-day-number">${date.getDate()}</span>
+    <span class="wiz-day-month">${MESES_CORTOS[date.getMonth()]}</span>
+    ${etiqueta ? `<span class="wiz-day-tag">${etiqueta}</span>` : ''}`;
+
+  if (estado === 'disponible') {
+    hacerClickeable(chip, () => elegirDia(date, chip));
+  } else {
+    chip.setAttribute('aria-disabled', 'true');
+    chip.title = estado === 'feriado' ? `Feriado: ${feriado}` : 'No hay turnos disponibles para esta fecha';
+    hacerClickeable(chip, () => avisarFechaNoDisponible(dia, chip));
+  }
+  animarEntrada(chip, indice);
+  return chip;
+}
+
+// Al tocar un feriado o un día sin turnos: explica por qué no se puede elegir
+function avisarFechaNoDisponible(dia, chip) {
+  document.querySelectorAll('.wiz-day-chip').forEach(c => c.classList.remove('selected'));
+  formData.date = '';
+  formData.time = '';
+  ocultarBotonContinuar();
+  document.getElementById('hoursSection').style.display = 'none';
+
+  const aviso = document.getElementById('fechaAviso');
+  const fecha = `${DIAS_CORTOS[dia.date.getDay()]} ${dia.date.getDate()} de ${MESES_CORTOS[dia.date.getMonth()]}`;
+  aviso.className = `wiz-fecha-aviso wiz-fecha-aviso-${dia.estado}`;
+  aviso.innerHTML = dia.estado === 'feriado'
+    ? `${htmlIcono('bi-calendar-x')} <strong>FERIADO</strong> — ${escaparHTML(fecha)}: ${escaparHTML(dia.feriado)}. Ese día no hay atención.`
+    : `${htmlIcono('bi-calendar-minus')} No hay turnos disponibles para esta fecha (${escaparHTML(fecha)}).`;
+  aviso.hidden = false;
+  sacudirCampo(chip);
+}
+
+// Oculta el aviso de fecha no disponible
+function ocultarAvisoDeFecha() {
+  const aviso = document.getElementById('fechaAviso');
+  if (aviso) aviso.hidden = true;
+}
+
+// Paso 4: muestra los horarios del día elegido (los ocupados, deshabilitados)
+async function mostrarHorariosDisponibles() {
   const container = document.getElementById('timeSlots');
   const error = document.getElementById('datetimeError');
   const doctor = formData.doctor;
@@ -293,13 +396,13 @@ async function renderTimeSlots() {
 
   container.innerHTML = '';
   const [anio, mes, dia] = fecha.split('-').map(Number);
-  const horarios = generarHorarios(doctor, new Date(anio, mes - 1, dia));
+  const horarios = generarHorariosDelDia(doctor, new Date(anio, mes - 1, dia));
 
   let ocupados = [];
   try {
     ocupados = await api.obtenerTurnosOcupados(doctor.id, fecha);
   } catch (err) {
-    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} No pudimos consultar los horarios. Intentá nuevamente.`;
+    error.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} No pudimos consultar los horarios. Intentá nuevamente.`;
     return;
   }
   // El usuario pudo cambiar de día mientras se esperaba la respuesta
@@ -317,10 +420,15 @@ async function renderTimeSlots() {
       slot.title = 'Horario no disponible';
     } else {
       if (time === formData.time) slot.classList.add('selected');
-      hacerClickeable(slot, () => selectTime(time, slot));
+      hacerClickeable(slot, () => elegirHorario(time, slot));
     }
     container.appendChild(slot);
   });
+
+  // Si no quedó ningún horario libre (por ejemplo, se ocuparon mientras elegía)
+  if (!horarios.some(h => !ocupados.includes(h))) {
+    container.innerHTML = `<p class="wiz-sin-turnos">${htmlIcono('bi-calendar-minus')} No hay turnos disponibles para esta fecha</p>`;
+  }
 
   // Si el horario elegido ya no está disponible (lo tomó otro paciente), se descarta
   if (formData.time && (ocupados.includes(formData.time) || !horarios.includes(formData.time))) {
@@ -330,7 +438,8 @@ async function renderTimeSlots() {
 }
 
 // ===== SELECCIONES =====
-function selectSpecialty(name, btn) {
+// Paso 2: el paciente elige una especialidad
+function elegirEspecialidad(name, btn) {
   document.querySelectorAll('.wiz-spec-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
 
@@ -338,37 +447,41 @@ function selectSpecialty(name, btn) {
   formData.specialty = name;
   document.getElementById('selectedSpecialtyName').textContent = name;
 
-  setTimeout(() => changeStep(3), 300);
+  setTimeout(() => irAlPaso(3), 300);
 }
 
-function selectDoctor(doc, card) {
+// Paso 3: el paciente elige un médico
+function elegirMedico(doc, card) {
   document.querySelectorAll('.wiz-doc-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
 
   formData.doctor = doc;
   document.getElementById('selectedDoctorName').textContent = doc.name;
 
-  setTimeout(() => changeStep(4), 300);
+  setTimeout(() => irAlPaso(4), 300);
 }
 
-function selectDay(date, chip) {
+// Paso 4: el paciente elige un día
+function elegirDia(date, chip) {
   document.querySelectorAll('.wiz-day-chip').forEach(c => c.classList.remove('selected'));
   chip.classList.add('selected');
 
-  formData.date = fechaISO(date);
+  formData.date = fechaAFormatoISO(date);
   formData.time = '';
-  ocultarSolicitud();
+  ocultarBotonContinuar();
+  ocultarAvisoDeFecha();
   document.getElementById('datetimeError').innerHTML = '';
   document.getElementById('selectedDayLabel').textContent =
     `${DIAS_CORTOS[date.getDay()]} ${date.getDate()} de ${MESES_CORTOS[date.getMonth()]}`;
 
   const hoursSection = document.getElementById('hoursSection');
   hoursSection.style.display = 'block';
-  renderTimeSlots();
+  mostrarHorariosDisponibles();
   setTimeout(() => hoursSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
 }
 
-function selectTime(time, slot) {
+// Paso 4: el paciente elige un horario
+function elegirHorario(time, slot) {
   document.querySelectorAll('.wiz-time-slot').forEach(s => s.classList.remove('selected'));
   slot.classList.add('selected');
 
@@ -378,7 +491,7 @@ function selectTime(time, slot) {
 }
 
 // Oculta el botón "Continuar" del paso 4
-function ocultarSolicitud() {
+function ocultarBotonContinuar() {
   document.getElementById('requestTurnBtn').classList.add('d-none');
 }
 
@@ -390,11 +503,13 @@ function marcarEspecialidadSeleccionada() {
 }
 
 // ===== NAVEGACIÓN ENTRE PASOS =====
-function prevStep() {
-  if (currentStep > 1) changeStep(currentStep - 1);
+// Botón "Atrás"
+function volverPasoAnterior() {
+  if (currentStep > 1) irAlPaso(currentStep - 1);
 }
 
-function changeStep(target) {
+// Cambia de paso: muestra el paso pedido y actualiza la barra de progreso
+function irAlPaso(target) {
   const currentSlide = document.getElementById(`slide-${currentStep}`);
   const targetSlide = document.getElementById(`slide-${target}`);
   if (currentSlide) currentSlide.classList.remove('active');
@@ -414,10 +529,10 @@ function changeStep(target) {
   stepper.style.setProperty('--progress', `${((target - 1) / (totalSteps - 1)) * 100}%`);
 
   if (target === 2) marcarEspecialidadSeleccionada();
-  if (target === 3) renderDoctors(formData.specialty);
+  if (target === 3) mostrarMedicos(formData.specialty);
   // Al volver desde el paso 5 se conservan el día y el horario elegidos
-  if (target === 4 && currentStep < 4) renderAvailableDays();
-  if (target === 4 && currentStep === 5) renderTimeSlots();
+  if (target === 4 && currentStep < 4) mostrarDiasDisponibles();
+  if (target === 4 && currentStep === 5) mostrarHorariosDisponibles();
 
   currentStep = target;
   mantenerAsistenteVisible();
@@ -436,6 +551,7 @@ function mantenerAsistenteVisible() {
 }
 
 // ===== PASO 1: DNI =====
+// Controla que el DNI tenga entre 7 y 9 números
 function validarFormatoDni() {
   const dniInput = document.getElementById('dniInput');
   const error = document.getElementById('dniError');
@@ -446,15 +562,16 @@ function validarFormatoDni() {
   else if (!/^\d{7,9}$/.test(dni)) mensaje = 'El DNI debe tener entre 7 y 9 números';
 
   if (mensaje) {
-    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} ${mensaje}`;
+    error.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} ${mensaje}`;
     dniInput.classList.add('is-invalid');
-    sacudir(dniInput);
+    sacudirCampo(dniInput);
     return null;
   }
   return dni;
 }
 
-async function continuarDesdeDni() {
+// Botón "Continuar" del paso 1: verifica el DNI con el servidor
+async function verificarDniYContinuar() {
   const dni = validarFormatoDni();
   if (!dni) return;
 
@@ -463,38 +580,54 @@ async function continuarDesdeDni() {
   const btn = document.getElementById('nextFromDni');
   const textoOriginal = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = `${icono('bi-hourglass-split')} Verificando...`;
+  btn.innerHTML = `${htmlIcono('bi-hourglass-split')} Verificando...`;
 
-  let registrado;
+  let paciente;
   try {
-    registrado = await api.verificarPaciente(dni);
+    paciente = await api.obtenerPaciente(dni);
   } catch (err) {
-    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} No pudimos verificar tu DNI. Intentá nuevamente.`;
+    error.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} No pudimos verificar tu DNI. Intentá nuevamente.`;
     return;
   } finally {
     btn.disabled = false;
     btn.innerHTML = textoOriginal;
   }
 
-  if (!registrado) {
-    error.innerHTML = `
-      ${icono('bi-x-circle-fill')} DNI no registrado <br>
-      <a href="https://wa.me/${CONFIG.whatsappContacto}" target="_blank" rel="noopener" class="btn-wsp">
-        ${icono('bi-whatsapp')} Contactar por WhatsApp
-      </a>`;
+  if (!paciente) {
+    // Paciente no registrado: se lo deriva al centro (sin WhatsApp si el número no está confirmado)
+    error.innerHTML = CONFIG.whatsappContacto
+      ? `${htmlIcono('bi-x-circle-fill')} DNI no registrado <br>
+        <a href="https://wa.me/${CONFIG.whatsappContacto}" target="_blank" rel="noopener" class="btn-wsp">
+          ${htmlIcono('bi-whatsapp')} Contactar por WhatsApp
+        </a>`
+      : `${htmlIcono('bi-x-circle-fill')} DNI no registrado. Comunicate con la administración del centro para registrarte.`;
     dniInput.classList.add('is-invalid');
-    sacudir(dniInput);
+    sacudirCampo(dniInput);
     return;
   }
 
   error.innerHTML = '';
   dniInput.classList.remove('is-invalid');
   formData.dni = dni;
-  irDespuesDelDni();
+  formData.paciente = paciente;
+  mostrarPaciente(paciente);
+  saltarPasosPreseleccionados();
+}
+
+// Muestra el nombre del paciente encontrado arriba del asistente
+function mostrarPaciente(paciente) {
+  const barra = document.getElementById('pacienteInfo');
+  barra.innerHTML = `${htmlIcono('bi-person-check-fill')} Paciente: <strong>${escaparHTML(nombreCompleto(paciente))}</strong> · DNI ${escaparHTML(paciente.dni)}`;
+  barra.hidden = false;
+}
+
+// "Nombre Apellido" del paciente
+function nombreCompleto(paciente) {
+  return `${paciente.nombre} ${paciente.apellido}`.trim();
 }
 
 // Después del DNI se saltean los pasos que ya se eligieron en el inicio
-function irDespuesDelDni() {
+function saltarPasosPreseleccionados() {
   if (preseleccion.specialty) {
     formData.specialty = preseleccion.specialty;
     document.getElementById('selectedSpecialtyName').textContent = preseleccion.specialty;
@@ -503,19 +636,20 @@ function irDespuesDelDni() {
   if (preseleccion.doctor) {
     formData.doctor = preseleccion.doctor;
     document.getElementById('selectedDoctorName').textContent = preseleccion.doctor.name;
-    changeStep(4);
+    irAlPaso(4);
   } else if (preseleccion.specialty) {
-    changeStep(3);
+    irAlPaso(3);
   } else {
-    changeStep(2);
+    irAlPaso(2);
   }
 }
 
 // ===== PASO 5: CONFIRMACIÓN =====
-function validarFechaHora() {
+// Controla que se haya elegido día y horario
+function validarFechaYHoraElegidas() {
   const error = document.getElementById('datetimeError');
   if (!formData.date || !formData.time) {
-    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} Seleccioná un día y un horario`;
+    error.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} Seleccioná un día y un horario`;
     return false;
   }
   error.innerHTML = '';
@@ -523,35 +657,53 @@ function validarFechaHora() {
 }
 
 // Completa el resumen y pasa al paso 5
-function showConfirmCard() {
-  if (!validarFechaHora()) return;
+async function mostrarResumenDelTurno() {
+  if (!validarFechaYHoraElegidas()) return;
 
   const fechaLarga = formatearFechaLarga(formData.date);
-  document.getElementById('cAvatar').replaceChildren(crearAvatar(formData.doctor));
+  document.getElementById('cAvatar').replaceChildren(crearFotoDelMedico(formData.doctor));
   document.getElementById('cDoctor').textContent = formData.doctor.name;
   document.getElementById('cSpecialty').textContent = formData.specialty;
   document.getElementById('cDate').textContent = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
   document.getElementById('cTime').textContent = `${formData.time} hs`;
-  document.getElementById('cDni').textContent = formData.dni;
+  document.getElementById('cPaciente').textContent = nombreCompleto(formData.paciente);
+  document.getElementById('cDni').textContent = `DNI ${formData.dni}`;
   document.getElementById('confirmError').innerHTML = '';
+  document.getElementById('cIndicaciones').hidden = true;
 
-  mostrarVistaConfirmacion(false);
-  changeStep(5);
+  alternarResumenYExito(false);
+  irAlPaso(5);
+  mostrarIndicacionesDelMedico(formData.doctor);
+}
+
+// Muestra (solo lectura) las indicaciones que dejó el médico para el paciente
+async function mostrarIndicacionesDelMedico(doctor) {
+  const caja = document.getElementById('cIndicaciones');
+  let texto = '';
+  try {
+    texto = (await api.obtenerIndicaciones(doctor.id)).trim();
+  } catch (err) {
+    return; // si no se pudieron consultar, el turno se puede confirmar igual
+  }
+  if (!texto || formData.doctor !== doctor) return;
+  document.getElementById('cIndicacionesTexto').textContent = texto;
+  caja.hidden = false;
 }
 
 // Alterna dentro del paso 5 entre el resumen y la pantalla de éxito
-function mostrarVistaConfirmacion(exito) {
+function alternarResumenYExito(exito) {
   document.getElementById('confirmView').classList.toggle('d-none', exito);
   document.getElementById('successView').classList.toggle('d-none', !exito);
   document.getElementById('slide-5').scrollTop = 0;
 }
 
-async function confirmAppointment() {
+// Botón "Confirmar turno": guarda el turno y muestra la pantalla de éxito
+async function confirmarTurno() {
   const btn = document.getElementById('confirmTurnBtn');
   const error = document.getElementById('confirmError');
   const textoOriginal = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = `${icono('bi-hourglass-split')} Guardando...`;
+  btn.innerHTML = `${htmlIcono('bi-hourglass-split')} Guardando...`;
 
   try {
     await api.guardarTurno({
@@ -565,26 +717,27 @@ async function confirmAppointment() {
   } catch (err) {
     // Por ejemplo, si otro paciente tomó el horario: "Cambiar horario"
     // vuelve al paso 4, donde los horarios se recargan.
-    error.innerHTML = `${icono('bi-exclamation-triangle-fill')} ${escaparHTML(err.message || 'No se pudo guardar el turno. Intentá nuevamente.')}`;
+    error.innerHTML = `${htmlIcono('bi-exclamation-triangle-fill')} ${escaparHTML(err.message || 'No se pudo guardar el turno. Intentá nuevamente.')}`;
     return;
   } finally {
     btn.disabled = false;
     btn.innerHTML = textoOriginal;
   }
 
-  generarPDF();
+  descargarComprobantePDF();
 
   document.getElementById('sFecha').textContent = formatearFechaLarga(formData.date);
   document.getElementById('sHora').textContent = formData.time;
   // Espacio no separable para que "Dr." no quede solo al final de una línea
   document.getElementById('sMedico').textContent = formData.doctor.name.replace(/^(\S+\.) /, '$1\u00a0');
-  mostrarVistaConfirmacion(true);
+  alternarResumenYExito(true);
 
   // La barra de progreso queda completa
   document.querySelector('.wiz-step[data-step="5"]').classList.replace('active', 'completed');
 }
 
-function generarPDF() {
+// Arma y descarga el comprobante del turno en PDF
+function descargarComprobantePDF() {
   if (!window.jspdf) return; // la librería no cargó (sin internet)
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
@@ -633,7 +786,7 @@ function generarPDF() {
 
   // ---- Datos del turno ----
   const filas = [
-    ['Paciente (DNI)', formData.dni],
+    ['Paciente', `${nombreCompleto(formData.paciente)} (DNI ${formData.dni})`],
     ['Especialidad', formData.specialty],
     ['Profesional', formData.doctor.name],
     ['Fecha', `${formatearFecha(formData.date)} (${formatearFechaLarga(formData.date)})`],
@@ -699,7 +852,7 @@ function generarPDF() {
 }
 
 // Vuelve al paso 1 con todo vacío (también descarta la preselección del inicio)
-function resetWizard() {
+function reiniciarAsistente() {
   // Oculta el paso actual sin transición para que no se superponga con el paso 1
   const currentSlide = document.getElementById(`slide-${currentStep}`);
   if (currentSlide) {
@@ -707,7 +860,8 @@ function resetWizard() {
     currentSlide.classList.remove('active');
   }
 
-  Object.assign(formData, { dni: '', specialty: '', doctor: null, date: '', time: '' });
+  Object.assign(formData, { dni: '', paciente: null, specialty: '', doctor: null, date: '', time: '' });
+  document.getElementById('pacienteInfo').hidden = true;
   preseleccion = { specialty: '', doctor: null };
   history.replaceState(null, '', window.location.pathname);
 
@@ -715,14 +869,14 @@ function resetWizard() {
   document.getElementById('preselectInfo').hidden = true;
   document.querySelectorAll('.wiz-spec-btn, .wiz-doc-card, .wiz-time-slot, .wiz-day-chip')
     .forEach(el => el.classList.remove('selected'));
-  ocultarSolicitud();
+  ocultarBotonContinuar();
   document.getElementById('hoursSection').style.display = 'none';
 
   void document.body.offsetWidth;
   requestAnimationFrame(() => {
     if (currentSlide) currentSlide.style.transition = '';
-    changeStep(1);
-    mostrarVistaConfirmacion(false);
+    irAlPaso(1);
+    alternarResumenYExito(false);
   });
 }
 
@@ -730,17 +884,21 @@ function resetWizard() {
    PÁGINA ANTIGUA (TurnosPagina.html): tarjetas desplegables y menú móvil.
    No se usa en especialidadesturnos.html; se deja para no romperla.
    ===================================================================== */
-document.querySelectorAll('.btn-toggle').forEach(boton => {
-  boton.addEventListener('click', () => {
-    const card = boton.closest('.card');
-    document.querySelectorAll('.card').forEach(c => {
-      if (c !== card) c.classList.remove('active');
+// Tarjetas "Ver más": abre una y cierra las demás
+function activarTarjetasDesplegables() {
+  document.querySelectorAll('.btn-toggle').forEach(boton => {
+    boton.addEventListener('click', () => {
+      const card = boton.closest('.card');
+      document.querySelectorAll('.card').forEach(c => {
+        if (c !== card) c.classList.remove('active');
+      });
+      card.classList.toggle('active');
     });
-    card.classList.toggle('active');
   });
-});
+}
 
-(() => {
+// Botones para abrir y cerrar el menú en celulares
+function activarMenuMovilAntiguo() {
   const nav = document.querySelector('#nav');
   const abrir = document.querySelector('#abrir');
   const cerrar = document.querySelector('#cerrar');
@@ -757,4 +915,7 @@ document.querySelectorAll('.btn-toggle').forEach(boton => {
     abrir.style.display = 'block';
     document.body.style.overflow = 'auto';
   });
-})();
+}
+
+activarTarjetasDesplegables();
+activarMenuMovilAntiguo();

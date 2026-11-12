@@ -151,6 +151,11 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
   transition: 0.3s;
 }
 .social-icons a:hover { background: #2a7cc7; transform: translateY(-3px); }
+.footer-legal {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px;
+  margin-top: 30px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 13px; color: #9aa8bb;
+}
 
 /* ================= ASISTENTE DE TURNOS ================= */
 .dni-search-section { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 30px 20px; background: linear-gradient(135deg, var(--gris-claro) 0%, #e9ecef 100%); }
@@ -158,6 +163,16 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
 
 /* ---------- Barra de progreso ---------- */
 .wiz-stepper { display: flex; justify-content: space-between; position: relative; margin-bottom: 28px; }
+
+/* Nombre del paciente, visible desde que valida el DNI */
+.wiz-paciente {
+  margin: -14px auto 14px; width: fit-content; max-width: 100%;
+  padding: 6px 14px; border-radius: 50px;
+  background: #fff; border: 1px solid #d5e0ec; box-shadow: 0 4px 12px rgba(0,58,135,0.06);
+  font-size: 14px; color: #1f2d3d; text-align: center;
+  animation: wizItem 0.4s var(--ease-suave) backwards;
+}
+.wiz-paciente i { color: #28a745; margin-right: 4px; }
 
 /* Línea de fondo gris (del centro del paso 1 al centro del paso 5).
    Con N pasos, left/right = 50% / N. */
@@ -214,6 +229,9 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
   display: flex; flex-direction: column; align-items: center; gap: 16px;
   text-align: center;
   overflow-y: auto; z-index: 1;
+  /* Al desplazarse hacia un elemento (por ejemplo, los horarios), deja libre
+     el espacio de la barra fija de botones para que no quede tapado */
+  scroll-padding-bottom: 100px;
 }
 .wiz-slide.active { opacity: 1; transform: translateY(0); pointer-events: all; visibility: visible; z-index: 10; }
 
@@ -288,6 +306,29 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
 .wiz-day-month { font-size: 11px; opacity: 0.85; }
 .wiz-days-hint { font-size: 13px; color: #888; text-align: center; margin-top: 10px; }
 
+/* Días que no se pueden elegir: sin turnos (gris) y feriados (rojo) */
+.wiz-day-tag { font-size: 9.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; margin-top: 2px; }
+.wiz-day-chip.wiz-day-sin-turnos { background: #f1f3f5; border-style: dashed; border-color: #ced4da; color: #8a94a0; cursor: not-allowed; }
+.wiz-day-chip.wiz-day-sin-turnos:hover { transform: none; background: #f1f3f5; border-color: #adb5bd; }
+.wiz-day-chip.wiz-day-feriado { background: #fdecec; border-color: #f3b4b4; color: #b42318; cursor: not-allowed; }
+.wiz-day-chip.wiz-day-feriado:hover { transform: none; background: #fdecec; border-color: #e58c8c; }
+
+.wiz-days-leyenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 12px; color: #5f6c7b; margin-top: 4px; }
+.wiz-days-leyenda span { display: inline-flex; align-items: center; gap: 6px; }
+.wiz-days-leyenda .ley { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 2px solid; }
+.ley-disponible { background: #f8f9fa; border-color: var(--accent) !important; }
+.ley-sin-turnos { background: #f1f3f5; border-color: #adb5bd !important; border-style: dashed !important; }
+.ley-feriado { background: #fdecec; border-color: #e58c8c !important; }
+
+/* Aviso al tocar un feriado o un día sin turnos, y cuando un día se quedó sin horarios */
+.wiz-fecha-aviso, .wiz-sin-turnos {
+  margin: 10px 0 0; padding: 10px 14px; border-radius: 10px;
+  font-size: 14px; text-align: center; animation: wizItem 0.3s var(--ease-suave) backwards;
+}
+.wiz-fecha-aviso-sin-turnos, .wiz-sin-turnos { background: #f1f3f5; border: 1px solid #dee2e6; color: #495057; }
+.wiz-fecha-aviso-feriado { background: #fdecec; border: 1px solid #f3b4b4; color: #b42318; }
+.wiz-sin-turnos { grid-column: 1 / -1; }
+
 .wiz-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; width: 100%; }
 .wiz-time-slot { padding: 12px; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 10px; text-align: center; font-size: 14px; font-weight: 500; color: #444; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
 .wiz-time-slot:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); }
@@ -338,6 +379,16 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
   text-transform: uppercase; letter-spacing: 0.5px;
 }
 .wiz-resumen-val { display: block; font-size: 15px; font-weight: 600; color: #1f2d3d; overflow-wrap: anywhere; }
+.wiz-resumen-sub { display: block; font-size: 12.5px; color: #6c757d; }
+
+/* Indicaciones del médico (solo lectura) */
+.wiz-indicaciones {
+  margin: 0 20px 14px; padding: 12px 14px;
+  background: #f0f7ff; border: 1px solid #cfe2f7; border-radius: 10px;
+}
+.wiz-indicaciones-t { font-weight: 700; font-size: 13px; color: var(--azul-oscuro); margin-bottom: 4px; }
+.wiz-indicaciones-t i { color: var(--accent); margin-right: 4px; }
+.wiz-indicaciones p { margin: 0; font-size: 14px; color: #1f2d3d; white-space: pre-line; }
 
 .wiz-resumen-aviso {
   display: flex; align-items: flex-start; gap: 10px;
@@ -474,6 +525,7 @@ header:not(.header-turnos) { display: flex; align-items: center; justify-content
   .wiz-resumen-grid { grid-template-columns: 1fr; padding: 16px; }
   .wiz-resumen-medico { padding: 16px; }
   .wiz-resumen-aviso { margin: 0 16px 16px; }
+  .wiz-indicaciones { margin: 0 16px 12px; }
   .wiz-confirm .bottom-buttons button { font-size: 14px; padding: 10px; }
   .wiz-exito .bottom-buttons { flex-direction: column; }
   .wiz-exito .bottom-buttons button { flex: none; width: 100%; height: 54px; }

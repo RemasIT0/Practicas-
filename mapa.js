@@ -24,10 +24,11 @@ const MAPA_CMP = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.mapa-cmp').forEach(crearMapa);
+  document.querySelectorAll('.mapa-cmp').forEach(crearMapaDeUbicacion);
 });
 
-function crearMapa(contenedor) {
+// Dibuja el mapa con el marcador del centro, el cartel y el botón "Cómo llegar"
+function crearMapaDeUbicacion(contenedor) {
   const destino = encodeURIComponent(MAPA_CMP.direccion);
   const urlComoLlegar = `https://www.google.com/maps/dir/?api=1&destination=${destino}`;
 
