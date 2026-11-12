@@ -950,6 +950,9 @@ section{
   color: #9aa8bb;
 }
 
+/* Copyright y créditos juntos, en una sola columna centrada */
+.footer-legal { flex-direction: column; align-items: center; text-align: center; }
+
 .social-icons a:hover{
   background: #2a7cc7;
   transform: translateY(-3px);
